@@ -68,19 +68,13 @@ class TestMoeModelImports:
 
     @pytest.mark.parametrize("module_path, class_name", _build_test_params())
     def test_import_model_class(self, module_path, class_name):
-        """Each model class should be importable from its module."""
+        """Each model class should be importable and be a valid class."""
         mod = importlib.import_module(module_path)
         cls = getattr(mod, class_name, None)
         assert cls is not None, (
             f"{class_name} not found in {module_path}. "
             f"Available attrs: {[a for a in dir(mod) if not a.startswith('_')]}"
         )
-
-    @pytest.mark.parametrize("module_path, class_name", _build_test_params())
-    def test_model_class_is_type(self, module_path, class_name):
-        """Each imported model class should actually be a class (not a function or module)."""
-        mod = importlib.import_module(module_path)
-        cls = getattr(mod, class_name)
         assert isinstance(cls, type), (
             f"{module_path}.{class_name} is {type(cls).__name__}, expected a class"
         )
