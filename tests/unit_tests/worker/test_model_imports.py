@@ -14,7 +14,6 @@ import importlib
 
 import pytest
 
-
 # Each entry: (module_path, class_names)
 MODEL_IMPORTS = [
     (
