@@ -22,7 +22,10 @@ except (ImportError, OSError):
 from vllm.logger import init_logger
 from vllm.platforms import Platform, PlatformEnum
 from vllm.platforms.interface import DeviceCapability
-from vllm.v1.attention.backends.registry import AttentionBackendEnum
+try:
+    from vllm.v1.attention.backends.registry import AttentionBackendEnum
+except ModuleNotFoundError:
+    AttentionBackendEnum = None  # type: ignore[assignment,misc]
 
 if TYPE_CHECKING:
     from vllm.config import VllmConfig
