@@ -289,6 +289,12 @@ class PlatformFL(Platform):
         return AttentionBackendEnum.TORCH_SDPA
 
     @classmethod
+    def is_async_output_supported(cls, enforce_eager: bool) -> bool:
+        if enforce_eager:
+            return False
+        return True
+
+    @classmethod
     def get_punica_wrapper(cls) -> str:
         # TODO(lms): support fl PunicaWrapper
         return "vllm.lora.punica_wrapper.punica_gpu.PunicaWrapperGPU"
