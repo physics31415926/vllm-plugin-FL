@@ -189,14 +189,18 @@ class PlatformFL(Platform):
                 logger.info("Forcing kv cache block size to 64 for FlagOSMLA backend.")
 
         # lazy import to avoid circular import
-        from vllm.config import CUDAGraphMode
+        try:
+            from vllm.config import CUDAGraphMode
+        except ImportError:
+            CUDAGraphMode = None  # type: ignore[assignment,misc]
 
         compilation_config = vllm_config.compilation_config
         if compilation_config.compile_sizes is None:
             compilation_config.compile_sizes = []
 
         if (
-            parallel_config.data_parallel_size > 1
+            CUDAGraphMode is not None
+            and parallel_config.data_parallel_size > 1
             and compilation_config.cudagraph_mode != CUDAGraphMode.NONE
         ):
             # TODO: Piecewise Cuda graph might be enabled
