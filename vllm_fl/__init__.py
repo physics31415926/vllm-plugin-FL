@@ -71,6 +71,13 @@ def register_model():
     _register_flagcx_connector()
 
     # Register OOT quant kernels so kernel selection can find them
-    register_quant_linear()
-    register_router()
+    try:
+        register_quant_linear()
+    except (ImportError, ModuleNotFoundError) as e:
+        logger.debug(f"Skipping quant_linear registration: {e}")
+
+    try:
+        register_router()
+    except (ImportError, ModuleNotFoundError) as e:
+        logger.debug(f"Skipping router registration: {e}")
 
