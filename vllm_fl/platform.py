@@ -1,14 +1,16 @@
 # Copyright (c) 2025 BAAI. All rights reserved.
-# Adapted from https://github.com/vllm-project/vllm/blob/v0.19.0/vllm/platforms/cuda.py
+# Adapted from https://github.com/vllm-project/vllm/blob/v0.20.2/vllm/platforms/cuda.py
 # Below is the original copyright:
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 import os
+from functools import lru_cache
 from typing import TYPE_CHECKING, TypeVar
 from typing_extensions import ParamSpec
 
 import torch
+import vllm.envs as envs
 
 # import custom ops, trigger op registration (CUDA only)
 try:
@@ -25,10 +27,12 @@ from vllm.v1.attention.backends.registry import AttentionBackendEnum
 if TYPE_CHECKING:
     from vllm.config import VllmConfig
     from vllm.config.cache import CacheDType
+    from vllm.config.kernel import IrOpPriorityConfig
     from vllm.v1.attention.selector import AttentionSelectorConfig
 else:
     VllmConfig = None
     CacheDType = None
+    IrOpPriorityConfig = None
 
 from vllm_fl.utils import DeviceInfo, get_device_name, get_device_type
 
@@ -236,7 +240,6 @@ class PlatformFL(Platform):
             use_mla,
             use_sparse,
             backend_path,
-            scope="local",
         )
         logger.info(
             "Using attention backend via dispatch (use_mla=%s): %s"
@@ -389,6 +392,45 @@ class PlatformFL(Platform):
     def num_compute_units(cls, device_id: int = 0) -> int:
         return cls.torch_device_fn.get_device_properties(device_id).multi_processor_count
 
+    @classmethod
+    def manual_seed_all(cls, seed: int) -> None:
+        """Set random seed for all devices."""
+        if cls.device_type == "cuda":
+            torch.cuda.manual_seed_all(seed)
+        elif cls.device_type == "npu":
+            torch.npu.manual_seed_all(seed)
+        elif cls.device_type == "musa":
+            torch.musa.manual_seed_all(seed)
+        else:
+            # Fallback for other device types
+            torch.manual_seed(seed)
+
+    @classmethod
+    def is_integrated_gpu(cls, device_id: int = 0) -> bool:
+        """Check if the GPU is integrated (e.g., iGPU)."""
+        if cls.device_type == "cuda":
+            return bool(torch.cuda.get_device_properties(device_id).is_integrated)
+        # For non-CUDA devices, assume discrete GPU
+        return False
+
+    @classmethod
+    def get_default_ir_op_priority(cls, vllm_config: "VllmConfig") -> "IrOpPriorityConfig":
+        """Get default IR operation priority configuration."""
+        from vllm.config.compilation import CompilationMode
+        from vllm.config.kernel import IrOpPriorityConfig
+
+        # Native used by default when compiling,
+        # use vllm_c kernels where available when no codegen
+        cc = vllm_config.compilation_config
+        using_inductor = cc.backend == "inductor" and cc.mode != CompilationMode.NONE
+        default = ["native"] if using_inductor else ["vllm_c", "native"]
+
+        # Use oink if enabled for rms_norm
+        rms_norm = default
+        if envs.VLLM_USE_OINK_OPS:
+            rms_norm = ["oink"] + default
+
+        return IrOpPriorityConfig.with_default(default, rms_norm=rms_norm)
 
     @classmethod
     def get_device_capability(cls, device_id: int = 0) -> DeviceCapability:

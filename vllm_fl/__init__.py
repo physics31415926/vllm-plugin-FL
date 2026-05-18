@@ -47,10 +47,6 @@ def register():
     """Register the FL platform."""
     _patch_transformers_compat()
 
-    # Model-specific platform patches
-    from vllm_fl.patches.glm_moe_dsa import apply_platform_patches as glm5_platform
-    glm5_platform()
-
     # Note: FlagCX connector registration is deferred to register_model()
     # to avoid circular imports during VllmConfig.__post_init__ in spawned
     # subprocesses.
@@ -78,13 +74,3 @@ def register_model():
     register_quant_linear()
     register_router()
 
-    # Register GLM-5 (GlmMoeDsa) — config not yet upstream
-    try:
-        from vllm.transformers_utils.config import _CONFIG_REGISTRY
-        from vllm_fl.configs.glm_moe_dsa import GlmMoeDsaConfig
-        _CONFIG_REGISTRY["glm_moe_dsa"] = GlmMoeDsaConfig
-
-        #from vllm_fl.patches.glm_moe_dsa import apply_model_patches as glm5_model
-        #glm5_model()
-    except Exception as e:
-        logger.error(f"Register GlmMoeDsa model error: {str(e)}")

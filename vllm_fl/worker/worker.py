@@ -1,5 +1,5 @@
 # Copyright (c) 2025 BAAI. All rights reserved.
-# Adapted from https://github.com/vllm-project/vllm/blob/v0.19.0/vllm/v1/worker/gpu_worker.py
+# Adapted from https://github.com/vllm-project/vllm/blob/v0.20.2/vllm/v1/worker/gpu_worker.py
 # Below is the original copyright:
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
@@ -47,7 +47,7 @@ from vllm.distributed.parallel_state import (
 )
 from vllm.logger import init_logger
 from vllm.lora.request import LoRARequest
-from vllm.utils.torch_utils import set_random_seed
+from vllm.utils.torch_utils import is_quantized_kv_cache, set_random_seed
 from vllm.model_executor.models.interfaces import is_mixture_of_experts
 from vllm.platforms import current_platform
 from vllm.profiler.wrapper import TorchProfilerWrapper
@@ -61,7 +61,7 @@ from vllm.v1.kv_cache_interface import KVCacheConfig, KVCacheSpec
 from vllm.v1.outputs import AsyncModelRunnerOutput, DraftTokenIds, ModelRunnerOutput
 from vllm.v1.utils import report_usage_stats
 from vllm.v1.worker.utils import is_residual_scattered_for_sp
-from vllm.v1.worker.worker_base import WorkerBase
+from vllm.v1.worker.worker_base import CompilationTimes, WorkerBase
 from vllm.v1.worker.workspace import init_workspace_manager
 import vllm_fl.envs as fl_envs
 
@@ -517,7 +517,6 @@ class WorkerFL(WorkerBase):
         logger.info_once(
             "Available KV cache memory: %.2f GiB",
             GiB(self.available_kv_cache_memory_bytes),
-            scope="local",
         )
         gc.collect()
 
@@ -565,7 +564,7 @@ class WorkerFL(WorkerBase):
         #     context = nullcontext()
         self.model_runner.initialize_kv_cache(kv_cache_config)
 
-    def compile_or_warm_up_model(self) -> float:
+    def compile_or_warm_up_model(self) -> CompilationTimes:
         warmup_sizes = []
         if self.vllm_config.compilation_config.mode == CompilationMode.VLLM_COMPILE:
             # warm up sizes that are not in cudagraph capture sizes,
@@ -688,7 +687,9 @@ class WorkerFL(WorkerBase):
         # the model initialization and profiling.
         set_random_seed(self.model_config.seed)
 
-        return self.compilation_config.compilation_time
+        return CompilationTimes(
+            compilation_time=self.compilation_config.compilation_time
+        )
 
     def reset_mm_cache(self) -> None:
         self.model_runner.reset_mm_cache()
@@ -698,6 +699,11 @@ class WorkerFL(WorkerBase):
 
     def get_model(self) -> nn.Module:
         return self.model_runner.get_model()
+
+    def get_compilation_match_table(self) -> dict[str, int]:
+        from vllm.compilation.passes.vllm_inductor_pass import get_match_table
+
+        return get_match_table()
 
     def get_supported_tasks(self) -> tuple[SupportedTask, ...]:
         return self.model_runner.get_supported_tasks()
@@ -1070,6 +1076,9 @@ class WorkerFL(WorkerBase):
     def shutdown(self) -> None:
         if runner := getattr(self, "model_runner", None):
             runner.ensure_kv_transfer_shutdown()
+            # Release GPU resources held by the model runner so that memory
+            # can be reclaimed when running in-process
+            runner.shutdown()
         if self.profiler is not None:
             self.profiler.shutdown()
 
@@ -1087,7 +1096,7 @@ def init_worker_distributed_environment(
     set_custom_all_reduce(not parallel_config.disable_custom_all_reduce)
     from vllm.model_executor.layers.batch_invariant import init_batch_invariance
 
-    init_batch_invariance(attention_config.backend)
+    init_batch_invariance()
 
     init_method = distributed_init_method or "env://"
     init_distributed_environment(
