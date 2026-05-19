@@ -4,7 +4,6 @@
 import torch
 
 from vllm.model_executor.layers.fused_moe import FusedMoE
-from vllm.model_executor.layers.fused_moe.shared_fused_moe import SharedFusedMoE
 from vllm.model_executor.layers.fused_moe.unquantized_fused_moe_method import (
     UnquantizedFusedMoEMethod,
 )
@@ -115,12 +114,12 @@ class FusedMoEFL(FusedMoE):
         self.runner = self._init_runner()
 
 
-class SharedFusedMoEFL(SharedFusedMoE, FusedMoEFL):
-    """OOT replacement for SharedFusedMoE.
+class SharedFusedMoEFL(FusedMoEFL):
+    """OOT replacement for SharedFusedMoE (removed in v0.20.2, merged into FusedMoE).
 
-    PluggableLayer.__new__ matches by cls.__name__, so SharedFusedMoE
-    needs its own registration entry.  The FL router/expert replacement
-    logic is inherited from FusedMoEFL via MRO.
+    PluggableLayer.__new__ matches by cls.__name__, so this entry is kept for
+    backward compatibility. The FL router/expert replacement logic is inherited
+    from FusedMoEFL.
     """
     pass
 

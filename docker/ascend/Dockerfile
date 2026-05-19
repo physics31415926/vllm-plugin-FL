@@ -1,5 +1,4 @@
-ARG VLLM_VERSION=0.19.0
-ARG CANN_VERSION=8.5.1
+ARG VLLM_VERSION=0.20.2
 ARG CANN_CHIP=a3
 ARG UBUNTU_VERSION=22.04
 ARG PYTHON_VERSION=3.11
@@ -66,7 +65,7 @@ WORKDIR /workspace
 # ---------- dev stage ----------
 FROM base AS dev
 
-ARG VLLM_VERSION=0.19.0
+ARG VLLM_VERSION=0.20.2
 
 RUN pip install \
         pytest \
@@ -86,7 +85,7 @@ RUN VLLM_TARGET_DEVICE="empty" pip install "vllm[audio]==${VLLM_VERSION}" \
 # ---------- ci stage ----------
 FROM base AS ci
 
-ARG VLLM_VERSION=0.19.0
+ARG VLLM_VERSION=0.20.2
 
 # Install dev/test tools
 RUN pip install \
@@ -132,7 +131,7 @@ FROM base AS release
 
 ARG INDEX_URL
 ARG EXTRA_INDEX_URL
-ARG VLLM_VERSION=0.19.0
+ARG VLLM_VERSION=0.20.2
 
 # Install vLLM
 # Todo

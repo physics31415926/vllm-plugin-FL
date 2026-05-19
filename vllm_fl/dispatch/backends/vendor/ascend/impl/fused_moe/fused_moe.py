@@ -34,7 +34,6 @@ from vllm.model_executor.layers.fused_moe.layer import (
     UnquantizedFusedMoEMethod,
     get_compressed_expert_map,
 )
-from vllm.model_executor.layers.fused_moe.shared_fused_moe import SharedFusedMoE
 
 from .ascend_config import get_ascend_config
 from .eplb_utils import init_eplb_config
@@ -405,7 +404,7 @@ class AscendFusedMoE(FusedMoE):
             return routed_out
 
 
-class AscendSharedFusedMoE(SharedFusedMoE, AscendFusedMoE):
+class AscendSharedFusedMoE(FusedMoE, AscendFusedMoE):
     def __init__(
         self,
         shared_experts: torch.nn.Module,
