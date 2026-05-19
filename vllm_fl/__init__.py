@@ -88,3 +88,20 @@ def register_model():
         #glm5_model()
     except Exception as e:
         logger.error(f"Register GlmMoeDsa model error: {str(e)}")
+
+    # Register DeepSeek-V4 — adapted to run on non-SM10 hardware (A800, etc.)
+    # by removing hard deep_gemm/mxfp4 dependencies at import time.
+    try:
+        from vllm.model_executor.models import ModelRegistry
+        if "DeepseekV4ForCausalLM" not in ModelRegistry.models:
+            ModelRegistry.register_model(
+                "DeepseekV4ForCausalLM",
+                "vllm_fl.models.deepseek_v4:DeepseekV4ForCausalLM",
+            )
+        if "DeepSeekV4MTPModel" not in ModelRegistry.models:
+            ModelRegistry.register_model(
+                "DeepSeekV4MTPModel",
+                "vllm_fl.models.deepseek_v4_mtp:DeepSeekV4MTP",
+            )
+    except Exception as e:
+        logger.error(f"Register DeepseekV4 model error: {str(e)}")
