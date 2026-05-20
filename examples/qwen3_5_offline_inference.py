@@ -18,11 +18,14 @@ if __name__ == "__main__":
     # Create a sampling params object.
     sampling_params = SamplingParams(max_tokens=10, temperature=0.0)
     # Create an LLM.
+    model_path = os.environ.get("MODEL_PATH", "/workspace/models/Qwen/Qwen3-4B")
+    tp_size = int(os.environ.get("TP_SIZE", "2"))
+    pp_size = int(os.environ.get("PP_SIZE", "1"))
     llm = LLM(
-        model="/models/Qwen3.5-397B-A17B",
-        tensor_parallel_size=8,
-        pipeline_parallel_size=2,
-        enforce_eager=False,
+        model=model_path,
+        tensor_parallel_size=tp_size,
+        pipeline_parallel_size=pp_size,
+        enforce_eager=True,
     )
 
     # Generate texts from the prompts.
