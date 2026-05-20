@@ -14,17 +14,19 @@ def rotary_embedding_maca(
     inplace: bool = True,
 ) -> tuple[torch.Tensor, torch.Tensor]:
     """
-    Apply rotary position embedding using vLLM's CUDA implementation.
+    Apply rotary position embedding using FlagGems.
+
+    Uses FlagGems unified operator library which provides optimized
+    implementations for MetaX GPUs via MACA Triton compatibility.
     """
+    from flag_gems.modules.rotary_embedding import gems_rope_forward
 
-    from vllm._custom_ops import rotary_embedding
-
-    rotary_embedding(
-        position_ids,
+    return gems_rope_forward(
         query,
         key,
         cos,
         sin,
-        rotary_interleaved,
+        position_ids=position_ids,
+        rotary_interleaved=rotary_interleaved,
+        inplace=inplace,
     )
-    return query, key
