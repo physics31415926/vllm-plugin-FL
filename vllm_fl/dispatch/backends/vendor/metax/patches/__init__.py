@@ -1,3 +1,4 @@
+from . import accelerator_compat
 from . import fix_standalone_compile
 from . import pynccl_wrapper
 from . import cuda_wrapper
