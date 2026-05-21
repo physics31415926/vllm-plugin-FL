@@ -1,7 +1,9 @@
 # Copyright (c) 2025 BAAI. All rights reserved.
 
+import importlib
 import json
 import os
+import shutil
 from typing import Optional, Tuple
 
 import flag_gems
@@ -9,6 +11,7 @@ from flag_gems.runtime.backend.device import DeviceDetector
 from flag_gems.runtime import backend
 
 _OP_CONFIG: Optional[dict[str, str]] = None
+_METAX_MCOPLIB_PRELOADED = False
 
 # Mapping used by dispatch registration to resolve the current runtime platform
 # into a backend directory under dispatch/backends/vendor.
@@ -70,6 +73,38 @@ def get_device_type(vendor_name: str) -> str:
 def get_device_name(vendor_name: str) -> str:
     """Return the configured device_name for the given vendor."""
     return _get_vendor_device_field(vendor_name, "device_name")
+
+
+# ---------------------------------------------------------------------------
+# MetaX mcoplib preloading helpers
+# ---------------------------------------------------------------------------
+
+def _looks_like_metax_runtime() -> bool:
+    """Detect MetaX runtime without importing heavy dependencies."""
+    vendor = os.environ.get("GEMS_VENDOR", "").strip().lower()
+    platform = os.environ.get("VLLM_FL_PLATFORM", "").strip().lower()
+    return (
+        vendor == "metax"
+        or platform == "metax"
+        or shutil.which("mx-smi") is not None
+    )
+
+
+def _preload_metax_mcoplib_if_needed() -> None:
+    """Load MACA vLLM op libraries before FlagGems can define fallback schemas."""
+    global _METAX_MCOPLIB_PRELOADED
+    if _METAX_MCOPLIB_PRELOADED or not _looks_like_metax_runtime():
+        return
+
+    for module_name in ("mcoplib._C", "mcoplib._moe_C"):
+        try:
+            importlib.import_module(module_name)
+        except ImportError:
+            pass
+    _METAX_MCOPLIB_PRELOADED = True
+
+
+# ---------------------------------------------------------------------------
 
 
 def use_flaggems(default: bool = True) -> bool:

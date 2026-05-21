@@ -5,17 +5,32 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 import os
+import sys
+import types
 from typing import TYPE_CHECKING, TypeVar
 from typing_extensions import ParamSpec
 
 import torch
 
-# import custom ops, trigger op registration (CUDA only)
-try:
-    import vllm._C  # noqa
-    import vllm._C_stable_libtorch  # noqa
-except (ImportError, OSError):
-    pass  # NPU or other platforms may not have vllm._C
+from vllm_fl.utils import _preload_metax_mcoplib_if_needed, _looks_like_metax_runtime
+
+# For MetaX: preload mcoplib before vLLM's fallback op registration to avoid
+# duplicate schema conflicts. Insert stub vllm._C so vLLM never triggers its
+# fallback torch.library.define() path.
+if _looks_like_metax_runtime():
+    _preload_metax_mcoplib_if_needed()
+    if "vllm._C" not in sys.modules:
+        sys.modules["vllm._C"] = types.ModuleType("vllm._C")
+    if "vllm._C_stable_libtorch" not in sys.modules:
+        sys.modules["vllm._C_stable_libtorch"] = types.ModuleType(
+            "vllm._C_stable_libtorch")
+else:
+    # import custom ops, trigger op registration (CUDA only)
+    try:
+        import vllm._C  # noqa
+        import vllm._C_stable_libtorch  # noqa
+    except (ImportError, OSError):
+        pass  # NPU or other platforms may not have vllm._C
 
 from vllm.logger import init_logger
 from vllm.platforms import Platform, PlatformEnum
@@ -127,10 +142,12 @@ class PlatformFL(Platform):
     def import_kernels(cls) -> None:
         """Import device-specific kernels."""
         logger.info(f"current vendor_name is: {cls.vendor_name}")
-        # Always load base vLLM C extensions
-        super().import_kernels()
 
         if cls.vendor_name == "metax":
+            # Load mcoplib first to register ops via C++ TORCH_LIBRARY.
+            # Skip super().import_kernels() — the base class would register
+            # fallback fake op schemas (at /dev/null) when vllm._C is absent,
+            # causing a duplicate schema crash when mcoplib._C loads.
             try:
                 import mcoplib._C  # noqa: F401
             except ImportError:
@@ -145,6 +162,8 @@ class PlatformFL(Platform):
                 import vllm_fl.dispatch.backends.vendor.metax.patches  # noqa: F401
             except Exception as e:
                 logger.warning(f"Failed to import maca patches: {e}")
+        else:
+            super().import_kernels()
 
     @classmethod
     def import_ir_kernels(cls) -> None:

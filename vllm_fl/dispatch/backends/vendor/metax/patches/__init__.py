@@ -1,4 +1,5 @@
 from . import accelerator_compat
+from . import functorch_config_patch
 from . import fix_standalone_compile
 from . import pynccl_wrapper
 from . import cuda_wrapper
