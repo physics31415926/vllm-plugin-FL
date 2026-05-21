@@ -4,15 +4,56 @@
 
 import logging
 
+import torch
+
 logger = logging.getLogger(__name__)
 from vllm.platforms import current_platform
 
 
-if current_platform.is_out_of_tree():
-    from vllm import _custom_ops as ops
+def _reshape_and_cache_flash_pytorch(
+    key: torch.Tensor,
+    value: torch.Tensor,
+    key_cache: torch.Tensor,
+    value_cache: torch.Tensor,
+    slot_mapping: torch.Tensor,
+    kv_cache_dtype: str,
+    k_scale: torch.Tensor,
+    v_scale: torch.Tensor,
+) -> None:
+    """Pure PyTorch fallback for reshape_and_cache_flash.
 
+    KV cache layout: [num_blocks, block_size, num_heads, head_dim]
+    key/value shape: [num_tokens, num_heads, head_dim]
+    slot_mapping: [num_tokens] - maps each token to a flat slot index
+
+    TODO(gems): Request FlagGems to implement a native Triton/MACA kernel
+    for better performance.
+    """
+    num_tokens = slot_mapping.shape[0]
+    block_size = key_cache.shape[1]
+
+    # Filter out padding tokens (slot_mapping < 0)
+    valid_mask = slot_mapping >= 0
+    valid_slots = slot_mapping[valid_mask]
+    valid_key = key[:num_tokens][valid_mask]
+    valid_value = value[:num_tokens][valid_mask]
+
+    # Compute block index and offset within block
+    block_indices = valid_slots // block_size
+    block_offsets = valid_slots % block_size
+
+    # Write to cache
+    # key_cache[block_indices, block_offsets] = valid_key
+    # value_cache[block_indices, block_offsets] = valid_value
+    key_cache[block_indices, block_offsets] = valid_key.to(key_cache.dtype)
+    value_cache[block_indices, block_offsets] = valid_value.to(
+        value_cache.dtype
+    )
+
+
+if current_platform.is_out_of_tree():
     get_scheduler_metadata = None
-    reshape_and_cache_flash = ops.reshape_and_cache_flash
+    reshape_and_cache_flash = _reshape_and_cache_flash_pytorch
     from flash_attn import flash_attn_varlen_func, flash_attn_with_kvcache  # noqa: F401
 
     get_scheduler_metadata = None
