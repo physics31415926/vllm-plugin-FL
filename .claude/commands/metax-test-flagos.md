@@ -287,3 +287,46 @@ grep -r "AttentionMetadataBuilder" vllm_fl/dispatch/backends/vendor/metax/
 - These are runtime calls, only triggered for specific attention paths (MLA models)
 - For standard MHA models (Qwen3-4B), these paths are not executed
 - If needed, replace with FlagGems equivalents or dispatch system
+
+### Triton Kernel Compatibility on MetaX
+
+Some vLLM Triton kernels fail to compile on MetaX's Triton backend (`PassManager::run failed` in ttgir stage). These need to be patched in the plugin to use PyTorch fallbacks.
+
+**Patched kernels (in `metax/patches/`):**
+
+| Kernel | vLLM Location | Patch | Impact |
+|--------|---------------|-------|--------|
+| `topk_topp_kernel` | `vllm/v1/sample/ops/topk_topp_triton.py` | `topk_topp_sampler.py` - redirect to PyTorch sort-based impl | Sampling performance (minor) |
+
+**FlagGems Missing Ops (feedback to FlagGems team):**
+
+The following ops are needed for MetaX but not yet in FlagGems `_metax` backend:
+1. `topk_topp` - combined top-k + top-p filtering for sampling (currently using PyTorch fallback)
+2. `topk` - basic topk op (exists in other backends: cambricon, kunlunxin, sunrise, but not metax)
+
+**Diagnosis Process for Triton Failures:**
+1. Error shows `PassManager::run failed` in worker process
+2. Look for `triton/backends/metax/compiler.py` in traceback → confirms MetaX Triton compilation issue
+3. Identify the specific kernel from the call stack
+4. Check if FlagGems has an alternative implementation
+5. If not, create a patch in `metax/patches/` that redirects to PyTorch fallback
+6. File feedback to FlagGems team for native implementation
+
+### End-to-End Testing Flow
+
+**Test progression (run in order, fix issues at each stage before proceeding):**
+1. **Unit tests** (`pytest tests/unit_tests/`) - import/API compatibility
+2. **Functional tests** (`pytest tests/functional_tests/`) - operator correctness
+3. **Offline inference** (`python examples/qwen3_5_offline_inference.py`) - full model execution
+4. **Serving test** (OpenAI-compatible API) - production readiness
+
+**Environment variables for inference:**
+```bash
+VLLM_PLUGINS=fl                    # Required: activate the FL plugin
+MODEL_PATH=/workspace/models/...   # Model location
+TP_SIZE=2                          # Tensor parallel size
+PP_SIZE=1                          # Pipeline parallel size
+```
+
+**Test model:** Qwen3.5-35B-A3B (TP=2, enforce_eager=True)
+
