@@ -65,6 +65,16 @@ def _register_stub_ops():
 
 __C_lib = _register_stub_ops()
 
+# Provide CUDA implementations for non-compute _C ops that are called at
+# runtime (not just referenced at import time for pattern matching).
+# weak_ref_tensor: creates a tensor sharing the same storage but without
+# preventing the original from being freed (used in CUDA graph capture).
+@torch.library.impl("_C::weak_ref_tensor", "CUDA")
+def _weak_ref_tensor_impl(tensor: torch.Tensor) -> torch.Tensor:
+    return torch.as_strided(
+        tensor, tensor.shape, tensor.stride(), tensor.storage_offset()
+    )
+
 from vllm.logger import init_logger
 from vllm.platforms import Platform, PlatformEnum
 from vllm.platforms.interface import DeviceCapability
