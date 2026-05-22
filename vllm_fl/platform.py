@@ -17,8 +17,8 @@ import torch
 # so that vLLM's Python code can still reference torch.ops._C.<op>.
 _native_C_available = False
 try:
-    import vllm._C  # noqa: F401
-    import vllm._C_stable_libtorch  # noqa: F401
+    __import__("vllm._C")
+    __import__("vllm._C_stable_libtorch")
     _native_C_available = True
 except (ImportError, OSError):
     pass
