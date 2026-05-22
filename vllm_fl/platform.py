@@ -44,14 +44,14 @@ if not _native_C_available:
 
     def _register_stub_ops():
         """Parse and register all _C op schemas from vLLM's torch_bindings.cpp."""
-        import vllm
-        vllm_root = _pathlib.Path(vllm.__file__).parent.parent
+        import vllm as _vllm
+        vllm_root = _pathlib.Path(_vllm.__file__).parent.parent
         bindings_file = vllm_root / "csrc" / "torch_bindings.cpp"
         if not bindings_file.exists():
             # Fallback: try site-packages source layout
             bindings_file = vllm_root / "vllm" / "csrc" / "torch_bindings.cpp"
         if not bindings_file.exists():
-            return
+            return None
 
         content = bindings_file.read_text(encoding="utf-8", errors="ignore")
         # Remove C++ single-line comments
@@ -60,7 +60,6 @@ if not _native_C_available:
         # Match ops.def("schema") or ops.def(\n"part1"\n"part2"...) patterns
         pattern = r'ops\.def\(\s*((?:"[^"]*"\s*)+)\)'
         lib = torch.library.Library("_C", "DEF")
-        registered = 0
 
         for m in _re.finditer(pattern, content):
             raw = m.group(1)
@@ -70,7 +69,6 @@ if not _native_C_available:
                 continue
             try:
                 lib.define(schema)
-                registered += 1
             except Exception:
                 pass  # Already registered or invalid schema
 
