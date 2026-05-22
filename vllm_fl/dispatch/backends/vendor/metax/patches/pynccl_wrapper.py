@@ -488,7 +488,6 @@ pynccl_wrapper.NCCLLibrary = MCCLLibrary
 # instead of pynccl's ctypes path. torch.distributed's NCCL backend is
 # natively supported by TorchDynamo for tracing.
 # ---------------------------------------------------------------------------
-import torch
 import torch.distributed as dist
 from vllm.distributed.device_communicators.cuda_communicator import CudaCommunicator
 
