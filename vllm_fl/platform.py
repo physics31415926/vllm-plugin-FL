@@ -12,68 +12,81 @@ from typing_extensions import ParamSpec
 
 import torch
 
-# Insert stub vllm._C so vLLM never loads its CUDA _C.so extension.
-# FlagGems provides triton-based op implementations via torch.library.define().
-if "vllm._C" not in sys.modules:
-    sys.modules["vllm._C"] = types.ModuleType("vllm._C")
-if "vllm._C_stable_libtorch" not in sys.modules:
-    sys.modules["vllm._C_stable_libtorch"] = types.ModuleType(
-        "vllm._C_stable_libtorch")
+# Try to load vLLM's native _C.so extension (available on NVIDIA).
+# If it fails (MetaX, Ascend, etc.), insert stubs and register op schemas
+# so that vLLM's Python code can still reference torch.ops._C.<op>.
+_native_C_available = False
+try:
+    import vllm._C  # noqa: F401
+    import vllm._C_stable_libtorch  # noqa: F401
+    _native_C_available = True
+except (ImportError, OSError):
+    pass
 
-# Register stub _C op schemas required by vLLM's runtime and compile backend.
-# vLLM's Python code accesses torch.ops._C.<op> at module-level (e.g. in
-# compilation/passes/fusion/ and utils/torch_utils.py). Without the native
-# _C.so extension, these ops must be registered via torch.library.
-# We parse schemas from vLLM's csrc/torch_bindings.cpp to stay in sync
-# across vLLM versions automatically.
-import re as _re
-import pathlib as _pathlib
+__C_lib = None
 
-def _register_stub_ops():
-    """Parse and register all _C op schemas from vLLM's torch_bindings.cpp."""
-    import vllm
-    vllm_root = _pathlib.Path(vllm.__file__).parent.parent
-    bindings_file = vllm_root / "csrc" / "torch_bindings.cpp"
-    if not bindings_file.exists():
-        # Fallback: try site-packages source layout
-        bindings_file = vllm_root / "vllm" / "csrc" / "torch_bindings.cpp"
-    if not bindings_file.exists():
-        return
+if not _native_C_available:
+    # Insert stub modules so subsequent imports don't fail.
+    if "vllm._C" not in sys.modules:
+        sys.modules["vllm._C"] = types.ModuleType("vllm._C")
+    if "vllm._C_stable_libtorch" not in sys.modules:
+        sys.modules["vllm._C_stable_libtorch"] = types.ModuleType(
+            "vllm._C_stable_libtorch")
 
-    content = bindings_file.read_text(encoding="utf-8", errors="ignore")
-    # Remove C++ single-line comments
-    content = _re.sub(r"//[^\n]*", "", content)
+    # Register stub _C op schemas required by vLLM's compile backend.
+    # vLLM's Python code accesses torch.ops._C.<op> at module-level (e.g. in
+    # compilation/passes/fusion/ and utils/torch_utils.py). Without the native
+    # _C.so extension, these ops must be registered via torch.library.
+    # We parse schemas from vLLM's csrc/torch_bindings.cpp to stay in sync
+    # across vLLM versions automatically.
+    import re as _re
+    import pathlib as _pathlib
 
-    # Match ops.def("schema") or ops.def(\n"part1"\n"part2"...) patterns
-    pattern = r'ops\.def\(\s*((?:"[^"]*"\s*)+)\)'
-    lib = torch.library.Library("_C", "DEF")
-    registered = 0
+    def _register_stub_ops():
+        """Parse and register all _C op schemas from vLLM's torch_bindings.cpp."""
+        import vllm
+        vllm_root = _pathlib.Path(vllm.__file__).parent.parent
+        bindings_file = vllm_root / "csrc" / "torch_bindings.cpp"
+        if not bindings_file.exists():
+            # Fallback: try site-packages source layout
+            bindings_file = vllm_root / "vllm" / "csrc" / "torch_bindings.cpp"
+        if not bindings_file.exists():
+            return
 
-    for m in _re.finditer(pattern, content):
-        raw = m.group(1)
-        parts = _re.findall(r'"([^"]*)"', raw)
-        schema = "".join(parts)
-        if not schema or "->" not in schema:
-            continue
-        try:
-            lib.define(schema)
-            registered += 1
-        except Exception:
-            pass  # Already registered or invalid schema
+        content = bindings_file.read_text(encoding="utf-8", errors="ignore")
+        # Remove C++ single-line comments
+        content = _re.sub(r"//[^\n]*", "", content)
 
-    return lib  # Keep reference alive
+        # Match ops.def("schema") or ops.def(\n"part1"\n"part2"...) patterns
+        pattern = r'ops\.def\(\s*((?:"[^"]*"\s*)+)\)'
+        lib = torch.library.Library("_C", "DEF")
+        registered = 0
 
-__C_lib = _register_stub_ops()
+        for m in _re.finditer(pattern, content):
+            raw = m.group(1)
+            parts = _re.findall(r'"([^"]*)"', raw)
+            schema = "".join(parts)
+            if not schema or "->" not in schema:
+                continue
+            try:
+                lib.define(schema)
+                registered += 1
+            except Exception:
+                pass  # Already registered or invalid schema
 
-# Provide CUDA implementations for non-compute _C ops that are called at
-# runtime (not just referenced at import time for pattern matching).
-# weak_ref_tensor: creates a tensor sharing the same storage but without
-# preventing the original from being freed (used in CUDA graph capture).
-@torch.library.impl("_C::weak_ref_tensor", "CUDA")
-def _weak_ref_tensor_impl(tensor: torch.Tensor) -> torch.Tensor:
-    return torch.as_strided(
-        tensor, tensor.shape, tensor.stride(), tensor.storage_offset()
-    )
+        return lib  # Keep reference alive
+
+    __C_lib = _register_stub_ops()
+
+    # Provide CUDA implementations for non-compute _C ops that are called at
+    # runtime (not just referenced at import time for pattern matching).
+    # weak_ref_tensor: creates a tensor sharing the same storage but without
+    # preventing the original from being freed (used in CUDA graph capture).
+    @torch.library.impl("_C::weak_ref_tensor", "CUDA")
+    def _weak_ref_tensor_impl(tensor: torch.Tensor) -> torch.Tensor:
+        return torch.as_strided(
+            tensor, tensor.shape, tensor.stride(), tensor.storage_offset()
+        )
 
 from vllm.logger import init_logger
 from vllm.platforms import Platform, PlatformEnum
