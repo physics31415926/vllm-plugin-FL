@@ -26,29 +26,38 @@ def _reshape_and_cache_flash_pytorch(
     key/value shape: [num_tokens, num_heads, head_dim]
     slot_mapping: [num_tokens] - maps each token to a flat slot index
 
+    This implementation avoids boolean indexing and dynamic shapes so that it
+    is compatible with CUDAGraph capture (no CPU-GPU sync).
+
     TODO(gems): Request FlagGems to implement a native Triton/MACA kernel
     for better performance.
     """
     num_tokens = slot_mapping.shape[0]
     block_size = key_cache.shape[1]
 
-    # Filter out padding tokens (slot_mapping < 0)
-    valid_mask = slot_mapping >= 0
-    valid_slots = slot_mapping[valid_mask]
-    valid_key = key[:num_tokens][valid_mask]
-    valid_value = value[:num_tokens][valid_mask]
+    # Clamp invalid slots (< 0) to 0 so we can compute indices without
+    # dynamic shapes.  We will mask out the writes for these positions.
+    clamped_slots = torch.clamp(slot_mapping, min=0)
 
     # Compute block index and offset within block
-    block_indices = valid_slots // block_size
-    block_offsets = valid_slots % block_size
+    block_indices = clamped_slots // block_size
+    block_offsets = clamped_slots % block_size
 
-    # Write to cache
-    # key_cache[block_indices, block_offsets] = valid_key
-    # value_cache[block_indices, block_offsets] = valid_value
-    key_cache[block_indices, block_offsets] = valid_key.to(key_cache.dtype)
-    value_cache[block_indices, block_offsets] = valid_value.to(
-        value_cache.dtype
-    )
+    # Prepare key/value data (only first num_tokens rows are valid)
+    k = key[:num_tokens].to(key_cache.dtype)
+    v = value[:num_tokens].to(value_cache.dtype)
+
+    # Build a mask for valid tokens (slot_mapping >= 0)
+    valid_mask = (slot_mapping >= 0).unsqueeze(-1).unsqueeze(-1)
+    # valid_mask shape: [num_tokens, 1, 1] to broadcast with [num_tokens, num_heads, head_dim]
+
+    # Zero out invalid tokens so they don't corrupt the cache at slot 0
+    k = k * valid_mask
+    v = v * valid_mask
+
+    # Scatter write to cache - invalid tokens write zeros to slot 0 (harmless)
+    key_cache[block_indices, block_offsets] = k
+    value_cache[block_indices, block_offsets] = v
 
 
 if current_platform.is_out_of_tree():
