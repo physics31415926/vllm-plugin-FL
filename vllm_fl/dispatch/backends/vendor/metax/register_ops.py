@@ -37,48 +37,12 @@ def register_builtins(registry) -> None:
     is_avail = backend.is_available
 
     impls = [
-        # Activation
-        OpImpl(
-            op_name="silu_and_mul",
-            impl_id="vendor.metax",
-            kind=BackendImplKind.VENDOR,
-            fn=_bind_is_available(backend.silu_and_mul, is_avail),
-            vendor="metax",
-            priority=BackendPriority.VENDOR,
-        ),
-        # Normalization
-        OpImpl(
-            op_name="rms_norm",
-            impl_id="vendor.metax",
-            kind=BackendImplKind.VENDOR,
-            fn=_bind_is_available(backend.rms_norm, is_avail),
-            vendor="metax",
-            priority=BackendPriority.VENDOR,
-        ),
-        # Rotary Embedding
-        OpImpl(
-            op_name="rotary_embedding",
-            impl_id="vendor.metax",
-            kind=BackendImplKind.VENDOR,
-            fn=_bind_is_available(backend.rotary_embedding, is_avail),
-            vendor="metax",
-            priority=BackendPriority.VENDOR,
-        ),
         # Attention Backend
         OpImpl(
             op_name="attention_backend",
             impl_id="vendor.metax",
             kind=BackendImplKind.VENDOR,
             fn=_bind_is_available(backend.attention_backend, is_avail),
-            vendor="metax",
-            priority=BackendPriority.VENDOR,
-        ),
-        # topk softmax
-        OpImpl(
-            op_name="topk_softmax",
-            impl_id="vendor.metax",
-            kind=BackendImplKind.VENDOR,
-            fn=_bind_is_available(backend.topk_softmax, is_avail),
             vendor="metax",
             priority=BackendPriority.VENDOR,
         ),

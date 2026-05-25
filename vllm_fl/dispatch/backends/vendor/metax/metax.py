@@ -8,7 +8,7 @@ This backend provides operator implementations for METAX GPUs.
 
 from __future__ import annotations
 
-from typing import Optional, Union
+from typing import Optional
 
 import torch
 
@@ -62,76 +62,6 @@ class MacaBackend(Backend):
 
     # ==================== Operator Implementations ====================
 
-    def silu_and_mul(self, obj, x: torch.Tensor) -> torch.Tensor:
-        """
-        SiLU activation followed by element-wise multiplication.
-
-        Args:
-            obj: The calling obj (for interface consistency)
-            x: Input tensor of shape [..., 2*d]
-
-        Returns:
-            Output tensor of shape [..., d]
-        """
-        from .impl.activation import silu_and_mul_maca
-
-        return silu_and_mul_maca(obj, x)
-
-    def gelu_and_mul(self, obj, x: torch.Tensor) -> torch.Tensor:
-        """
-        GELU activation followed by element-wise multiplication.
-
-        Args:
-            obj: The calling obj (for interface consistency)
-            x: Input tensor of shape [..., 2*d]
-
-        Returns:
-            Output tensor of shape [..., d]
-        """
-        from .impl.activation import gelu_and_mul_maca
-
-        return gelu_and_mul_maca(obj, x)
-
-    def rms_norm(
-        self,
-        obj,
-        x: torch.Tensor,
-        residual: Optional[torch.Tensor] = None,
-    ) -> Union[torch.Tensor, tuple[torch.Tensor, torch.Tensor]]:
-        """
-        RMS normalization using Maca's CUDA implementation.
-        """
-        from .impl.layernorm import rms_norm_maca
-
-        return rms_norm_maca(obj, x, residual)
-
-    def rotary_embedding(
-        self,
-        obj,
-        query: torch.Tensor,
-        key: torch.Tensor,
-        cos: torch.Tensor,
-        sin: torch.Tensor,
-        position_ids: torch.Tensor,
-        rotary_interleaved: bool = False,
-        inplace: bool = True,
-    ) -> tuple[torch.Tensor, torch.Tensor]:
-        """
-        Apply rotary position embedding using vLLM's CUDA implementation.
-        """
-        from .impl.rotary_embedding import rotary_embedding_maca
-
-        return rotary_embedding_maca(
-            obj,
-            query,
-            key,
-            cos,
-            sin,
-            position_ids,
-            rotary_interleaved=rotary_interleaved,
-            inplace=inplace,
-        )
-
     def attention_backend(self, use_mla: bool = False, use_sparse: bool = False) -> str:
         """
         Get the attention backend class path for CUDA.
@@ -159,17 +89,3 @@ class MacaBackend(Backend):
 
         # Default to FLASH_ATTN
         return AttentionBackendEnum.FLASH_ATTN.get_path()
-
-    def topk_softmax(
-        self,
-        topk_weights,
-        topk_indices,
-        token_expert_indices,
-        gating_output,
-        renormalize=False,
-    ):
-        from .impl.fused_moe import topk_softmax_maca
-
-        return topk_softmax_maca(
-            topk_weights, topk_indices, token_expert_indices, gating_output, renormalize
-        )
