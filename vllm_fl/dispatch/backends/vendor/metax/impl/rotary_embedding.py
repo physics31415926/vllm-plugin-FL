@@ -13,20 +13,41 @@ def rotary_embedding_maca(
     rotary_interleaved: bool = False,
     inplace: bool = True,
 ) -> tuple[torch.Tensor, torch.Tensor]:
-    """
-    Apply rotary position embedding using FlagGems.
+    """Apply rotary position embedding (PyTorch native)."""
+    # Index cos/sin by position_ids
+    cos_selected = cos[position_ids]
+    sin_selected = sin[position_ids]
 
-    Uses FlagGems unified operator library which provides optimized
-    implementations for MetaX GPUs via MACA Triton compatibility.
-    """
-    from flag_gems.modules.rotary_embedding import gems_rope_forward
+    # Expand dims to broadcast with [seq_len, num_heads, head_dim]
+    if query.dim() == 4:
+        cos_selected = cos_selected.unsqueeze(1)
+        sin_selected = sin_selected.unsqueeze(1)
+    elif query.dim() == 3:
+        cos_selected = cos_selected.unsqueeze(1)
+        sin_selected = sin_selected.unsqueeze(1)
 
-    return gems_rope_forward(
-        query,
-        key,
-        cos,
-        sin,
-        position_ids=position_ids,
-        rotary_interleaved=rotary_interleaved,
-        inplace=inplace,
-    )
+    # Handle partial rotary dim
+    rotary_dim = cos_selected.shape[-1]
+    head_dim = query.shape[-1]
+    if rotary_dim != head_dim:
+        cos_selected = torch.cat([cos_selected, cos_selected], dim=-1)
+        sin_selected = torch.cat([sin_selected, sin_selected], dim=-1)
+
+    if rotary_interleaved:
+        def rotate_interleaved(x):
+            x1 = x[..., ::2]
+            x2 = x[..., 1::2]
+            return torch.stack((-x2, x1), dim=-1).flatten(-2)
+
+        q_embed = (query * cos_selected) + (rotate_interleaved(query) * sin_selected)
+        k_embed = (key * cos_selected) + (rotate_interleaved(key) * sin_selected)
+    else:
+        def rotate_half(x):
+            x1 = x[..., : x.shape[-1] // 2]
+            x2 = x[..., x.shape[-1] // 2 :]
+            return torch.cat((-x2, x1), dim=-1)
+
+        q_embed = (query * cos_selected) + (rotate_half(query) * sin_selected)
+        k_embed = (key * cos_selected) + (rotate_half(key) * sin_selected)
+
+    return q_embed, k_embed

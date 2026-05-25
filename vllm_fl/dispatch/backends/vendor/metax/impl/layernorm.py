@@ -9,16 +9,18 @@ def rms_norm_maca(
     x: torch.Tensor,
     residual: torch.Tensor | None = None,
 ) -> torch.Tensor | tuple[torch.Tensor, torch.Tensor]:
-    """
-    RMS normalization using FlagGems for MetaX MACA backend.
-
-    Uses FlagGems unified operator library which provides optimized
-    implementations for MetaX GPUs via MACA Triton compatibility.
-    """
-    from flag_gems.modules.normalization import gems_rms_forward
-
-    # Get weight and epsilon from obj
+    """RMS normalization (PyTorch native)."""
     weight = obj.weight
-    epsilon = obj.variance_epsilon
+    eps = obj.variance_epsilon
 
-    return gems_rms_forward(x, residual, weight, epsilon)
+    if residual is not None:
+        x = x + residual
+        residual_out = x
+
+    variance = x.to(torch.float32).pow(2).mean(-1, keepdim=True)
+    x = x * torch.rsqrt(variance + eps)
+    out = (weight * x).to(weight.dtype)
+
+    if residual is not None:
+        return out, residual_out
+    return out

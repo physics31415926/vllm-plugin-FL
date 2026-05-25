@@ -65,8 +65,6 @@ if current_platform.is_out_of_tree():
     reshape_and_cache_flash = _reshape_and_cache_flash_pytorch
     from flash_attn import flash_attn_varlen_func, flash_attn_with_kvcache  # noqa: F401
 
-    get_scheduler_metadata = None
-
 
 def get_flash_attn_version(requires_alibi: bool = False) -> int | None:
     logger.info_once(
