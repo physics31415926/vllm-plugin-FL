@@ -33,8 +33,13 @@ logger = init_logger(__name__)
 # FL-specific: platform-agnostic weak_ref_tensors
 def weak_ref_tensors(tensor: Any) -> Any:
     if current_platform.device_type == "cuda":
-        from vllm.utils.torch_utils import weak_ref_tensors
-        return weak_ref_tensors(tensor)
+        try:
+            from vllm.utils.torch_utils import weak_ref_tensors as _vllm_wrt
+            return _vllm_wrt(tensor)
+        except (AttributeError, RuntimeError):
+            # TODO: torch.ops._C.weak_ref_tensor not available on MetaX torch;
+            #       remove fallback once MetaX torch exposes this op.
+            return tensor
     else:
         ### TODO: add csrc npu custom op
         return tensor
