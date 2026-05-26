@@ -201,6 +201,19 @@ from vllm.v1.sample.logits_processor.interface import LogitsProcessor
 from vllm.v1.sample.metadata import SamplingMetadata
 from vllm.v1.sample.rejection_sampler import RejectionSampler
 from vllm.v1.sample.sampler import Sampler
+# MetaX MACA: disable Triton topk/topp kernel — MetaX Triton cannot compile it.
+# This import guarantees topk_topp_sampler is in sys.modules so the patch lands.
+# TODO: remove when MetaX Triton supports vLLM's topk_topp kernel.
+import os as _os, sys as _sys
+if _os.path.isdir("/opt/maca"):
+    _tts = _sys.modules.get("vllm.v1.sample.ops.topk_topp_sampler")
+    if _tts is not None and getattr(_tts, "HAS_TRITON", False):
+        _tts.HAS_TRITON = False
+        import logging as _logging
+        _logging.getLogger(__name__).info(
+            "MetaX: patched topk_topp_sampler.HAS_TRITON=False in model_runner"
+        )
+del _os, _sys
 from vllm.v1.spec_decode.dflash import DFlashProposer
 from vllm.v1.spec_decode.draft_model import DraftModelProposer
 from vllm.v1.spec_decode.eagle import EagleProposer
