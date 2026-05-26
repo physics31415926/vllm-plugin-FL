@@ -29,15 +29,17 @@ op_backends:
   # attention_backend: prioritize vendor (MACA attention)
   attention_backend:
     - vendor:metax
-  # All other ops use reference (PyTorch native) implementations
-  topk_softmax:
+  # All other ops: prefer FlagGems (Triton), fallback to reference (PyTorch native)
+  silu_and_mul:
+    - flagos
     - reference
   rms_norm:
     - flagos
     - reference
-  silu_and_mul:
-    - reference
   rotary_embedding:
+    - flagos
+    - reference
+  topk_softmax:
     - flagos
     - reference
 
