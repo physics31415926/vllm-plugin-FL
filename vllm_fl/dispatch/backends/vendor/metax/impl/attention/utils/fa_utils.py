@@ -9,10 +9,12 @@ from vllm.platforms import current_platform
 
 
 if current_platform.is_out_of_tree():
-    from vllm import _custom_ops as ops
-
-    get_scheduler_metadata = None
-    reshape_and_cache_flash = ops.reshape_and_cache_flash
+    # MetaX MACA: use flag_gems.reshape_and_cache_flash instead of
+    # vllm._custom_ops.reshape_and_cache_flash, because the latter calls
+    # torch.ops._C_cache_ops.reshape_and_cache_flash which is not
+    # implemented in MetaX's MACA compatibility layer.
+    # TODO: remove when MetaX MACA implements _C_cache_ops.reshape_and_cache_flash.
+    from flag_gems import reshape_and_cache_flash  # noqa: F401
     from flash_attn import flash_attn_varlen_func, flash_attn_with_kvcache  # noqa: F401
 
     get_scheduler_metadata = None

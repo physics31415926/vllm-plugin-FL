@@ -1,17 +1,15 @@
 # SPDX-License-Identifier: Apache-2.0
 # 2026 - Modified by MetaX Integrated Circuits (Shanghai) Co., Ltd. All Rights Reserved.
 import torch
-from vllm.model_executor.layers.activation import (
-    SiluAndMul,
-    GeluAndMul,
-)
+import torch.nn.functional as F
 
 
 def silu_and_mul_maca(obj, x: torch.Tensor) -> torch.Tensor:
     """
-    SiLU activation followed by element-wise multiplication using CUDA.
+    SiLU activation followed by element-wise multiplication.
 
-    Uses vLLM's optimized CUDA kernel when available.
+    MetaX C550: vllm._C CUDA kernels are not registered on MACA.
+    Use PyTorch native implementation instead.
 
     Args:
         obj: The calling obj (for interface consistency)
@@ -20,15 +18,16 @@ def silu_and_mul_maca(obj, x: torch.Tensor) -> torch.Tensor:
     Returns:
         Output tensor of shape [..., d]
     """
-    act_fn = SiluAndMul()
-    return act_fn.forward_cuda(x)
+    d = x.shape[-1] // 2
+    return F.silu(x[..., :d]) * x[..., d:]
 
 
 def gelu_and_mul_maca(obj, x: torch.Tensor) -> torch.Tensor:
     """
-    GELU activation followed by element-wise multiplication using CUDA.
+    GELU activation followed by element-wise multiplication.
 
-    Uses vLLM's optimized CUDA kernel when available.
+    MetaX C550: vllm._C CUDA kernels are not registered on MACA.
+    Use PyTorch native implementation instead.
 
     Args:
         obj: The calling obj (for interface consistency)
@@ -37,5 +36,5 @@ def gelu_and_mul_maca(obj, x: torch.Tensor) -> torch.Tensor:
     Returns:
         Output tensor of shape [..., d]
     """
-    act_fn = GeluAndMul()
-    return act_fn.forward_cuda(x)
+    d = x.shape[-1] // 2
+    return F.gelu(x[..., :d]) * x[..., d:]

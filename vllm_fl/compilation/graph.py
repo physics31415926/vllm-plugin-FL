@@ -31,12 +31,23 @@ logger = init_logger(__name__)
 
 
 # FL-specific: platform-agnostic weak_ref_tensors
+def _is_metax() -> bool:
+    """Detect MetaX GPU: device_type is 'cuda' (MACA compat layer) but
+    vllm._C.weak_ref_tensor is not registered on MetaX hardware."""
+    try:
+        return "MetaX" in torch.cuda.get_device_name(0)
+    except Exception:
+        return False
+
+
 def weak_ref_tensors(tensor: Any) -> Any:
-    if current_platform.device_type == "cuda":
+    if current_platform.device_type == "cuda" and not _is_metax():
         from vllm.utils.torch_utils import weak_ref_tensors
         return weak_ref_tensors(tensor)
     else:
-        ### TODO: add csrc npu custom op
+        # MetaX: torch.ops._C.weak_ref_tensor is not registered on MACA.
+        # NPU: TODO add csrc npu custom op.
+        # Both fall back to returning the tensor directly (no weak ref overhead).
         return tensor
 
 
