@@ -37,41 +37,16 @@ if not _native_C_available:
     # vLLM's Python code accesses torch.ops._C.<op> at module-level (e.g. in
     # compilation/passes/fusion/ and utils/torch_utils.py). Without the native
     # _C.so extension, these ops must be registered via torch.library.
-    # We parse schemas from vLLM's csrc/torch_bindings.cpp to stay in sync
-    # across vLLM versions automatically.
-    import re as _re
-    import pathlib as _pathlib
+    from vllm_fl._op_schemas import VLLM_C_OP_SCHEMAS
 
     def _register_stub_ops():
-        """Parse and register all _C op schemas from vLLM's torch_bindings.cpp."""
-        import vllm as _vllm
-        vllm_root = _pathlib.Path(_vllm.__file__).parent.parent
-        bindings_file = vllm_root / "csrc" / "torch_bindings.cpp"
-        if not bindings_file.exists():
-            # Fallback: try site-packages source layout
-            bindings_file = vllm_root / "vllm" / "csrc" / "torch_bindings.cpp"
-        if not bindings_file.exists():
-            return None
-
-        content = bindings_file.read_text(encoding="utf-8", errors="ignore")
-        # Remove C++ single-line comments
-        content = _re.sub(r"//[^\n]*", "", content)
-
-        # Match ops.def("schema") or ops.def(\n"part1"\n"part2"...) patterns
-        pattern = r'ops\.def\(\s*((?:"[^"]*"\s*)+)\)'
+        """Register all _C op schemas from the hardcoded list."""
         lib = torch.library.Library("_C", "DEF")
-
-        for m in _re.finditer(pattern, content):
-            raw = m.group(1)
-            parts = _re.findall(r'"([^"]*)"', raw)
-            schema = "".join(parts)
-            if not schema or "->" not in schema:
-                continue
+        for schema in VLLM_C_OP_SCHEMAS:
             try:
                 lib.define(schema)
             except Exception:
                 pass  # Already registered or invalid schema
-
         return lib  # Keep reference alive
 
     __C_lib = _register_stub_ops()
