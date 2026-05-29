@@ -45,6 +45,24 @@ if not _native_C_available:
         for pkg in _KNOWN_C_PROVIDERS
     )
 
+    if _skip_c_stubs:
+        # Pre-load the external _C provider so that its TORCH_LIBRARY
+        # registrations happen BEFORE any downstream code (e.g. FlagGems
+        # patch_util.py) tries to define the same schemas. FlagGems checks
+        # _is_op_registered() before defining; if ops are already registered
+        # by mcoplib, it will skip schema definition and avoid conflicts.
+        for pkg in _KNOWN_C_PROVIDERS:
+            if importlib.util.find_spec(pkg) is not None:
+                try:
+                    __import__(f"{pkg}._C")
+                except (ImportError, OSError):
+                    pass
+                try:
+                    __import__(f"{pkg}._moe_C")
+                except (ImportError, OSError):
+                    pass
+                break
+
     if not _skip_c_stubs:
         # Register stub _C op schemas required by vLLM's compile backend.
         # vLLM's Python code accesses torch.ops._C.<op> at module-level (e.g.
