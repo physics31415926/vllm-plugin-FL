@@ -4,6 +4,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
+import importlib.util
 import os
 import sys
 import types
@@ -33,33 +34,48 @@ if not _native_C_available:
         sys.modules["vllm._C_stable_libtorch"] = types.ModuleType(
             "vllm._C_stable_libtorch")
 
-    # Register stub _C op schemas required by vLLM's compile backend.
-    # vLLM's Python code accesses torch.ops._C.<op> at module-level (e.g. in
-    # compilation/passes/fusion/ and utils/torch_utils.py). Without the native
-    # _C.so extension, these ops must be registered via torch.library.
-    from vllm_fl._op_schemas import VLLM_C_OP_SCHEMAS
+    # Check if an external package provides _C ops via TORCH_LIBRARY.
+    # If so, skip stub registration to avoid "Only a single TORCH_LIBRARY"
+    # namespace conflict. Uses find_spec (no .so loading) to detect.
+    # Add new providers here as other platforms adopt similar patterns.
+    _KNOWN_C_PROVIDERS = ["mcoplib"]  # MetaX
 
-    def _register_stub_ops():
-        """Register all _C op schemas from the hardcoded list."""
-        lib = torch.library.Library("_C", "DEF")
-        for schema in VLLM_C_OP_SCHEMAS:
-            try:
-                lib.define(schema)
-            except Exception:
-                pass  # Already registered or invalid schema
-        return lib  # Keep reference alive
+    _skip_c_stubs = any(
+        importlib.util.find_spec(pkg) is not None
+        for pkg in _KNOWN_C_PROVIDERS
+    )
 
-    __C_lib = _register_stub_ops()
+    if not _skip_c_stubs:
+        # Register stub _C op schemas required by vLLM's compile backend.
+        # vLLM's Python code accesses torch.ops._C.<op> at module-level (e.g.
+        # in compilation/passes/fusion/ and utils/torch_utils.py). Without the
+        # native _C.so extension, these ops must be registered via
+        # torch.library.
+        from vllm_fl._op_schemas import VLLM_C_OP_SCHEMAS
 
-    # Provide CUDA implementations for non-compute _C ops that are called at
-    # runtime (not just referenced at import time for pattern matching).
-    # weak_ref_tensor: creates a tensor sharing the same storage but without
-    # preventing the original from being freed (used in CUDA graph capture).
-    @torch.library.impl("_C::weak_ref_tensor", "CUDA")
-    def _weak_ref_tensor_impl(tensor: torch.Tensor) -> torch.Tensor:
-        return torch.as_strided(
-            tensor, tensor.shape, tensor.stride(), tensor.storage_offset()
-        )
+        def _register_stub_ops():
+            """Register all _C op schemas from the hardcoded list."""
+            lib = torch.library.Library("_C", "DEF")
+            for schema in VLLM_C_OP_SCHEMAS:
+                try:
+                    lib.define(schema)
+                except Exception:
+                    pass  # Already registered or invalid schema
+            return lib  # Keep reference alive
+
+        __C_lib = _register_stub_ops()
+
+        # Provide CUDA implementations for non-compute _C ops that are called
+        # at runtime (not just referenced at import time for pattern matching).
+        # weak_ref_tensor: creates a tensor sharing the same storage but
+        # without preventing the original from being freed (used in CUDA graph
+        # capture).
+        @torch.library.impl("_C::weak_ref_tensor", "CUDA")
+        def _weak_ref_tensor_impl(tensor: torch.Tensor) -> torch.Tensor:
+            return torch.as_strided(
+                tensor, tensor.shape, tensor.stride(),
+                tensor.storage_offset()
+            )
 
 from vllm.logger import init_logger
 from vllm.platforms import Platform, PlatformEnum
