@@ -3,6 +3,29 @@
 import os
 import logging
 
+# Pre-load external _C op providers (e.g. mcoplib) BEFORE importing utils,
+# which triggers FlagGems import. FlagGems' patch_util.py defines _C op schemas
+# only if they are not already registered. By loading mcoplib._C first, its
+# TORCH_LIBRARY registrations happen before FlagGems checks, avoiding duplicate
+# schema conflicts.
+def _preload_c_providers():
+    import importlib.util
+    _KNOWN_C_PROVIDERS = ["mcoplib"]  # MetaX
+    for pkg in _KNOWN_C_PROVIDERS:
+        if importlib.util.find_spec(pkg) is not None:
+            try:
+                __import__(f"{pkg}._C")
+            except (ImportError, OSError):
+                pass
+            try:
+                __import__(f"{pkg}._moe_C")
+            except (ImportError, OSError):
+                pass
+            break
+
+_preload_c_providers()
+del _preload_c_providers
+
 from vllm_fl.utils import get_op_config as _get_op_config
 
 from . import version as version  # PyTorch-style: vllm_fl.version.git_version
