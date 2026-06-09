@@ -659,6 +659,7 @@ class MiniCPMV4_6ViTWindowAttentionSelfAttn(nn.Module):
                     continue
                 param = params_dict[mapped_name]
                 param.weight_loader(param, loaded_weight, shard_id)
+                loaded_params.add(mapped_name)
                 break
             else:
                 if name not in params_dict:
@@ -666,7 +667,7 @@ class MiniCPMV4_6ViTWindowAttentionSelfAttn(nn.Module):
                 param = params_dict[name]
                 weight_loader = getattr(param, "weight_loader", default_weight_loader)
                 weight_loader(param, loaded_weight)
-            loaded_params.add(name)
+                loaded_params.add(name)
         return loaded_params
 
 
