@@ -86,14 +86,14 @@ from vllm.utils.collection_utils import flatten_2d_lists
 from vllm.utils.tensor_schema import TensorSchema, TensorShape
 from vllm.utils.torch_utils import set_default_torch_dtype
 
-from .idefics2_vision_model import Idefics2VisionTransformer
-from .interfaces import (
+from vllm.model_executor.models.idefics2_vision_model import Idefics2VisionTransformer
+from vllm.model_executor.models.interfaces import (
     MultiModalEmbeddings,
     SupportsLoRA,
     SupportsMultiModal,
     SupportsPP,
 )
-from .utils import AutoWeightsLoader, flatten_bn, maybe_prefix
+from vllm.model_executor.models.utils import AutoWeightsLoader, flatten_bn, maybe_prefix
 
 # For profile run
 _MAX_FRAMES_PER_VIDEO = 16
