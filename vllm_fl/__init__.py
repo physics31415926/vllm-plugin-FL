@@ -121,3 +121,13 @@ def register_model():
         #glm5_model()
     except Exception as e:
         logger.error(f"Register GlmMoeDsa model error: {str(e)}")
+
+    # Register MiniCPM-V 4.6 — not yet in vLLM 0.20.2 release
+    try:
+        from vllm.model_executor.models.registry import ModelRegistry
+        ModelRegistry.register_model(
+            "MiniCPMV4_6ForConditionalGeneration",
+            "vllm_fl.models.minicpmv4_6:MiniCPMV4_6ForConditionalGeneration",
+        )
+    except Exception as e:
+        logger.error(f"Register MiniCPMV4_6 model error: {str(e)}")
