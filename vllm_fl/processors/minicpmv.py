@@ -58,7 +58,7 @@ class MiniCPMVProcessor(ProcessorMixin):
 
     def __init__(self, image_processor=None, tokenizer=None):
         super().__init__(image_processor, tokenizer)
-        self.version = image_processor.version
+        self.version = getattr(image_processor, "version", None)
 
     def __call__(
         self,
