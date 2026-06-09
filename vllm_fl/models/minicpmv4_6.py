@@ -49,7 +49,7 @@ from vllm.model_executor.models.interfaces import (
     SupportsPP,
     _require_is_multimodal,
 )
-from vllm.model_executor.models.minicpmv import (
+from vllm_fl.models.minicpmv import (
     MiniCPMVDummyInputsBuilder,
     MiniCPMVImageEmbeddingInputs,
     MiniCPMVImageEmbeddingItems,
