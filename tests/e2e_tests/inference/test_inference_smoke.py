@@ -17,6 +17,7 @@ Supports both text-only and multimodal (audio/image/video) models via the
 """
 
 import os
+from typing import Any
 
 import pytest
 
@@ -88,23 +89,53 @@ def _build_multimodal_prompt(
     question: str,
     modality: str,
     asset_count: int,
+    prompt_format: str = "",
 ) -> str:
     """Build a chat prompt with multimodal placeholders.
 
     Uses the tokenizer's ``apply_chat_template`` to format the prompt.
     The placeholder format is determined by modality.
+
+    Args:
+        tokenizer: HuggingFace tokenizer with ``apply_chat_template``.
+        question: The text question to ask.
+        modality: One of ``audio``, ``image``, ``video``.
+        asset_count: Number of assets to embed in the prompt.
+        prompt_format: Optional model-specific format override.
+            ``"minicpm_v"`` — builds a structured content list
+            ``[{"type": "image"}, ..., {"type": "text", "text": question}]``
+            instead of inline placeholder strings.  Required for MiniCPM-V
+            models whose tokenizer rejects ``(<image>./</image>)`` placeholders.
     """
+    if prompt_format == "minicpm_v":
+        # MiniCPM-V expects structured content with typed dicts
+        type_map = {"image": "image", "audio": "audio", "video": "video"}
+        media_type = type_map.get(modality, modality)
+        content: list[Any] = [
+            {media_type: "<placeholder>", "type": media_type}
+            for _ in range(asset_count)
+        ]
+        # Simpler form accepted by MiniCPM-V tokenizer
+        content = [{"type": media_type} for _ in range(asset_count)]
+        content.append({"type": "text", "text": question})
+        messages = [{"role": "user", "content": content}]
+        return tokenizer.apply_chat_template(
+            messages,
+            tokenize=False,
+            add_generation_prompt=True,
+        )
+
     placeholder_map = {
         "audio": "(<audio>./</audio>)",
         "image": "(<image>./</image>)",
         "video": "(<video>./</video>)",
     }
     placeholder = placeholder_map.get(modality, "")
-    content = (
+    text_content = (
         f"{placeholder * asset_count}\n{question}" if asset_count > 0 else question
     )
 
-    messages = [{"role": "user", "content": content}]
+    messages = [{"role": "user", "content": text_content}]
     return tokenizer.apply_chat_template(
         messages,
         tokenize=False,
@@ -201,6 +232,7 @@ def _run_multimodal_test(llm: LLM, sampling_params: SamplingParams) -> None:
             question,
             gen.modality,
             asset_count,
+            prompt_format=gen.prompt_format,
         )
         mm_data = _load_assets(gen.modality, gen.assets, asset_count)
 

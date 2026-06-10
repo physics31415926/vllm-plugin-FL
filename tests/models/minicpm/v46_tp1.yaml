@@ -1,0 +1,26 @@
+# MiniCPM-V 4.6 multimodal model configuration (TP=1, image)
+
+llm:
+  model: "/workspace/models/openbmb/MiniCPM-V-4___6"
+  tensor_parallel_size: 1
+  max_model_len: 2048
+  max_num_batched_tokens: 2048
+  gpu_memory_utilization: 0.7
+  max_num_seqs: 2
+  enforce_eager: true
+  trust_remote_code: true
+  load_format: "dummy"
+
+generate:
+  modality: image
+  prompt_format: minicpm_v
+  prompts:
+    - question: "What is in this image?"
+      asset_count: 1
+    - question: "Describe the image briefly."
+      asset_count: 1
+  assets:
+    - cat
+  sampling:
+    max_tokens: 64
+    temperature: 0.0

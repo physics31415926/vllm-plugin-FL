@@ -63,7 +63,7 @@ a100:
       inference:
         qwen3: ["4b_tp2", "next_tp8"]
         qwen3_5: ["35b_tp4"]
-        minicpm: ["o45_tp4"]
+        minicpm: ["o45_tp4", "v46_tp1"]
       serving:
         qwen3: ["next_tp8"]
         # The bug is that MiniCPMOBaseModel.load_weights

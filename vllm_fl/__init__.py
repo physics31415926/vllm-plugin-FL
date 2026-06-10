@@ -121,3 +121,23 @@ def register_model():
         #glm5_model()
     except Exception as e:
         logger.error(f"Register GlmMoeDsa model error: {str(e)}")
+
+    # Register MiniCPM-V 4.6 -- LLM backbone is Qwen3.5 (hybrid GDN+Attn),
+    # not yet upstream in vLLM 0.20.x.
+    try:
+        from vllm.transformers_utils.config import _CONFIG_REGISTRY
+        from vllm.model_executor.models import ModelRegistry
+        from vllm_fl.configs.minicpmv4_6_config import MiniCPMV4_6Config
+
+        # Register config so AutoConfig.from_pretrained recognises
+        # model_type="minicpmv4_6". vLLM's get_config() calls
+        # AutoConfig.register() automatically when it finds the key in
+        # _CONFIG_REGISTRY (vllm/transformers_utils/config.py:210-215).
+        _CONFIG_REGISTRY["minicpmv4_6"] = MiniCPMV4_6Config
+
+        ModelRegistry.register_model(
+            "MiniCPMV4_6ForConditionalGeneration",
+            "vllm_fl.models.minicpmv4_6:MiniCPMV4_6ForConditionalGeneration",
+        )
+    except Exception as e:
+        logger.error(f"Register MiniCPMV4_6 model error: {str(e)}")

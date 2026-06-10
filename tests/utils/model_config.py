@@ -48,13 +48,30 @@ _MODELS_DIR = Path(__file__).resolve().parents[1] / "models"
 
 @dataclass
 class GenerateConfig:
-    """Test generation configuration parsed from the ``generate`` section."""
+    """Test generation configuration parsed from the ``generate`` section.
+
+    Fields:
+        modality: One of ``text``, ``image``, ``audio``, ``video``.
+        prompts: List of prompt strings or dicts (multimodal).
+        assets: Pool of named vllm assets for multimodal inputs.
+        sampling: Sampling parameters for ``SamplingParams()``.
+        parametrize: Cartesian-product axes for combo testing.
+        prompt_format: Optional model-specific prompt builder.
+            Supported values:
+
+            - ``"minicpm_v"`` — uses structured content list
+              ``[{"type": "image"}, {"type": "text", "text": question}]``
+              passed to ``apply_chat_template``, required for MiniCPM-V
+              models whose tokenizer does not accept ``(<image>./</image>)``
+              placeholders.
+    """
 
     modality: str = "text"
     prompts: list[Any] = field(default_factory=list)
     assets: list[str] = field(default_factory=list)
     sampling: dict[str, Any] = field(default_factory=dict)
     parametrize: dict[str, list] = field(default_factory=dict)
+    prompt_format: str = ""
 
     @classmethod
     def from_dict(cls, raw: dict[str, Any]) -> GenerateConfig:
@@ -64,6 +81,7 @@ class GenerateConfig:
             assets=raw.get("assets", []),
             sampling=raw.get("sampling", {}),
             parametrize=raw.get("parametrize", {}),
+            prompt_format=raw.get("prompt_format", ""),
         )
 
     def get_parametrize_combos(self) -> list[dict[str, Any]]:
