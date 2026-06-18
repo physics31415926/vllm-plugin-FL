@@ -108,29 +108,17 @@ class MacaBackend(Backend):
     def rotary_embedding(
         self,
         obj,
+        positions: torch.Tensor,
         query: torch.Tensor,
         key: torch.Tensor,
-        cos: torch.Tensor,
-        sin: torch.Tensor,
-        position_ids: torch.Tensor,
-        rotary_interleaved: bool = False,
-        inplace: bool = True,
     ) -> tuple[torch.Tensor, torch.Tensor]:
         """
-        Apply rotary position embedding using vLLM's CUDA implementation.
+        Apply rotary position embedding via obj.forward_cuda.
+        MetaX path receives raw (positions, query, key) and delegates to forward_cuda.
         """
         from .impl.rotary_embedding import rotary_embedding_maca
 
-        return rotary_embedding_maca(
-            obj,
-            query,
-            key,
-            cos,
-            sin,
-            position_ids,
-            rotary_interleaved=rotary_interleaved,
-            inplace=inplace,
-        )
+        return rotary_embedding_maca(obj, positions, query, key)
 
     def attention_backend(self, use_mla: bool = False, use_sparse: bool = False) -> str:
         """

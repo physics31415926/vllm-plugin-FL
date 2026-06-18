@@ -1,0 +1,114 @@
+# SPDX-License-Identifier: Apache-2.0
+# 2026 - Modified by MetaX Integrated Circuits (Shanghai) Co., Ltd. All Rights Reserved.
+from vllm.model_executor.layers.attention.mm_encoder_attention import (
+    MMEncoderAttention as vllm_MMEncoderAttention,
+)
+import torch
+from ...utils.vit_attn_wrappers import (
+    vit_flash_attn_wrapper as mx_vit_fa_wrapper,
+)
+from ...utils.fa_utils import get_flash_attn_version
+from vllm.model_executor.models.vision import get_vit_attn_backend
+from vllm.model_executor.layers.attention.mm_encoder_attention import logger
+from vllm.v1.attention.backends.registry import AttentionBackendEnum
+
+
+@vllm_MMEncoderAttention.register_oot
+class MMEncoderAttention(vllm_MMEncoderAttention):
+    def __init__(
+        self,
+        num_heads: int,
+        head_size: int,
+        scale: float | None = None,
+        num_kv_heads: int | None = None,
+        prefix: str = "",
+    ) -> None:
+        """
+        Args:
+            num_heads: number of attention heads per partition.
+            head_size: hidden_size per attention head.
+            scale: scale factor.
+            num_kv_heads: number of kv heads.
+            prefix: This has no effect, it is only here to make it easier to
+                    swap between Attention and MultiHeadAttention
+        """
+        super(vllm_MMEncoderAttention, self).__init__()
+
+        self.num_heads = num_heads
+        self.head_size = head_size
+        self.scale = 1.0 / (head_size**0.5) if scale is None else scale
+        self.num_kv_heads = num_heads if num_kv_heads is None else num_kv_heads
+        self.layer_name = prefix
+        assert self.num_heads % self.num_kv_heads == 0, (
+            f"num_heads ({self.num_heads}) is not "
+            f"divisible by num_kv_heads ({self.num_kv_heads})"
+        )
+        self.num_queries_per_kv = self.num_heads // self.num_kv_heads
+
+        # During model initialization, the default dtype is set as the model
+        # weight and activation dtype.
+        dtype = torch.get_default_dtype()
+
+        # Get device-specific vision attention backend.
+        self.attn_backend = get_vit_attn_backend(
+            head_size=head_size,
+            dtype=dtype,
+        )
+
+        self.is_flash_attn_backend = self.attn_backend in {
+            AttentionBackendEnum.FLASH_ATTN,
+        }
+
+        # ----------------------------------------------------
+        # Note: Use maca's get_flash_attn_version to determine
+        #       the FA version for MACA, which will return 2.
+        self._fa_version = (
+            get_flash_attn_version(head_size=head_size)
+            if self.is_flash_attn_backend
+            else None
+        )
+
+        logger.info_once(
+            f"Using {self.attn_backend} for MacaMMEncoderAttention.", scope="local"
+        )
+
+    def _forward_fa(
+        self,
+        query: torch.Tensor,
+        key: torch.Tensor,
+        value: torch.Tensor,
+        cu_seqlens: torch.Tensor | None = None,
+        max_seqlen: torch.Tensor | None = None,  # Only used for Flash Attention
+    ) -> torch.Tensor:
+        """Input shape:
+        (batch_size x seq_len x hidden_size) or
+        (batch_size x seq_len x num_heads x head_size)
+        """
+        assert (cu_seqlens is not None and max_seqlen is not None) or (
+            cu_seqlens is None and max_seqlen is None
+        ), "cu_seqlens and max_seqlen should be both set or both None."
+
+        bsz, q_len = query.size()[:2]
+        kv_len = key.size(1)
+        is_reshaped = query.dim() != 4
+
+        query, key, value = self.view_qkv_to_4d(query, key, value, bsz, q_len, kv_len)
+
+        output = mx_vit_fa_wrapper(
+            q=query,
+            k=key,
+            v=value,
+            batch_size=bsz,
+            is_rocm_aiter=False,
+            fa_version=self._fa_version,
+            scale=self.scale,
+            cu_seqlens=cu_seqlens,
+            max_seqlen=max_seqlen,
+        )
+        if is_reshaped:
+            output = output.reshape(bsz, q_len, -1)
+        return output
+
+    def forward_oot(self, *args, **kwargs):
+        # Custom forward method for MACA can be implemented here.
+        return self.forward_cuda(*args, **kwargs)

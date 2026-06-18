@@ -5,26 +5,12 @@ import torch
 
 def rotary_embedding_maca(
     obj,
+    positions: torch.Tensor,
     query: torch.Tensor,
     key: torch.Tensor,
-    cos: torch.Tensor,
-    sin: torch.Tensor,
-    position_ids: torch.Tensor,
-    rotary_interleaved: bool = False,
-    inplace: bool = True,
 ) -> tuple[torch.Tensor, torch.Tensor]:
     """
-    Apply rotary position embedding using vLLM's CUDA implementation.
+    Apply rotary position embedding via obj.forward_cuda.
+    forward_cuda handles slicing, cos/sin lookup, and kernel dispatch internally.
     """
-
-    from vllm._custom_ops import rotary_embedding
-
-    rotary_embedding(
-        position_ids,
-        query,
-        key,
-        cos,
-        sin,
-        rotary_interleaved,
-    )
-    return query, key
+    return obj.forward_cuda(positions, query, key)

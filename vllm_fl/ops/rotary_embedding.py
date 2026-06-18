@@ -3,6 +3,7 @@
 from typing import Optional
 import torch
 from vllm.model_executor.layers.rotary_embedding import RotaryEmbedding
+from vllm.platforms import current_platform
 from vllm_fl.dispatch import call_op
 
 
@@ -27,6 +28,13 @@ class RotaryEmbeddingFL(RotaryEmbedding):
         query: torch.Tensor,
         key: Optional[torch.Tensor] = None,
     ) -> tuple[torch.Tensor, Optional[torch.Tensor]]:
+        # MetaX: delegate to forward_cuda directly (handles slicing internally)
+        if current_platform.vendor_name == "metax":
+            self.cos_sin_cache = self.cos_sin_cache.to(
+                positions.device, dtype=query.dtype)
+            return call_op("rotary_embedding", self, positions, query, key)
+
+        # Other platforms: pre-process and pass sliced tensors
         self.cos_sin_cache: torch.Tensor = self.cos_sin_cache.to(positions.device)
         positions = positions.flatten()
         num_tokens = positions.shape[0]

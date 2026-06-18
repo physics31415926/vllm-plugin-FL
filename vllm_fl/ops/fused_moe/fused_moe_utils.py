@@ -86,6 +86,14 @@ def select_unquantized_moe_backend_oot(moe_config: FusedMoEConfig,
     if current_platform.is_out_of_tree() and use_flaggems():
         return UnquantizedMoeBackend.TRITON, TritonExpertsFL
 
+    # MetaX: always use MetaX's TritonExperts
+    if hasattr(current_platform, 'vendor_name') and current_platform.vendor_name == "metax":
+        from vllm_fl.dispatch.backends.vendor.metax.utils.fused_moe import (
+            get_triton_experts_cls,
+        )
+        MetaxTritonExperts = get_triton_experts_cls()
+        return UnquantizedMoeBackend.TRITON, MetaxTritonExperts
+
     if moe_config.is_lora_enabled:
         return UnquantizedMoeBackend.TRITON, backend_to_kernel_cls(
             UnquantizedMoeBackend.TRITON
