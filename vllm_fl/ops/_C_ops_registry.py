@@ -54,6 +54,15 @@ def register_op_schemas():
     except (ImportError, OSError):
         pass
 
+    # On MetaX, mcoplib._C provides the same ops. Skip Python-side
+    # schema registration to avoid duplicate operator definition abort.
+    try:
+        import importlib.util
+        if importlib.util.find_spec("mcoplib") is not None:
+            return
+    except Exception:
+        pass
+
     from vllm_fl.ops._C_ops_schemas import SCHEMAS as schemas
 
     if not schemas:
