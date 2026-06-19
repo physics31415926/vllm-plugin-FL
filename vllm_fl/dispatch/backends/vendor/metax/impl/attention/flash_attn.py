@@ -76,7 +76,7 @@ from vllm.v1.kv_cache_interface import AttentionSpec
 from .mla.common import QueryLenSupport
 
 logger = init_logger(__name__)
-from ....utils import envs as mx_envs
+from ...utils import envs as mx_envs
 from vllm.v1.attention.backends.registry import AttentionBackendEnum, register_backend
 
 
