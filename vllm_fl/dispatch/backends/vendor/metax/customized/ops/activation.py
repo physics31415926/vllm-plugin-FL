@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: Apache-2.0
 # 2026 - Modified by MetaX Integrated Circuits (Shanghai) Co., Ltd. All Rights Reserved.
+from vllm.model_executor.custom_op import op_registry_oot
 from vllm.model_executor.layers.activation import (
     FastGELU,
     FatreluAndMul,
@@ -14,61 +15,30 @@ from vllm.model_executor.layers.activation import (
 )
 
 
-@FatreluAndMul.register_oot
-class MacaFatreluAndMul(FatreluAndMul):
-    def forward_oot(self, *args, **kwargs):
-        return self.forward_cuda(*args, **kwargs)
+def _register(cls):
+    """Register OOT class only if not already registered."""
+    if cls.__name__ in op_registry_oot:
+        return
+
+    @cls.register_oot
+    class _Maca(cls):
+        def forward_oot(self, *args, **kwargs):
+            return self.forward_cuda(*args, **kwargs)
+
+    _Maca.__name__ = f"Maca{cls.__name__}"
+    _Maca.__qualname__ = f"Maca{cls.__name__}"
 
 
-@SiluAndMul.register_oot
-class MacaSiluAndMul(SiluAndMul):
-    def forward_oot(self, *args, **kwargs):
-        return self.forward_cuda(*args, **kwargs)
-
-
-@SiluAndMulWithClamp.register_oot
-class MacaSiluAndMulWithClamp(SiluAndMulWithClamp):
-    def forward_oot(self, *args, **kwargs):
-        return self.forward_cuda(*args, **kwargs)
-
-
-@MulAndSilu.register_oot
-class MacaMulAndSilu(MulAndSilu):
-    def forward_oot(self, *args, **kwargs):
-        return self.forward_cuda(*args, **kwargs)
-
-
-@GeluAndMul.register_oot
-class MacaGeluAndMul(GeluAndMul):
-    def forward_oot(self, *args, **kwargs):
-        return self.forward_cuda(*args, **kwargs)
-
-
-@SwigluOAIAndMul.register_oot
-class MacaSwigluOAIAndMul(SwigluOAIAndMul):
-    def forward_oot(self, *args, **kwargs):
-        return self.forward_cuda(*args, **kwargs)
-
-
-@SwigluStepAndMul.register_oot
-class MacaSwigluStepAndMul(SwigluStepAndMul):
-    def forward_oot(self, *args, **kwargs):
-        return self.forward_cuda(*args, **kwargs)
-
-
-@NewGELU.register_oot
-class MacaNewGELU(NewGELU):
-    def forward_oot(self, *args, **kwargs):
-        return self.forward_cuda(*args, **kwargs)
-
-
-@FastGELU.register_oot
-class MacaFastGELU(FastGELU):
-    def forward_oot(self, *args, **kwargs):
-        return self.forward_cuda(*args, **kwargs)
-
-
-@QuickGELU.register_oot
-class MacaQuickGELU(QuickGELU):
-    def forward_oot(self, *args, **kwargs):
-        return self.forward_cuda(*args, **kwargs)
+for _cls in [
+    FatreluAndMul,
+    SiluAndMul,
+    SiluAndMulWithClamp,
+    MulAndSilu,
+    GeluAndMul,
+    SwigluOAIAndMul,
+    SwigluStepAndMul,
+    NewGELU,
+    FastGELU,
+    QuickGELU,
+]:
+    _register(_cls)

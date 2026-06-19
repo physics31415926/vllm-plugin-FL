@@ -11,15 +11,15 @@ logger = logging.getLogger(__name__)
 
 try:
     from . import mm_encoder_attention  # noqa: F401
-except ImportError as e:
+except (ImportError, AssertionError) as e:
     logger.debug(f"Skipping mm_encoder_attention registration: {e}")
 
 try:
     from . import sparse_attn_indexer  # noqa: F401
-except ImportError as e:
+except (ImportError, AssertionError) as e:
     logger.debug(f"Skipping sparse_attn_indexer registration: {e}")
 
 try:
     from . import minimax_text01_rmsnorm  # noqa: F401
-except ImportError as e:
+except (ImportError, AssertionError) as e:
     logger.debug(f"Skipping minimax_text01_rmsnorm registration: {e}")

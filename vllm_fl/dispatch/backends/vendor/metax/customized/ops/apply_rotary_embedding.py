@@ -4,28 +4,30 @@ from vllm.model_executor.layers.rotary_embedding.common import ApplyRotaryEmb
 import torch
 
 
-@ApplyRotaryEmb.register_oot
-class MacaApplyRotaryEmb(ApplyRotaryEmb):
-    def forward_oot(
-        self,
-        x: torch.Tensor,
-        cos: torch.Tensor,
-        sin: torch.Tensor,
-    ) -> torch.Tensor:
-        """Same as forward_cuda"""
-        from flash_attn.layers.rotary import apply_rotary_emb
+def _register():
+    """Register MacaApplyRotaryEmb, skip if vllm_metax already registered it."""
+    from vllm.model_executor.custom_op import op_registry_oot
+    if "ApplyRotaryEmb" in op_registry_oot:
+        return
 
-        x, cos, sin, origin_shape, origin_dtype = self._pre_process(x, cos, sin)
+    @ApplyRotaryEmb.register_oot
+    class MacaApplyRotaryEmb(ApplyRotaryEmb):
+        def forward_oot(
+            self,
+            x: torch.Tensor,
+            cos: torch.Tensor,
+            sin: torch.Tensor,
+        ) -> torch.Tensor:
+            """Same as forward_cuda"""
+            from flash_attn.layers.rotary import apply_rotary_emb
 
-        """
-        Arguments of apply_rotary_emb() in vllm_flash_attn:
-            x: [batch_size, seq_len, nheads, headdim]
-            cos, sin: [seqlen_rotary, rotary_dim / 2]
-            interleaved: default as False (Neox-style).
-            ...
-        """
-        interleaved = not self.is_neox_style
-        output = apply_rotary_emb(x, cos, sin, interleaved)
+            x, cos, sin, origin_shape, origin_dtype = self._pre_process(x, cos, sin)
 
-        output = self._post_process(output, origin_shape, origin_dtype)
-        return output
+            interleaved = not self.is_neox_style
+            output = apply_rotary_emb(x, cos, sin, interleaved)
+
+            output = self._post_process(output, origin_shape, origin_dtype)
+            return output
+
+
+_register()
