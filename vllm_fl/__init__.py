@@ -138,9 +138,8 @@ def register_model():
     # Must be done here (general_plugins hook) rather than import_kernels()
     # because at this point all vllm modules are fully loaded — avoids
     # circular import issues with layernorm etc.
-    from vllm_fl.utils import get_op_config as _cfg
-    _op_cfg = _cfg()
-    if _op_cfg and _op_cfg.get("vendor_name") == "metax":
+    from vllm.platforms import current_platform
+    if getattr(current_platform, "vendor_name", None) == "metax":
         try:
             import vllm_fl.dispatch.backends.vendor.metax.customized.pluggable_layer  # noqa: F401, E501
         except Exception as e:
