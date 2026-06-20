@@ -134,16 +134,28 @@ def register_model():
     register_quant_linear()
     register_router()
 
-    # Register OOT pluggable layers (e.g. MacaGatedDeltaNetAttention).
+    # Register OOT customized ops/layers (e.g. MacaGatedDeltaNetAttention,
+    # activation variants, layernorm variants, rotary variants).
     # Must be done here (general_plugins hook) rather than import_kernels()
     # because at this point all vllm modules are fully loaded — avoids
-    # circular import issues with layernorm etc.
+    # circular import issues with vllm.kernels during import_kernels().
     from vllm.platforms import current_platform
     if getattr(current_platform, "vendor_name", None) == "metax":
         try:
-            import vllm_fl.dispatch.backends.vendor.metax.customized.pluggable_layer  # noqa: F401, E501
+            import vllm_fl.dispatch.backends.vendor.metax.customized  # noqa: F401, E501
         except Exception as e:
-            logger.warning(f"Failed to register OOT pluggable layers: {e}")
+            logger.warning(f"Failed to register OOT customized ops: {e}")
+
+        # Second-pass: patches that were skipped during import_kernels() due
+        # to circular imports (quant_kernels, model_executor) can now load.
+        try:
+            from vllm_fl.dispatch.backends.vendor.metax.patches import quant_kernels  # noqa: F401, E501
+        except Exception as e:
+            logger.debug(f"quant_kernels patch second-pass skipped: {e}")
+        try:
+            from vllm_fl.dispatch.backends.vendor.metax.patches import model_executor  # noqa: F401, E501
+        except Exception as e:
+            logger.debug(f"model_executor patch second-pass skipped: {e}")
 
     # Register GLM-5 (GlmMoeDsa) — config not yet upstream
     try:
