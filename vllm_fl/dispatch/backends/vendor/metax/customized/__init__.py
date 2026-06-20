@@ -3,7 +3,11 @@
 
 # Only import OOT registrations that FL doesn't already cover.
 # FL registers: SiluAndMul, GeluAndMul, RMSNorm, RotaryEmbedding, FusedMoE, UnquantizedFusedMoEMethod
-# We register: ApplyRotaryEmb, GatedDeltaNetAttention, extra layers
+# We register: ApplyRotaryEmb, extra layers
+#
+# NOTE: pluggable_layer (GatedDeltaNetAttention) is registered separately in
+# register_model() (general_plugins hook) to avoid circular imports when
+# this module is loaded during import_kernels().
 #
 # NOTE: vllm_metax may already be installed and have registered these ops.
 # All registrations must be idempotent (skip if already registered).
@@ -14,7 +18,6 @@ _logger = logging.getLogger(__name__)
 
 _modules = [
     ".ops",
-    ".pluggable_layer",
     ".layers",
 ]
 
