@@ -3,7 +3,7 @@
 import logging
 from typing import Optional, List
 
-from vllm.model_executor.custom_op import CustomOp, PluggableLayer
+from vllm.model_executor.custom_op import CustomOp, PluggableLayer, op_registry_oot
 from .layernorm import *  # noqa F403 F401
 from .activation import *  # noqa F403 F401
 from .rotary_embedding import *  # noqa F403 F401
@@ -73,6 +73,10 @@ def register_oot_ops(whitelist: Optional[List[str]] = None) -> None:
             continue
 
         op_cls, registration_name = OOT_OPS[op_name]
+        # Skip if already registered (e.g. by customized/ in register_model())
+        if registration_name in op_registry_oot:
+            logger.debug(f"Skipping '{registration_name}': already registered")
+            continue
         logger.info(f"Registering oot op: {op_name} as '{registration_name}'")
         if issubclass(op_cls, PluggableLayer):
             PluggableLayer.register_oot(_decorated_layer_cls=op_cls, name=registration_name)
