@@ -24,12 +24,8 @@ def apply_top_k_top_p(
     return apply_top_k_top_p_pytorch(logits, k, p)
 
 
-import logging
-_logger = logging.getLogger(__name__)
-
 import vllm.v1.sample.ops.topk_topp_sampler
 
-_logger.warning("Patching topk_topp_sampler.apply_top_k_top_p -> pytorch fallback")
 vllm.v1.sample.ops.topk_topp_sampler.apply_top_k_top_p = apply_top_k_top_p
 
 import vllm.v1.sample.rejection_sampler
