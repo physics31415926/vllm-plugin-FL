@@ -54,6 +54,16 @@ def register_op_schemas():
     except (ImportError, OSError):
         pass
 
+    # If a vendor C extension (e.g. mcoplib._C on MetaX) is available it
+    # will register the real _C ops itself.  Registering stubs on top of
+    # real ops causes a c10::Error duplicate-registration abort (exit 134).
+    # TODO: remove once vllm._C is built for all supported platforms.
+    try:
+        import mcoplib._C  # noqa: F401
+        return
+    except (ImportError, OSError):
+        pass
+
     from vllm_fl.ops._C_ops_schemas import SCHEMAS as schemas
 
     if not schemas:
