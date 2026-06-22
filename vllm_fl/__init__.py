@@ -147,7 +147,8 @@ def register_model():
             logger.warning(f"Failed to register OOT customized ops: {e}")
 
         # Second-pass: patches that were skipped during import_kernels() due
-        # to circular imports (quant_kernels, model_executor) can now load.
+        # to circular imports (quant_kernels, model_executor, triton_support)
+        # can now load safely since all vllm modules are fully initialized.
         try:
             from vllm_fl.dispatch.backends.vendor.metax.patches import quant_kernels  # noqa: F401, E501
         except Exception as e:
@@ -156,6 +157,10 @@ def register_model():
             from vllm_fl.dispatch.backends.vendor.metax.patches import model_executor  # noqa: F401, E501
         except Exception as e:
             logger.debug(f"model_executor patch second-pass skipped: {e}")
+        try:
+            from vllm_fl.dispatch.backends.vendor.metax.patches import triton_support  # noqa: F401, E501
+        except Exception as e:
+            logger.debug(f"triton_support patch second-pass skipped: {e}")
 
     # Register GLM-5 (GlmMoeDsa) — config not yet upstream
     try:
