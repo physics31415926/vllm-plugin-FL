@@ -157,10 +157,23 @@ def register_model():
             from vllm_fl.dispatch.backends.vendor.metax.patches import model_executor  # noqa: F401, E501
         except Exception as e:
             logger.debug(f"model_executor patch second-pass skipped: {e}")
+        # topk_topp_sampler: apply directly to avoid triggering the full
+        # patches/__init__.py import chain which fails in worker subprocesses.
         try:
-            from vllm_fl.dispatch.backends.vendor.metax.patches import triton_support  # noqa: F401, E501
+            import importlib
+            import importlib.util
+            import pathlib
+            _patch_file = pathlib.Path(__file__).parent / (
+                "dispatch/backends/vendor/metax/patches/"
+                "triton_support/topk_topp_sampler.py"
+            )
+            _spec = importlib.util.spec_from_file_location(
+                "vllm_fl._patches_topk_topp", str(_patch_file)
+            )
+            _mod = importlib.util.module_from_spec(_spec)
+            _spec.loader.exec_module(_mod)
         except Exception as e:
-            logger.debug(f"triton_support patch second-pass skipped: {e}")
+            logger.debug(f"topk_topp_sampler patch second-pass skipped: {e}")
 
     # Register GLM-5 (GlmMoeDsa) — config not yet upstream
     try:
