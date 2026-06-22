@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: Apache-2.0
+﻿# SPDX-License-Identifier: Apache-2.0
 # 2026 - Modified by MetaX Integrated Circuits (Shanghai) Co., Ltd. All Rights Reserved.
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 """
@@ -199,6 +199,15 @@ import torch
 from vllm import _custom_ops as ops
 from vllm import envs
 from vllm.v1.attention.backend import (
+    AttentionMetadataBuilder,
+    CommonAttentionMetadata,
+)
+from vllm.v1.attention.backends.utils import (
+    get_dcp_local_seq_lens,
+    get_per_layer_parameters,
+    infer_global_hyperparameters,
+    split_decodes_and_prefills,
+)
     AttentionBackend,
     AttentionLayer,
     MLAAttentionImpl,
@@ -223,9 +232,11 @@ from vllm.model_executor.layers.linear import (
 )
 from vllm.platforms import current_platform
 from vllm.utils.math_utils import cdiv, round_down
-from vllm.v1.attention.backends.utils import (
+from vllm.v1.attention.backend import (
     AttentionMetadataBuilder,
     CommonAttentionMetadata,
+)
+from vllm.v1.attention.backends.utils import (
     get_dcp_local_seq_lens,
     get_per_layer_parameters,
     infer_global_hyperparameters,
