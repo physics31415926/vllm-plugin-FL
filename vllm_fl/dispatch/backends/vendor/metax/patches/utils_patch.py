@@ -3,8 +3,7 @@
 
 import vllm
 import vllm.utils.nccl
-
-import torch
+import vllm.utils.import_utils
 
 
 def find_mccl_library() -> str:
@@ -14,6 +13,7 @@ def find_mccl_library() -> str:
     After importing `torch`, `libnccl.so.2` or `librccl.so.1` can be
     found by `ctypes` automatically.
     """
+    import torch
     so_file = None
 
     # manually load the nccl library
@@ -25,3 +25,7 @@ def find_mccl_library() -> str:
 
 
 vllm.utils.nccl.find_nccl_library = find_mccl_library
+
+from vllm_metax.utils import import_pymxsml  # noqa: E402
+
+vllm.utils.import_utils.import_pynvml = import_pymxsml

@@ -2,37 +2,47 @@
 # 2026 - Modified by MetaX Integrated Circuits (Shanghai) Co., Ltd. All Rights Reserved.
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-import logging
-
-logger = logging.getLogger(__name__)
+from vllm.logger import init_logger
 from vllm.platforms import current_platform
 
+logger = init_logger(__name__)
 
 if current_platform.is_out_of_tree():
     from vllm import _custom_ops as ops
-
-    get_scheduler_metadata = None
-    reshape_and_cache_flash = ops.reshape_and_cache_flash
+    from vllm_metax._dummy_ops import dummy_ops
     from flash_attn import flash_attn_varlen_func, flash_attn_with_kvcache  # noqa: F401
 
-    get_scheduler_metadata = None
+    get_scheduler_metadata = dummy_ops.get_scheduler_metadata
+    reshape_and_cache_flash = ops.reshape_and_cache_flash
 
 
-def get_flash_attn_version(requires_alibi: bool = False) -> int | None:
+def get_flash_attn_version(
+    requires_alibi: bool = False,
+    head_size: int | None = None,
+    head_size_v: int | None = None,
+    has_sinks: bool = False,
+) -> int | None:
     logger.info_once(
         "Using Maca version of flash attention, which only supports version 2."
     )
-
     # Note: In maca this need to be None since
     # metax flash_attn api does not have parameter
     # for `fa_version`.
-    return None
+    return 2
+
+
+def is_fa_version_supported(fa_version: int) -> bool:
+    return fa_version == 2
 
 
 def flash_attn_supports_fp8() -> bool:
     logger.info_once(
         "Using Maca version of flash attention, which does not support FP8"
     )
+    return False
+
+
+def flash_attn_supports_quant_query_input() -> bool:
     return False
 
 
