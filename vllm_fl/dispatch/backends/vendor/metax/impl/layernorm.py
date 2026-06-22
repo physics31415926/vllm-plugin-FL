@@ -1,6 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
 # 2026 - Modified by MetaX Integrated Circuits (Shanghai) Co., Ltd. All Rights Reserved.
-from vllm.model_executor.layers.layernorm import rms_norm, fused_add_rms_norm
 
 import torch
 
@@ -13,8 +12,13 @@ def rms_norm_maca(
     """
     RMS normalization using Maca's CUDA implementation.
     """
-    add_residual = residual is not None
-    if add_residual:
-        return fused_add_rms_norm(x, residual, obj.weight, obj.epsilon)
+    from vllm import _custom_ops as ops
+
+    if residual is not None:
+        # fused_add_rms_norm mutates x and residual in-place, returns None
+        ops.fused_add_rms_norm(x, residual, obj.weight, obj.epsilon)
+        return x, residual
     else:
-        return rms_norm(x, obj.weight, obj.epsilon)
+        out = torch.empty_like(x)
+        ops.rms_norm(out, x, obj.weight, obj.epsilon)
+        return out
