@@ -410,7 +410,10 @@ class PlatformFL(Platform):
 
     @classmethod
     def use_custom_op_collectives(cls) -> bool:
-        return cls.vendor_name in ("nvidia", "thead")
+        # MetaX requires custom op collectives to avoid dynamo tracing into
+        # pynccl.all_reduce() which calls ctypes._SimpleCData.__new__,
+        # a C builtin that dynamo cannot trace.
+        return cls.vendor_name in ("nvidia", "thead", "metax")
 
     @classmethod
     def num_compute_units(cls, device_id: int = 0) -> int:
