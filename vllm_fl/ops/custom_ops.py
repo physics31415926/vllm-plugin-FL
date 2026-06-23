@@ -73,6 +73,15 @@ def register_oot_ops(whitelist: Optional[List[str]] = None) -> None:
             continue
 
         op_cls, registration_name = OOT_OPS[op_name]
+
+        # Idempotency guard: op_registry_oot is a process-level global dict.
+        # When Worker processes are forked from the engine process, the dict is
+        # inherited. Worker.__init__ calls register_oot_ops() again, which would
+        # hit the "Duplicate op name" assert without this check.
+        if registration_name in op_registry_oot:
+            logger.debug(f"OOT op '{registration_name}' already registered, skipping.")
+            continue
+
         logger.info(f"Registering oot op: {op_name} as '{registration_name}'")
         if issubclass(op_cls, PluggableLayer):
             PluggableLayer.register_oot(_decorated_layer_cls=op_cls, name=registration_name)
