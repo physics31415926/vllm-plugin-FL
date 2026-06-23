@@ -98,6 +98,18 @@ def register():
     from vllm_fl.patches.glm_moe_dsa import apply_platform_patches as glm5_platform
     glm5_platform()
 
+    # Apply MetaX hotfixes and patches early (before platform is fully initialized).
+    # register_patch() covers: hotfix/fix_cudagraph_sizes, fix_compilation_backend,
+    # fix_standalone_compile, and all vllm_metax.patch sub-modules (distributed,
+    # device_allocator, model_executor, quant_kernels, triton_support, chores,
+    # optimizations, MRV2, transformers_utils).
+    # Safe to call unconditionally: no-op if vllm_metax is not installed.
+    try:
+        import vllm_metax
+        vllm_metax.register_patch()
+    except ImportError:
+        pass
+
     # Note: FlagCX connector registration is deferred to register_model()
     # to avoid circular imports during VllmConfig.__post_init__ in spawned
     # subprocesses.
@@ -129,6 +141,17 @@ def register_router():
 def register_model():
     """Register FL-specific models not yet upstream."""
     _register_flagcx_connector()
+
+    # Register MetaX custom ops and quant configs.
+    # Must run after platform is established (current_platform is valid here)
+    # but before model registration so ops are available during model init.
+    # Safe to call unconditionally: no-op if vllm_metax is not installed.
+    try:
+        import vllm_metax
+        vllm_metax.register_custom_op()
+        vllm_metax.register_quant_configs()
+    except ImportError:
+        pass
 
     # Register OOT quant kernels so kernel selection can find them
     register_quant_linear()

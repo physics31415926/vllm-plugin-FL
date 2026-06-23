@@ -1,41 +1,74 @@
 # SPDX-License-Identifier: Apache-2.0
 # 2026 - Modified by MetaX Integrated Circuits (Shanghai) Co., Ltd. All Rights Reserved.
-import torch
 from vllm.model_executor.layers.activation import (
-    SiluAndMul,
+    FastGELU,
+    FatreluAndMul,
     GeluAndMul,
+    MulAndSilu,
+    NewGELU,
+    QuickGELU,
+    SiluAndMul,
+    SiluAndMulWithClamp,
+    SwigluOAIAndMul,
+    SwigluStepAndMul,
 )
 
 
-def silu_and_mul_maca(obj, x: torch.Tensor) -> torch.Tensor:
-    """
-    SiLU activation followed by element-wise multiplication using CUDA.
-
-    Uses vLLM's optimized CUDA kernel when available.
-
-    Args:
-        obj: The calling obj (for interface consistency)
-        x: Input tensor of shape [..., 2*d]
-
-    Returns:
-        Output tensor of shape [..., d]
-    """
-    act_fn = SiluAndMul()
-    return act_fn.forward_cuda(x)
+@FatreluAndMul.register_oot
+class MacaFatreluAndMul(FatreluAndMul):
+    def forward_oot(self, *args, **kwargs):
+        return self.forward_cuda(*args, **kwargs)
 
 
-def gelu_and_mul_maca(obj, x: torch.Tensor) -> torch.Tensor:
-    """
-    GELU activation followed by element-wise multiplication using CUDA.
+@SiluAndMul.register_oot
+class MacaSiluAndMul(SiluAndMul):
+    def forward_oot(self, *args, **kwargs):
+        return self.forward_cuda(*args, **kwargs)
 
-    Uses vLLM's optimized CUDA kernel when available.
 
-    Args:
-        obj: The calling obj (for interface consistency)
-        x: Input tensor of shape [..., 2*d]
+@SiluAndMulWithClamp.register_oot
+class MacaSiluAndMulWithClamp(SiluAndMulWithClamp):
+    def forward_oot(self, *args, **kwargs):
+        return self.forward_cuda(*args, **kwargs)
 
-    Returns:
-        Output tensor of shape [..., d]
-    """
-    act_fn = GeluAndMul()
-    return act_fn.forward_cuda(x)
+
+@MulAndSilu.register_oot
+class MacaMulAndSilu(MulAndSilu):
+    def forward_oot(self, *args, **kwargs):
+        return self.forward_cuda(*args, **kwargs)
+
+
+@GeluAndMul.register_oot
+class MacaGeluAndMul(GeluAndMul):
+    def forward_oot(self, *args, **kwargs):
+        return self.forward_cuda(*args, **kwargs)
+
+
+@SwigluOAIAndMul.register_oot
+class MacaSwigluOAIAndMul(SwigluOAIAndMul):
+    def forward_oot(self, *args, **kwargs):
+        return self.forward_cuda(*args, **kwargs)
+
+
+@SwigluStepAndMul.register_oot
+class MacaSwigluStepAndMul(SwigluStepAndMul):
+    def forward_oot(self, *args, **kwargs):
+        return self.forward_cuda(*args, **kwargs)
+
+
+@NewGELU.register_oot
+class MacaNewGELU(NewGELU):
+    def forward_oot(self, *args, **kwargs):
+        return self.forward_cuda(*args, **kwargs)
+
+
+@FastGELU.register_oot
+class MacaFastGELU(FastGELU):
+    def forward_oot(self, *args, **kwargs):
+        return self.forward_cuda(*args, **kwargs)
+
+
+@QuickGELU.register_oot
+class MacaQuickGELU(QuickGELU):
+    def forward_oot(self, *args, **kwargs):
+        return self.forward_cuda(*args, **kwargs)

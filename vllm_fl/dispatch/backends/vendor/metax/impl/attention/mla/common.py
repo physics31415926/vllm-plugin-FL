@@ -195,44 +195,45 @@ from enum import Enum
 from typing import ClassVar, Generic, TypeVar
 
 import torch
+from tqdm import tqdm
 
 from vllm import _custom_ops as ops
 from vllm import envs
-from vllm.v1.attention.backend import (
-    AttentionBackend,
-    AttentionLayer,
-    MLAAttentionImpl,
-)
-from vllm.model_executor.layers.attention.mla_attention import get_mla_dims
-from vllm.v1.attention.ops.common import cp_lse_ag_out_rs
+from vllm._aiter_ops import rocm_aiter_ops
+from vllm.config import ModelConfig, VllmConfig, get_current_vllm_config
+from vllm.distributed.parallel_state import get_dcp_group, is_global_first_rank
+from vllm.logger import init_logger
 
-# --------------------------------------------------------------
-# Note: use Maca's merge_attn_states to get cuda kernel invoked
-# --------------------------------------------------------------
-from ..ops.merge_attn_states import merge_attn_states
-from ..utils.fa_utils import get_flash_attn_version
-from vllm.config import VllmConfig, get_current_vllm_config
-from vllm.distributed.parallel_state import get_dcp_group
-from vllm.model_executor.layers.batch_invariant import (
-    _batch_invariant_MODE as _bi_mode,
-)
 from vllm.model_executor.layers.linear import (
     ColumnParallelLinear,
     LinearBase,
     UnquantizedLinearMethod,
 )
 from vllm.platforms import current_platform
+from vllm.utils.flashinfer import has_nvidia_artifactory
 from vllm.utils.math_utils import cdiv, round_down
 from vllm.v1.attention.backend import (
+    AttentionBackend,
+    AttentionLayer,
+    AttentionMetadata,
     AttentionMetadataBuilder,
     CommonAttentionMetadata,
+    MLAAttentionImpl,
 )
+from vllm_metax.v1.attention.backends.fa_utils import get_flash_attn_version
 from vllm.v1.attention.backends.utils import (
     get_dcp_local_seq_lens,
     get_per_layer_parameters,
     infer_global_hyperparameters,
     split_decodes_and_prefills,
 )
+
+from vllm.v1.attention.ops.common import cp_lse_ag_out_rs
+
+# --------------------------------------------------------------
+# Note: use Maca's merge_attn_states to get cuda kernel invoked
+# --------------------------------------------------------------
+from vllm_metax.v1.attention.ops.merge_attn_states import merge_attn_states
 from vllm.v1.kv_cache_interface import AttentionSpec
 
 
@@ -274,7 +275,16 @@ except ImportError:
     flashinfer_available = False
 
 
-from vllm.logger import init_logger
+def dynamic_per_batched_tensor_quant(
+    x: torch.Tensor, dtype: torch.dtype = torch.float8_e4m3fn
+):
+    DTYPE_MAX = torch.finfo(dtype).max
+    min_val, max_val = x.aminmax()
+    amax = torch.maximum(min_val.abs(), max_val.abs()).clamp(min=1e-10)
+    scale = DTYPE_MAX / amax
+    x_scl_sat = (x * scale).clamp(min=-DTYPE_MAX, max=DTYPE_MAX)
+    return x_scl_sat.to(dtype).contiguous(), scale.float().reciprocal()
+
 
 logger = init_logger(__name__)
 
@@ -349,6 +359,8 @@ class MLACommonPrefillMetadata:
     max_query_len: int
     chunked_context: ChunkedContextMetadata | None = None
     query_seq_lens: torch.Tensor | None = None
+    workspace_buffer: torch.Tensor | None = None
+    q_data_type: torch.dtype | None = None
 
 
 @dataclass
@@ -378,7 +390,7 @@ D = TypeVar("D", bound=MLACommonDecodeMetadata)
 
 
 @dataclass
-class MLACommonMetadata(Generic[D]):
+class MLACommonMetadata(AttentionMetadata, Generic[D]):
     """Metadata for MLACommon.
 
     NOTE: Please read the comment at the top of the file before trying to
@@ -426,7 +438,7 @@ class MLACommonMetadata(Generic[D]):
 
 
 M = TypeVar("M", bound=MLACommonMetadata)
-A = TypeVar("A")
+A = TypeVar("A", bound=AttentionMetadata)
 
 
 def use_flashinfer_prefill() -> bool:
@@ -453,6 +465,27 @@ def use_trtllm_ragged_deepseek_prefill() -> bool:
     """Check if TRT-LLM ragged DeepSeek prefill should be used."""
     logger.info_once("TRT-LLM ragged DeepSeek prefill is not supported on Maca.")
     return False
+
+
+@dataclass
+class MLADims:
+    q_lora_rank: int | None
+    kv_lora_rank: int
+    qk_nope_head_dim: int
+    qk_rope_head_dim: int
+    v_head_dim: int
+
+
+def get_mla_dims(model_config: ModelConfig) -> MLADims:
+    hf_text_config = model_config.hf_text_config
+
+    return MLADims(
+        q_lora_rank=getattr(hf_text_config, "q_lora_rank", None),
+        kv_lora_rank=hf_text_config.kv_lora_rank,
+        qk_nope_head_dim=hf_text_config.qk_nope_head_dim,
+        qk_rope_head_dim=hf_text_config.qk_rope_head_dim,
+        v_head_dim=hf_text_config.v_head_dim,
+    )
 
 
 class MLACommonMetadataBuilder(AttentionMetadataBuilder[M]):
@@ -539,6 +572,7 @@ class MLACommonMetadataBuilder(AttentionMetadataBuilder[M]):
             self.dcp_rank = 0
         self.dcp_local_block_size = parallel_config.cp_kv_cache_interleave_size
         self.dcp_virtual_block_size = self.dcp_local_block_size * self.dcp_world_size
+        self.cp_kv_cache_interleave_size = parallel_config.cp_kv_cache_interleave_size
 
         # Don't try to access the runner on AMD
         if self.aot_schedule:
@@ -595,7 +629,7 @@ class MLACommonMetadataBuilder(AttentionMetadataBuilder[M]):
             self._fi_prefill_chunks: list[BatchPrefillWithRaggedKVCacheWrapper] = []
 
             self._global_hyperparameters = infer_global_hyperparameters(
-                get_per_layer_parameters(vllm_config, layer_names, MLACommonImpl)
+                get_per_layer_parameters(vllm_config, layer_names, MLACommonImpl)  # type: ignore[type-abstract]
             )
 
         if self._use_trtllm_ragged_prefill:
@@ -703,8 +737,8 @@ class MLACommonMetadataBuilder(AttentionMetadataBuilder[M]):
     def _build_decode(
         self,
         block_table_tensor: torch.Tensor,
-        seq_lens_cpu: torch.Tensor,
         seq_lens_device: torch.Tensor,
+        max_seq_len: int,
         query_start_loc_cpu: torch.Tensor,
         query_start_loc_device: torch.Tensor,
         num_decode_tokens: int,
@@ -754,13 +788,7 @@ class MLACommonMetadataBuilder(AttentionMetadataBuilder[M]):
         query_start_loc = common_attn_metadata.query_start_loc
         query_start_loc_cpu = common_attn_metadata.query_start_loc_cpu
         seq_lens = common_attn_metadata.seq_lens
-        seq_lens_cpu = common_attn_metadata.seq_lens_cpu
         dcp_local_seq_lens = common_attn_metadata.dcp_local_seq_lens
-        dcp_local_seq_lens_cpu = common_attn_metadata.dcp_local_seq_lens_cpu
-
-        query_seq_lens_cpu = query_start_loc_cpu[1:] - query_start_loc_cpu[:-1]
-
-        num_computed_tokens_cpu = common_attn_metadata.seq_lens_cpu - query_seq_lens_cpu
 
         num_decodes, num_prefills, num_decode_tokens, num_prefill_tokens = (
             split_decodes_and_prefills(
@@ -775,6 +803,10 @@ class MLACommonMetadataBuilder(AttentionMetadataBuilder[M]):
 
         prefill_metadata = None
         if num_prefills > 0:
+            num_computed_tokens_cpu = (
+                common_attn_metadata.compute_num_computed_tokens().cpu()
+            )
+
             reqs_start = num_decodes  # prefill_start
 
             context_lens_cpu = num_computed_tokens_cpu[reqs_start:num_reqs]
@@ -854,7 +886,7 @@ class MLACommonMetadataBuilder(AttentionMetadataBuilder[M]):
                     )
                     # Note(qcs): The max local context lengths
                     # padded to `dcp_local_block_size`.
-                    padded_local_context_lens_cpu = (
+                    padded_local_context_lens_cpu: torch.Tensor = (
                         cdiv(
                             context_lens_cpu,
                             self.dcp_virtual_block_size,
@@ -964,19 +996,29 @@ class MLACommonMetadataBuilder(AttentionMetadataBuilder[M]):
                 prefill_metadata.query_seq_lens = (
                     prefill_query_start_loc[1:] - prefill_query_start_loc[:-1]
                 )
+                prefill_metadata.workspace_buffer = self._workspace_buffer
 
         decode_metadata = None
         if num_decodes > 0:
             dcp_tot_seq_lens_device = None
             if self.dcp_world_size > 1:
                 dcp_tot_seq_lens_device = seq_lens[:num_decodes]
-                seq_lens_cpu = dcp_local_seq_lens_cpu
                 seq_lens = dcp_local_seq_lens
+
+                # After DCP distribution, the maximum number of tokens for any rank is
+                # ceil(L / (N * I)) * I, where L is max_seq_len, N is dcp_world_size,
+                # and I is cp_kv_cache_interleave_size.
+                # This eliminates GPU->CPU sync while minimizing workspace
+                # over-allocation.
+                num_partitions = self.dcp_world_size * self.cp_kv_cache_interleave_size
+                max_seq_len = (
+                    (max_seq_len + num_partitions - 1) // num_partitions
+                ) * self.cp_kv_cache_interleave_size
 
             decode_metadata = self._build_decode(
                 block_table_tensor=block_table_tensor[:num_decodes, ...],
-                seq_lens_cpu=seq_lens_cpu[:num_decodes],
                 seq_lens_device=seq_lens[:num_decodes],
+                max_seq_len=max_seq_len,
                 query_start_loc_cpu=query_start_loc_cpu[: num_decodes + 1],
                 query_start_loc_device=query_start_loc[: num_decodes + 1],
                 num_decode_tokens=num_decode_tokens,
@@ -1080,7 +1122,7 @@ def reorg_kvcache(
 
 
 # TODO(Lucas): rename MLACommonBaseImpl -> MLACommonImpl,
-# and MLACommonImpl -> MLACommonDenseImpl or somthing like that
+# and MLACommonImpl -> MLACommonDenseImpl or something like that
 class MLACommonBaseImpl(MLAAttentionImpl[A], Generic[A]):
     """
     NOTE: Please read the comment at the top of the file before trying to
@@ -1128,7 +1170,7 @@ class MLACommonBaseImpl(MLAAttentionImpl[A], Generic[A]):
         self.kv_b_proj = kv_b_proj
         self.indexer = indexer
         self.q_pad_num_heads = q_pad_num_heads
-        self.is_aiter_triton_fp8_bmm_enabled = False
+        self.is_aiter_triton_fp8_bmm_enabled = rocm_aiter_ops.is_fp8bmm_enabled()
 
     def process_weights_after_loading(self, act_dtype: torch.dtype):
         def get_layer_weight(layer):
@@ -1141,7 +1183,9 @@ class MLACommonBaseImpl(MLAAttentionImpl[A], Generic[A]):
             )
 
         def get_and_maybe_dequant_weights(layer: LinearBase):
-            if not isinstance(layer.quant_method, UnquantizedLinearMethod):
+            if layer.quant_method is not None and not isinstance(
+                layer.quant_method, UnquantizedLinearMethod
+            ):
                 # NOTE: This should only be used offline, since it's O(N^3)
                 eye = torch.eye(
                     layer.input_size_per_partition,
@@ -1240,21 +1284,27 @@ class MLACommonImpl(MLACommonBaseImpl[M], Generic[M]):
             # FA2 vs FA3
             self.flash_attn_varlen_func = flash_attn_varlen_func
             self.vllm_flash_attn_version = get_flash_attn_version()
-            if self.vllm_flash_attn_version is not None:
-                self.flash_attn_varlen_func = functools.partial(
-                    flash_attn_varlen_func, fa_version=self.vllm_flash_attn_version
-                )
+
+            # /-----------------------------------------------------------
+            # Note: maca flash_attn_varlen_func does not have `fa_version`
+            # ------------------------------------------------------------
+            # if self.vllm_flash_attn_version is not None:
+            #     self.flash_attn_varlen_func = functools.partial(
+            #         flash_attn_varlen_func, fa_version=self.vllm_flash_attn_version
+            #     )
 
             # For MLA the v head dim is smaller than qk head dim so we pad out
             # v with 0s to match the qk head dim for attention backends that do
             # not support different headdims
             # We don't need to pad V if we are on a hopper system with FA3
+            device_capability = current_platform.get_device_capability()
             self._pad_v = self.vllm_flash_attn_version is None or not (
                 self.vllm_flash_attn_version == 3
-                and current_platform.get_device_capability()[0] == 9
+                and device_capability is not None
+                and device_capability[0] == 9
             )
 
-        self.dcp_world_size: int | None = None
+        self.dcp_world_size: int = -1
 
         self.chunked_prefill_workspace_size = (
             MLACommonMetadataBuilder.determine_chunked_prefill_workspace_size(
@@ -1280,7 +1330,7 @@ class MLACommonImpl(MLACommonBaseImpl[M], Generic[M]):
             # ROCm leverages the upstream flash_attn, which takes a parameter
             # called "return_attn_probs" instead of return_softmax_lse
             kwargs["return_attn_probs"] = return_softmax_lse
-        if _bi_mode:
+        if envs.VLLM_BATCH_INVARIANT:
             kwargs["num_splits"] = 1
 
         attn_out = self.flash_attn_varlen_func(
@@ -1388,12 +1438,13 @@ class MLACommonImpl(MLACommonBaseImpl[M], Generic[M]):
         from flashinfer.prefill import trtllm_ragged_attention_deepseek
 
         assert prefill.query_seq_lens is not None
+        assert prefill.workspace_buffer is not None
 
         ret = trtllm_ragged_attention_deepseek(
             query=q,
             key=k,
             value=v,
-            workspace_buffer=self._workspace_buffer,
+            workspace_buffer=prefill.workspace_buffer,
             seq_lens=prefill.query_seq_lens,
             max_q_len=prefill.max_query_len,
             max_kv_len=prefill.max_query_len,
@@ -1422,6 +1473,7 @@ class MLACommonImpl(MLACommonBaseImpl[M], Generic[M]):
 
         assert prefill.chunked_context is not None
         assert prefill.chunked_context.seq_lens[chunk_idx] is not None
+        assert prefill.workspace_buffer is not None
 
         out = torch.zeros(
             q.shape[0],
@@ -1430,13 +1482,13 @@ class MLACommonImpl(MLACommonBaseImpl[M], Generic[M]):
             device=q.device,
             dtype=q.dtype,
         )
-        self._workspace_buffer.fill_(0)
+        prefill.workspace_buffer.fill_(0)
 
         attn_out, lse = trtllm_ragged_attention_deepseek(
             query=q,
             key=k,
             value=v,
-            workspace_buffer=self._workspace_buffer,
+            workspace_buffer=prefill.workspace_buffer,
             seq_lens=prefill.chunked_context.seq_lens[chunk_idx],
             max_q_len=prefill.max_query_len,
             max_kv_len=prefill.chunked_context.max_seq_lens[chunk_idx],
@@ -1467,7 +1519,9 @@ class MLACommonImpl(MLACommonBaseImpl[M], Generic[M]):
             )
 
         def get_and_maybe_dequant_weights(layer: LinearBase):
-            if not isinstance(layer.quant_method, UnquantizedLinearMethod):
+            if layer.quant_method is not None and not isinstance(
+                layer.quant_method, UnquantizedLinearMethod
+            ):
                 # NOTE: This should only be used offline, since it's O(N^3)
                 eye = torch.eye(
                     layer.input_size_per_partition,
@@ -1638,7 +1692,7 @@ class MLACommonImpl(MLACommonBaseImpl[M], Generic[M]):
             )
             # workspace
             # |------- N tokens --------|--------- N*dcp_size tokens ----------|
-            # |<- use for loca_gather ->|<--------- use for allgather -------->|
+            # |<- use for local_gather ->|<--------- use for allgather -------->|
             allgather_offset = workspace.shape[0] // (dcp_world_size + 1)
             assert allgather_offset * (dcp_world_size + 1) == workspace.shape[0]
             assert toks <= allgather_offset
@@ -1718,7 +1772,7 @@ class MLACommonImpl(MLACommonBaseImpl[M], Generic[M]):
     ) -> None:
         # TODO (zyongye): Prefill function here
         assert attn_metadata.prefill is not None
-        assert self.dcp_world_size is not None
+        assert self.dcp_world_size != -1
 
         has_context = attn_metadata.prefill.chunked_context is not None
         kv_nope = self.kv_b_proj(kv_c_normed)[0].view(
@@ -1818,7 +1872,7 @@ class MLACommonImpl(MLACommonBaseImpl[M], Generic[M]):
             # same expert outputs.
             return output.fill_(0)
 
-        if self.dcp_world_size is None:
+        if self.dcp_world_size == -1:
             self.dcp_world_size = get_dcp_group().world_size
 
         fp8_attention = self.kv_cache_dtype.startswith("fp8")

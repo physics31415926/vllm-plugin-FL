@@ -7,20 +7,11 @@ from typing import ClassVar
 
 import torch
 
-from vllm.v1.attention.backend import AttentionLayer, AttentionType, MultipleOf
-from ..ops.flashmla import (
-    flash_mla_with_kvcache,
-    get_mla_metadata,
-    is_flashmla_dense_supported,
-)
+import vllm.envs as envs
 from vllm.config import VllmConfig
 from vllm.config.cache import CacheDType
 from vllm.logger import init_logger
-from vllm.model_executor.layers.batch_invariant import (
-    _batch_invariant_MODE as _bi_mode,
-)
-from vllm.platforms.interface import DeviceCapability
-from .common import (
+from vllm_metax.model_executor.layers.attention.mla_attention import (
     MLACommonBackend,
     MLACommonDecodeMetadata,
     MLACommonImpl,
@@ -28,10 +19,28 @@ from .common import (
     MLACommonMetadataBuilder,
     QueryLenSupport,
 )
-from vllm.v1.attention.backend import AttentionCGSupport
+from vllm.platforms.interface import DeviceCapability
+from vllm.utils.platform_utils import num_compute_units
+from vllm.utils.torch_utils import is_quantized_kv_cache
+from vllm.v1.attention.backend import (
+    AttentionCGSupport,
+    AttentionLayer,
+    AttentionType,
+    MultipleOf,
+)
 from vllm.v1.attention.backends.utils import (
     reshape_attn_output_for_spec_decode,
     reshape_query_for_spec_decode,
+)
+
+# ----------------------------
+# Note: flashmla on maca does not support fp8 related features yet,
+# so we can import these for type checking but not use them in the
+# code until they are supported. As well as the new `FlashMLASchedMeta`
+from vllm_metax.v1.attention.ops.flashmla import (
+    flash_mla_with_kvcache,
+    get_mla_metadata,
+    is_flashmla_dense_supported,
 )
 from vllm.v1.kv_cache_interface import AttentionSpec
 from vllm.v1.attention.backends.registry import AttentionBackendEnum, register_backend
@@ -44,6 +53,9 @@ class MacaFlashMLABackend(MLACommonBackend):
     supported_dtypes: ClassVar[list[torch.dtype]] = [torch.float16, torch.bfloat16]
     supported_kv_cache_dtypes: ClassVar[list[CacheDType]] = [
         "auto",
+        "float16",
+        "bfloat16",
+        "fp8",
     ]
 
     @staticmethod
@@ -72,18 +84,20 @@ class MacaFlashMLABackend(MLACommonBackend):
         head_size: int,
         dtype: torch.dtype,
         kv_cache_dtype: CacheDType | None,
-        block_size: int,
+        block_size: int | None,
         use_mla: bool,
         has_sink: bool,
         use_sparse: bool,
         device_capability: DeviceCapability,
     ) -> str | None:
         if use_sparse:
-            from ..ops.flashmla import is_flashmla_sparse_supported
+            from vllm_metax.v1.attention.ops.flashmla import (
+                is_flashmla_sparse_supported,
+            )
 
             return is_flashmla_sparse_supported()[1]
         else:
-            from ..ops.flashmla import is_flashmla_dense_supported
+            from vllm_metax.v1.attention.ops.flashmla import is_flashmla_dense_supported
 
             return is_flashmla_dense_supported()[1]
 
@@ -122,10 +136,11 @@ class FlashMLAMetadataBuilder(MLACommonMetadataBuilder[FlashMLAMetadata]):
 
         self.cg_buf_tile_scheduler_metadata = None
         self.cg_buf_num_splits = None
-        self.is_fp8_kvcache = vllm_config.cache_config.cache_dtype.startswith("fp8")
+        self.is_fp8_kvcache = is_quantized_kv_cache(
+            vllm_config.cache_config.cache_dtype
+        )
 
-        device_properties = torch.cuda.get_device_properties(self.device)
-        num_sms = device_properties.multi_processor_count
+        num_sms = num_compute_units(self.device.index)
 
         if self.compilation_config.cudagraph_mode.has_full_cudagraphs():
             self.cg_buf_tile_scheduler_metadata = torch.zeros(
@@ -144,8 +159,8 @@ class FlashMLAMetadataBuilder(MLACommonMetadataBuilder[FlashMLAMetadata]):
     def _build_decode(
         self,
         block_table_tensor: torch.Tensor,
-        seq_lens_cpu: torch.Tensor,
         seq_lens_device: torch.Tensor,
+        max_seq_len: int,
         query_start_loc_cpu: torch.Tensor,
         query_start_loc_device: torch.Tensor,
         num_decode_tokens: int,
@@ -249,7 +264,7 @@ class FlashMLAImpl(MLACommonImpl[FlashMLAMetadata]):
                 "FlashMLAImpl"
             )
 
-    def _forward_decode(
+    def forward_mqa(
         self,
         q: torch.Tensor | tuple[torch.Tensor, torch.Tensor],
         kv_c_and_k_pe_cache: torch.Tensor,
@@ -271,7 +286,7 @@ class FlashMLAImpl(MLACommonImpl[FlashMLAMetadata]):
 
         tile_scheduler_metadata = attn_metadata.decode.tile_scheduler_metadata
         num_splits = attn_metadata.decode.num_splits
-        if _bi_mode:
+        if envs.VLLM_BATCH_INVARIANT and not is_quantized_kv_cache(self.kv_cache_dtype):
             device = q.device
             dtype = torch.int32
 
@@ -309,8 +324,10 @@ class FlashMLAImpl(MLACommonImpl[FlashMLAMetadata]):
             num_splits=num_splits,
             softmax_scale=self.scale,
             causal=True,
-            descale_q=layer._q_scale.reshape(1),
-            descale_k=layer._k_scale.reshape(1),
+            # ------------------------------------------------
+            # Note: flashmla on maca does not support fp8 descale yet
+            # descale_q=layer._q_scale.reshape(1),
+            # descale_k=layer._k_scale.reshape(1),
         )
 
         o = reshape_attn_output_for_spec_decode(o)

@@ -2,10 +2,9 @@
 # 2026 - Modified by MetaX Integrated Circuits (Shanghai) Co., Ltd. All Rights Reserved.
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-from vllm.logger import init_logger
+from vllm.v1.attention.backends.fa_utils import logger
 from vllm.platforms import current_platform
 
-logger = init_logger(__name__)
 
 if current_platform.is_out_of_tree():
     from vllm import _custom_ops as ops
@@ -25,6 +24,7 @@ def get_flash_attn_version(
     logger.info_once(
         "Using Maca version of flash attention, which only supports version 2."
     )
+
     # Note: In maca this need to be None since
     # metax flash_attn api does not have parameter
     # for `fa_version`.
