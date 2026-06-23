@@ -3,7 +3,7 @@
 import logging
 from typing import Optional, List
 
-from vllm.model_executor.custom_op import CustomOp, PluggableLayer
+from vllm.model_executor.custom_op import CustomOp, PluggableLayer, op_registry_oot
 from .layernorm import *  # noqa F403 F401
 from .activation import *  # noqa F403 F401
 from .rotary_embedding import *  # noqa F403 F401
