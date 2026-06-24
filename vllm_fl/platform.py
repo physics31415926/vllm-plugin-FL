@@ -5,17 +5,43 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 import os
+import sys
+import types
 from typing import TYPE_CHECKING, TypeVar
 from typing_extensions import ParamSpec
 
 import torch
 
-# import custom ops, trigger op registration (CUDA only)
+# Try to load vLLM's native _C.so extension (available on NVIDIA).
+# If it fails (MetaX, Ascend, etc.), insert stubs and register op schemas
+# so that vLLM's Python code can still reference torch.ops._C.<op>.
+_native_C_available = False
 try:
-    import vllm._C  # noqa
-    import vllm._C_stable_libtorch  # noqa
+    __import__("vllm._C")
+    __import__("vllm._C_stable_libtorch")
+    _native_C_available = True
 except (ImportError, OSError):
-    pass  # NPU or other platforms may not have vllm._C
+    pass
+
+__C_lib = None
+
+if not _native_C_available:
+    # Insert stub modules so subsequent imports don't fail.
+    if "vllm._C" not in sys.modules:
+        sys.modules["vllm._C"] = types.ModuleType("vllm._C")
+    if "vllm._C_stable_libtorch" not in sys.modules:
+        sys.modules["vllm._C_stable_libtorch"] = types.ModuleType(
+            "vllm._C_stable_libtorch")
+
+    # Provide CUDA implementations for non-compute _C ops that are called at
+    # runtime (not just referenced at import time for pattern matching).
+    # weak_ref_tensor: creates a tensor sharing the same storage but without
+    # preventing the original from being freed (used in CUDA graph capture).
+    @torch.library.impl("_C::weak_ref_tensor", "CUDA")
+    def _weak_ref_tensor_impl(tensor: torch.Tensor) -> torch.Tensor:
+        return torch.as_strided(
+            tensor, tensor.shape, tensor.stride(), tensor.storage_offset()
+        )
 
 from vllm.logger import init_logger
 from vllm.platforms import Platform, PlatformEnum
@@ -129,8 +155,6 @@ class PlatformFL(Platform):
     def import_kernels(cls) -> None:
         """Import device-specific kernels."""
         logger.info(f"current vendor_name is: {cls.vendor_name}")
-        # Always load base vLLM C extensions
-        super().import_kernels()
 
         if cls.vendor_name == "metax":
             try:
@@ -147,6 +171,8 @@ class PlatformFL(Platform):
                 import vllm_fl.dispatch.backends.vendor.metax.patches  # noqa: F401
             except Exception as e:
                 logger.warning(f"Failed to import maca patches: {e}")
+        else:
+            super().import_kernels()
 
         if cls.device_type == "musa":
             try:

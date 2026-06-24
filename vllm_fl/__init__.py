@@ -77,7 +77,15 @@ def _patch_flash_attn_import():
 
 
 def _patch_custom_ops():
-    """Register torch.ops._C op schemas when vllm._C is unavailable."""
+    """Register torch.ops._C op schemas when vllm._C is unavailable.
+
+    Skip registration entirely if mcoplib._C is available — it already
+    claims the _C namespace via TORCH_LIBRARY (C++ DEF), and a second
+    Python FRAGMENT registration of the same namespace causes a fatal
+    c10::Error crash at mcoplib._C dlopen time.
+
+    TODO: remove mcoplib guard once mcoplib switches to TORCH_LIBRARY_FRAGMENT.
+    """
     try:
         import vllm._C  # noqa: F401
         return
@@ -85,9 +93,10 @@ def _patch_custom_ops():
         pass
 
     try:
-        import vllm_fl._C  # noqa: F401
-    except (ImportError, OSError) as e:
-        logger.debug("Failed to import vllm_fl._C: %s", e)
+        import mcoplib._C  # noqa: F401
+        return
+    except (ImportError, OSError):
+        pass
 
     from vllm_fl.ops._C_ops_registry import register_op_schemas
     register_op_schemas()
