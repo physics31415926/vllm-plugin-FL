@@ -282,11 +282,22 @@ class TritonExpertsFL(TritonExperts):
         expert_tokens_meta: mk.ExpertTokensMetadata | None,
         apply_router_weight_on_input: bool,
     ):
-        # Fast path (no LoRA): single fused FlagGems call.
+        # Fast path (no LoRA): single fused kernel call.
         if self._lora_context is None:
-            import flag_gems
+            from vllm.platforms import current_platform
 
-            output.copy_(flag_gems.fused_experts_impl(
+            if current_platform.vendor_name == "metax":
+                # MetaX MACA triton cannot compile FlagGems fused_moe kernel
+                # (3D tl.trans / PassManager::run failures). Use MetaX's own
+                # precompiled fused_experts_impl instead.
+                from vllm_metax.model_executor.layers.fused_moe.fused_moe import (
+                    fused_experts_impl as _fused_experts_impl,
+                )
+            else:
+                import flag_gems
+                _fused_experts_impl = flag_gems.fused_experts_impl
+
+            output.copy_(_fused_experts_impl(
                 hidden_states,
                 w1,
                 w2,
