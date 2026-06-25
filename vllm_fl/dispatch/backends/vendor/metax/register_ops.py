@@ -1,5 +1,11 @@
 # Copyright (c) 2026 BAAI. All rights reserved.
 
+"""
+Maca backend operator registrations.
+
+This module registers all VENDOR (Metax) implementations.
+"""
+
 from __future__ import annotations
 
 import functools
@@ -8,7 +14,7 @@ from vllm_fl.dispatch.types import OpImpl, BackendImplKind, BackendPriority
 
 
 def _bind_is_available(fn, is_available_fn):
-    """Wrap fn and attach _is_available for OpImpl.is_available() check."""
+    """Wrap a function and bind _is_available attribute for OpImpl.is_available() check."""
 
     @functools.wraps(fn)
     def wrapper(*args, **kwargs):
@@ -19,18 +25,69 @@ def _bind_is_available(fn, is_available_fn):
 
 
 def register_builtins(registry) -> None:
-    """Register all MetaX (MACA) operator implementations."""
+    """
+    Register all CUDA (VENDOR) operator implementations.
+
+    Args:
+        registry: Registry to register into
+    """
     from .metax import MacaBackend
 
     backend = MacaBackend()
     is_avail = backend.is_available
 
     impls = [
+        # Activation
+        OpImpl(
+            op_name="silu_and_mul",
+            impl_id="vendor.metax",
+            kind=BackendImplKind.VENDOR,
+            fn=_bind_is_available(backend.silu_and_mul, is_avail),
+            vendor="metax",
+            priority=BackendPriority.VENDOR,
+        ),
+        # Normalization
+        OpImpl(
+            op_name="rms_norm",
+            impl_id="vendor.metax",
+            kind=BackendImplKind.VENDOR,
+            fn=_bind_is_available(backend.rms_norm, is_avail),
+            vendor="metax",
+            priority=BackendPriority.VENDOR,
+        ),
+        # Rotary Embedding
+        OpImpl(
+            op_name="rotary_embedding",
+            impl_id="vendor.metax",
+            kind=BackendImplKind.VENDOR,
+            fn=_bind_is_available(backend.rotary_embedding, is_avail),
+            vendor="metax",
+            priority=BackendPriority.VENDOR,
+        ),
+        # Attention Backend
         OpImpl(
             op_name="attention_backend",
             impl_id="vendor.metax",
             kind=BackendImplKind.VENDOR,
             fn=_bind_is_available(backend.attention_backend, is_avail),
+            vendor="metax",
+            priority=BackendPriority.VENDOR,
+        ),
+        # topk softmax
+        OpImpl(
+            op_name="topk_softmax",
+            impl_id="vendor.metax",
+            kind=BackendImplKind.VENDOR,
+            fn=_bind_is_available(backend.topk_softmax, is_avail),
+            vendor="metax",
+            priority=BackendPriority.VENDOR,
+        ),
+        # invoke fused moe triton kernel
+        OpImpl(
+            op_name="invoke_fused_moe_triton_kernel",
+            impl_id="vendor.metax",
+            kind=BackendImplKind.VENDOR,
+            fn=_bind_is_available(backend.invoke_fused_moe_triton_kernel, is_avail),
             vendor="metax",
             priority=BackendPriority.VENDOR,
         ),
