@@ -5,54 +5,17 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 import os
-import sys
-import types
 from typing import TYPE_CHECKING, TypeVar
 from typing_extensions import ParamSpec
 
 import torch
 
-# Try to load vLLM's native _C.so extension (available on NVIDIA).
-# If it fails (MetaX, Ascend, etc.), insert stubs and register op schemas
-# so that vLLM's Python code can still reference torch.ops._C.<op>.
-_native_C_available = False
+# import custom ops, trigger op registration (CUDA only)
 try:
-    __import__("vllm._C")
-    __import__("vllm._C_stable_libtorch")
-    _native_C_available = True
+    import vllm._C  # noqa
+    import vllm._C_stable_libtorch  # noqa
 except (ImportError, OSError):
-    pass
-
-# On MetaX, mcoplib._C provides the _C ops via TORCH_LIBRARY.
-# Load it early so its registrations are visible to register_op_schemas()
-# (which skips already-defined ops) and we avoid duplicate-def crashes.
-_mcoplib_C_available = False
-if not _native_C_available:
-    try:
-        __import__("mcoplib._C")
-        _mcoplib_C_available = True
-    except (ImportError, OSError):
-        pass
-
-__C_lib = None
-
-if not _native_C_available and not _mcoplib_C_available:
-    # Insert stub modules so subsequent imports don't fail.
-    if "vllm._C" not in sys.modules:
-        sys.modules["vllm._C"] = types.ModuleType("vllm._C")
-    if "vllm._C_stable_libtorch" not in sys.modules:
-        sys.modules["vllm._C_stable_libtorch"] = types.ModuleType(
-            "vllm._C_stable_libtorch")
-
-    # Provide CUDA implementations for non-compute _C ops that are called at
-    # runtime (not just referenced at import time for pattern matching).
-    # weak_ref_tensor: creates a tensor sharing the same storage but without
-    # preventing the original from being freed (used in CUDA graph capture).
-    @torch.library.impl("_C::weak_ref_tensor", "CUDA")
-    def _weak_ref_tensor_impl(tensor: torch.Tensor) -> torch.Tensor:
-        return torch.as_strided(
-            tensor, tensor.shape, tensor.stride(), tensor.storage_offset()
-        )
+    pass  # NPU or other platforms may not have vllm._C
 
 from vllm.logger import init_logger
 from vllm.platforms import Platform, PlatformEnum
