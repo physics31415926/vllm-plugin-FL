@@ -23,9 +23,20 @@ try:
 except (ImportError, OSError):
     pass
 
+# On MetaX, mcoplib._C provides the _C ops via TORCH_LIBRARY.
+# Load it early so its registrations are visible to register_op_schemas()
+# (which skips already-defined ops) and we avoid duplicate-def crashes.
+_mcoplib_C_available = False
+if not _native_C_available:
+    try:
+        __import__("mcoplib._C")
+        _mcoplib_C_available = True
+    except (ImportError, OSError):
+        pass
+
 __C_lib = None
 
-if not _native_C_available:
+if not _native_C_available and not _mcoplib_C_available:
     # Insert stub modules so subsequent imports don't fail.
     if "vllm._C" not in sys.modules:
         sys.modules["vllm._C"] = types.ModuleType("vllm._C")
