@@ -285,9 +285,8 @@ class TritonExpertsFL(TritonExperts):
         # Fast path (no LoRA, NVIDIA only): single fused FlagGems call.
         if self._lora_context is None and current_platform.is_cuda():
             import flag_gems
-            _fused_experts_impl = flag_gems.fused_experts_impl
 
-            output.copy_(_fused_experts_impl(
+            output.copy_(flag_gems.fused_experts_impl(
                 hidden_states,
                 w1,
                 w2,
