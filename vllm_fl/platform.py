@@ -129,8 +129,6 @@ class PlatformFL(Platform):
     def import_kernels(cls) -> None:
         """Import device-specific kernels."""
         logger.info(f"current vendor_name is: {cls.vendor_name}")
-        # Always load base vLLM C extensions
-        super().import_kernels()
 
         if cls.vendor_name == "metax":
             try:
@@ -147,6 +145,8 @@ class PlatformFL(Platform):
                 import vllm_fl.dispatch.backends.vendor.metax.patches  # noqa: F401
             except Exception as e:
                 logger.warning(f"Failed to import maca patches: {e}")
+        else:
+            super().import_kernels()
 
         if cls.device_type == "musa":
             try:
