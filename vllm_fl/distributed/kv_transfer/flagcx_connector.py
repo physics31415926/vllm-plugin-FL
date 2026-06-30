@@ -18,9 +18,9 @@ import torch
 import zmq
 import zmq.asyncio
 
-from vllm.attention.backends.abstract import AttentionMetadata
+from vllm.v1.attention.backend import AttentionMetadata
 from vllm.utils.torch_utils import current_stream
-from vllm.attention.selector import get_attn_backend
+from vllm.v1.attention.selector import get_attn_backend
 from vllm.config import VllmConfig
 from vllm.distributed.kv_transfer.kv_connector.utils import TpKVTopology
 from vllm.distributed.kv_transfer.kv_connector.v1.base import (

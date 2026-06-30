@@ -7,7 +7,7 @@ import torch
 import vllm.envs as envs
 import vllm.model_executor.layers.fused_moe.modular_kernel as mk
 from vllm._aiter_ops import rocm_aiter_ops
-from vllm.config.kernel import MoEBackend
+
 from vllm.logger import init_logger
 from vllm.model_executor.layers.fused_moe.config import (
     FusedMoEConfig,
@@ -16,7 +16,8 @@ from vllm.platforms import current_platform
 from vllm.utils.flashinfer import has_flashinfer_cutlass_fused_moe
 from vllm.model_executor.layers.fused_moe.oracle.unquantized import UnquantizedMoeBackend, map_unquantized_backend, backend_to_kernel_cls
 from vllm.model_executor.layers.fused_moe.activation import MoEActivation
-from vllm.model_executor.layers.fused_moe.fused_moe import TritonExperts, try_get_optimal_moe_config
+from vllm.model_executor.layers.fused_moe.experts.triton_moe import TritonExperts
+from vllm.model_executor.layers.fused_moe.fused_moe import try_get_optimal_moe_config
 from vllm.model_executor.layers.fused_moe.utils import _resize_cache, moe_kernel_quantize_input
 from vllm.model_executor.layers.quantization.utils.flashinfer_utils import (
     FlashinferMoeBackend,
