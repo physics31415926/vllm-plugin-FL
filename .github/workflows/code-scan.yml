@@ -3,6 +3,7 @@ name: Code Scan
 on:
   pull_request:
     branches: [main, devops]
+    types: [opened, synchronize, reopened, ready_for_review]
     paths-ignore:
       - "**.md"
       - "docs/**"
@@ -28,6 +29,12 @@ jobs:
   # ============================================================
   codeql:
     name: CodeQL Analysis
+    # Skip: fork-internal PRs, draft PRs, PRs with WIP/wip in title
+    if: |
+      github.repository == 'flagos-ai/vllm-plugin-FL' &&
+      !github.event.pull_request.draft &&
+      !contains(github.event.pull_request.title, 'WIP') &&
+      !contains(github.event.pull_request.title, 'wip')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout (attempt 1)
@@ -61,8 +68,14 @@ jobs:
   # ============================================================
   dependency-review:
     name: Dependency Review
+    # Skip: fork-internal PRs, draft PRs, PRs with WIP/wip in title
+    if: |
+      github.event_name == 'pull_request' &&
+      github.repository == 'flagos-ai/vllm-plugin-FL' &&
+      !github.event.pull_request.draft &&
+      !contains(github.event.pull_request.title, 'WIP') &&
+      !contains(github.event.pull_request.title, 'wip')
     runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request'
     steps:
       - name: Checkout (attempt 1)
         id: checkout1
