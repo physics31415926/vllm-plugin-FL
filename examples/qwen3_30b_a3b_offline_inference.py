@@ -25,7 +25,7 @@ if __name__ == "__main__":
         tensor_parallel_size=4,
         max_num_batched_tokens=8192,
         max_num_seqs=256,
-        gpu_memory_utilization=0.9,
+        gpu_memory_utilization=0.7,
         trust_remote_code=True,
         disable_log_stats=True,
     )
