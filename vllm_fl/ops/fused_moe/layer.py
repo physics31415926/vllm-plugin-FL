@@ -1,29 +1,14 @@
 # Copyright (c) 2025 BAAI. All rights reserved.
 # Adapted from vllm/model_executor/layers/fused_moe/layer.py (v0.24.0)
 
-import torch
-
 from vllm.model_executor.layers.fused_moe import FusedMoE
+from vllm.model_executor.layers.fused_moe.config import FusedMoEConfig
 from vllm.model_executor.layers.fused_moe.runner.moe_runner import MoERunner
 from vllm.model_executor.layers.fused_moe.unquantized_fused_moe_method import (
     UnquantizedFusedMoEMethod,
 )
-from vllm.model_executor.layers.fused_moe.router.fused_topk_router import (
-    FusedTopKRouter,
-)
-from vllm.model_executor.layers.fused_moe.router.fused_topk_bias_router import (
-    FusedTopKBiasRouter,
-)
-from vllm.model_executor.layers.fused_moe.router.grouped_topk_router import (
-    GroupedTopKRouter,
-)
-from vllm.model_executor.layers.fused_moe.config import FusedMoEConfig
 
-from vllm_fl.ops.fused_moe.router import (
-    FusedTopKRouterFL,
-    GroupedTopKRouterFL,
-    FusedTopKBiasRouterFL,
-)
+from vllm_fl.ops.fused_moe.router import replace_router_with_fl
 from .fused_moe_utils import select_unquantized_moe_backend_oot
 
 
@@ -61,59 +46,16 @@ def FusedMoEFL(*args, **kwargs) -> MoERunner:
     # 1. Build the standard MoERunner via the upstream factory.
     runner: MoERunner = FusedMoE(*args, **kwargs)
 
-    moe_config: FusedMoEConfig = runner.moe_config
-
     # 2. Replace quant_method with FL version.
-    fl_quant_method = UnquantizedFusedMoEMethodFL(moe_config)
+    fl_quant_method = UnquantizedFusedMoEMethodFL(runner.moe_config)
     runner._replace_quant_method(fl_quant_method)
 
-    # 3. Replace router with FL version, copying all attributes from the
-    #    original so we don't lose any configuration.
-    original_router = runner.router
-
-    def _get(obj, *attrs, default=None):
-        """Helper: return the first attribute found on obj, or default."""
-        for attr in attrs:
-            val = getattr(obj, attr, _SENTINEL)
-            if val is not _SENTINEL:
-                return val
-        return default
-
-    _SENTINEL = object()
-
-    if isinstance(original_router, GroupedTopKRouter):
-        runner.router = GroupedTopKRouterFL(
-            moe_config=moe_config,
-            top_k=_get(original_router, "top_k"),
-            num_expert_group=_get(original_router, "num_expert_group"),
-            topk_group=_get(original_router, "topk_group"),
-            scoring_func=_get(original_router, "scoring_func", default="softmax"),
-            correction_bias=_get(original_router, "correction_bias"),
-            routed_scaling_factor=_get(
-                original_router, "routed_scaling_factor", default=1.0
-            ),
-        )
-    elif isinstance(original_router, FusedTopKBiasRouter):
-        runner.router = FusedTopKBiasRouterFL(
-            moe_config=moe_config,
-            top_k=_get(original_router, "top_k"),
-            scoring_func=_get(original_router, "scoring_func", default="softmax"),
-            correction_bias=_get(original_router, "correction_bias"),
-            routed_scaling_factor=_get(
-                original_router, "routed_scaling_factor", default=1.0
-            ),
-        )
-    elif isinstance(original_router, FusedTopKRouter):
-        runner.router = FusedTopKRouterFL(
-            moe_config=moe_config,
-            top_k=_get(original_router, "top_k"),
-            scoring_func=_get(original_router, "scoring_func", default="softmax"),
-            correction_bias=_get(original_router, "correction_bias"),
-            routed_scaling_factor=_get(
-                original_router, "routed_scaling_factor", default=1.0
-            ),
-        )
-    # If the router type is unrecognised, leave it as-is (safe fallback).
+    # 3. Replace router _compute_routing with FL version via monkey-patch.
+    #    replace_router_with_fl() patches the class method so the router
+    #    instance built by FusedMoE() above uses FL dispatch without needing
+    #    to re-construct the router (which would require re-passing all init
+    #    args and risks signature mismatch across vllm versions).
+    replace_router_with_fl()
 
     return runner
 
