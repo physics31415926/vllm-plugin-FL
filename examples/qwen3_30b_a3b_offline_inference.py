@@ -23,7 +23,7 @@ if __name__ == "__main__":
     llm = LLM(
         model=model_path,
         tensor_parallel_size=4,
-        max_num_batched_tokens=16384,
+        max_num_batched_tokens=8192,
         max_num_seqs=256,
         gpu_memory_utilization=0.9,
         trust_remote_code=True,
