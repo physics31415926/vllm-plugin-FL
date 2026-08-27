@@ -94,7 +94,7 @@ def select_unquantized_moe_backend_oot(moe_config: FusedMoEConfig,
     if moe_config.is_lora_enabled:
         return UnquantizedMoeBackend.TRITON, backend_to_kernel_cls(
             UnquantizedMoeBackend.TRITON
-        )
+        )[0]
 
     # NOTE: the kernels are selected in the following order.
     AVAILABLE_BACKENDS = _get_priority_backends(moe_config)
@@ -133,13 +133,14 @@ def select_unquantized_moe_backend_oot(moe_config: FusedMoEConfig,
         config: FusedMoEConfig,
         activation_format: mk.FusedMoEActivationFormat,
     ) -> tuple[UnquantizedMoeBackend, type[mk.FusedMoEExperts] | None]:
-        k_cls = backend_to_kernel_cls(backend)
-        supported, reason = k_cls.is_supported_config(
-            k_cls, config, None, None, activation_format
-        )
-        if supported:
-            logger.info_once(_make_log_backend(backend))
-            return backend, k_cls
+        reason = None
+        for k_cls in backend_to_kernel_cls(backend):
+            supported, reason = k_cls.is_supported_config(
+                k_cls, config, None, None, activation_format
+            )
+            if supported:
+                logger.info_once(_make_log_backend(backend))
+                return backend, k_cls
         raise ValueError(_make_log_unsupported(backend, reason))
 
     runner_backend = moe_config.moe_backend
@@ -178,7 +179,7 @@ def select_unquantized_moe_backend_oot(moe_config: FusedMoEConfig,
                     f"FlashInfer MOE backend '{fi_backend}' "
                     "does not support unquantized MoE."
                 )
-            k_cls = backend_to_kernel_cls(backend)
+            k_cls = backend_to_kernel_cls(backend)  # noqa: F841
             return _return_or_raise(backend, moe_config, activation_format)
         else:
             # If the user is not explicit about the backend, try both.
@@ -186,15 +187,15 @@ def select_unquantized_moe_backend_oot(moe_config: FusedMoEConfig,
                 UnquantizedMoeBackend.FLASHINFER_TRTLLM,
                 UnquantizedMoeBackend.FLASHINFER_CUTLASS,
             ]:
-                k_cls = backend_to_kernel_cls(backend)
-                supported, reason = k_cls.is_supported_config(
-                    k_cls, moe_config, None, None, activation_format
-                )
-                if supported:
-                    logger.info_once(_make_log_backend(backend))
-                    return backend, k_cls
-                else:
-                    logger.debug_once(_make_log_unsupported(backend, reason))
+                for k_cls in backend_to_kernel_cls(backend):
+                    supported, reason = k_cls.is_supported_config(
+                        k_cls, moe_config, None, None, activation_format
+                    )
+                    if supported:
+                        logger.info_once(_make_log_backend(backend))
+                        return backend, k_cls
+                    else:
+                        logger.debug_once(_make_log_unsupported(backend, reason))
 
             raise NotImplementedError(
                 "Found VLLM_USE_FLASHINFER_MOE_FP16=1, but no "
@@ -211,15 +212,15 @@ def select_unquantized_moe_backend_oot(moe_config: FusedMoEConfig,
             return _return_or_raise(backend, moe_config, activation_format)
 
     for backend in AVAILABLE_BACKENDS:
-        k_cls = backend_to_kernel_cls(backend)
-        supported, reason = k_cls.is_supported_config(
-            k_cls, moe_config, None, None, activation_format
-        )
-        if supported:
-            logger.info_once(_make_log_backend(backend))
-            return backend, k_cls
+        for k_cls in backend_to_kernel_cls(backend):
+            supported, reason = k_cls.is_supported_config(
+                k_cls, moe_config, None, None, activation_format
+            )
+            if supported:
+                logger.info_once(_make_log_backend(backend))
+                return backend, k_cls
 
-        logger.debug_once(_make_log_unsupported(backend, reason))
+            logger.debug_once(_make_log_unsupported(backend, reason))
 
     raise NotImplementedError(
         "No Unquantized MoE backend supports the deployment configuration."
