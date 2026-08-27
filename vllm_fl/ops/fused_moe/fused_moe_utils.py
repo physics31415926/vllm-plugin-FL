@@ -20,9 +20,8 @@ from vllm.model_executor.layers.fused_moe.experts.triton_moe import TritonExpert
 from vllm.model_executor.layers.fused_moe.fused_moe import try_get_optimal_moe_config
 from vllm.model_executor.layers.fused_moe.utils import _resize_cache, moe_kernel_quantize_input
 import os
-from vllm.model_executor.layers.quantization.utils.flashinfer_utils import (
-    FlashinferMoeBackend,
-)
+# FlashinferMoeBackend enum was removed in vLLM 0.28.0; use string comparison
+# against the VLLM_FLASHINFER_MOE_BACKEND env var directly.
 from vllm.triton_utils import tl, triton
 from vllm_fl.dispatch import CachedOp
 from vllm_fl.ops.fused_moe.activation import apply_moe_activation
@@ -168,17 +167,15 @@ def select_unquantized_moe_backend_oot(moe_config: FusedMoEConfig,
 
         elif envs.is_set("VLLM_FLASHINFER_MOE_BACKEND"):
             # If user is explicit about backend, validate it.
-            # get_flashinfer_moe_backend() was removed in vllm 0.24.0; inline it.
-            fi_backend = FlashinferMoeBackend(
-                os.environ["VLLM_FLASHINFER_MOE_BACKEND"]
-            )
-            if fi_backend == FlashinferMoeBackend.CUTLASS:
+            # FlashinferMoeBackend enum removed in vllm 0.28.0; use string.
+            fi_backend = os.environ["VLLM_FLASHINFER_MOE_BACKEND"].strip().lower()
+            if fi_backend == "cutlass":
                 backend = UnquantizedMoeBackend.FLASHINFER_CUTLASS
-            elif fi_backend == FlashinferMoeBackend.TENSORRT_LLM:
+            elif fi_backend in ("tensorrt_llm", "trtllm"):
                 backend = UnquantizedMoeBackend.FLASHINFER_TRTLLM
             else:
                 raise ValueError(
-                    f"FlashInfer MOE backend {fi_backend} "
+                    f"FlashInfer MOE backend '{fi_backend}' "
                     "does not support unquantized MoE."
                 )
             k_cls = backend_to_kernel_cls(backend)

@@ -3,11 +3,11 @@
 
 import vllm.model_executor.layers.fused_moe as _fused_moe_pkg
 
-# Save the original FusedMoE factory BEFORE any monkey-patching occurs.
-# custom_ops.py patches _fused_moe_pkg.FusedMoE = FusedMoEFL at runtime,
-# so calling _fused_moe_pkg.FusedMoE() inside FusedMoEFL would recurse
+# Save the original FusedMoEFactory BEFORE any monkey-patching occurs.
+# custom_ops.py patches _fused_moe_pkg.FusedMoEFactory = FusedMoEFL at runtime,
+# so calling _fused_moe_pkg.FusedMoEFactory() inside FusedMoEFL would recurse
 # infinitely.  Capturing it here breaks the cycle.
-_OrigFusedMoE = _fused_moe_pkg.FusedMoE
+_OrigFusedMoE = _fused_moe_pkg.FusedMoEFactory
 from vllm.model_executor.layers.fused_moe.config import FusedMoEConfig
 from vllm.model_executor.layers.fused_moe.runner.moe_runner import MoERunner
 from vllm.model_executor.layers.fused_moe.unquantized_fused_moe_method import (
@@ -43,15 +43,16 @@ class UnquantizedFusedMoEMethodFL(UnquantizedFusedMoEMethod):
 
 def FusedMoEFL(*args, **kwargs) -> MoERunner:
     """
-    OOT factory replacement for FusedMoE (vllm >= 0.24.0).
+    OOT factory replacement for FusedMoEFactory (vllm >= 0.28.0).
 
-    In vllm 0.24.0, FusedMoE changed from a class to a factory function that
-    returns a MoERunner instance.  FusedMoEFL mirrors this pattern: it
-    delegates to the standard FusedMoE() factory, replaces the router, and
-    substitutes the FL experts only for unquantized MoE.
+    In vllm 0.24.0+, FusedMoE changed from a class to a factory function that
+    returns a MoERunner instance (renamed to FusedMoEFactory in 0.28.0).
+    FusedMoEFL mirrors this pattern: it delegates to the standard
+    FusedMoEFactory() and then replaces the router and quant_method on the
+    returned MoERunner with FL-customised versions.
 
-    Registration: op_registry_oot maps FusedMoE -> FusedMoEFL so that all
-    MoE layers in a model use the FL router transparently.
+    Registration: custom_ops.py monkey-patches FusedMoEFactory -> FusedMoEFL
+    so that all MoE layers in a model use flaggems operators transparently.
     """
     # 1. Build the standard MoERunner via the upstream factory.
     #    Use _OrigFusedMoE (captured at import time, before monkey-patching)

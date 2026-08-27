@@ -276,6 +276,11 @@ class WorkerFL(WorkerBase):
                     record=should_record, once=True, path=fl_envs.FLAGGEMS_ENABLE_OPLIST_PATH
                 )
 
+    @property
+    def use_v2_model_runner(self) -> bool:
+        """Required by kernel_warmup in vLLM 0.28+."""
+        return self.vllm_config.use_v2_model_runner
+
     # def sleep(self, level: int = 1) -> None:
     #     TODO(lms): rewrite CuMemAllocator
     #     from vllm.device_allocator.cumem import CuMemAllocator
@@ -1093,26 +1098,34 @@ class WorkerFL(WorkerBase):
         from vllm.distributed.parallel_state import (
             get_dp_group,
             get_ep_group,
-            prepare_communication_buffer_for_model,
         )
-        from vllm.model_executor.layers.fused_moe.layer import (
-            FusedMoE,
+        try:
+            from vllm.distributed.parallel_state import (
+                prepare_communication_buffer_for_model,
+            )
+        except ImportError:
+            def prepare_communication_buffer_for_model(model):
+                pass
+        from vllm.model_executor.layers.fused_moe.config import (
             FusedMoEParallelConfig,
+        )
+        from vllm.model_executor.layers.fused_moe.runner.moe_runner import (
+            MoERunner,
         )
 
         parallel_config = self.vllm_config.parallel_config
 
-        def get_moe_modules(model: torch.nn.Module) -> list[FusedMoE]:
+        def get_moe_modules(model: torch.nn.Module) -> list[MoERunner]:
             return [
                 module
                 for module in model.modules()
                 if (
-                    module.__class__.__name__ == "FusedMoE"
+                    module.__class__.__name__ == "MoERunner"
                     or module.__class__.__name__ == "SharedFusedMoE"
                 )
             ]
 
-        def update_moe_modules(moe_modules: list[FusedMoE], num_local_experts: int):
+        def update_moe_modules(moe_modules: list[MoERunner], num_local_experts: int):
             assert all(
                 module.moe_config.num_local_experts == num_local_experts
                 for module in moe_modules
