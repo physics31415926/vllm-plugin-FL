@@ -90,4 +90,11 @@ a800:
     e2e:
       inference:
         qwen3: ["8b_v2"]
-        qwen3_8: ["27b_tp2"]
+        deepseek_v2: ["lite_chat_v2"]
+        llava_onevision2: ["8b_v2"]
+        qwen3_5: ["08b_auto_v1", "08b_forced_v2_mtp"]
+        unlimited_ocr: ["3b_auto_v1", "3b_forced_v2"]
+        qwen3_8: ["27b_tp2", "27b_tp2_vision"]
+        longcat_flash_lite: ["68b_tp4_v2"]
+      serving:
+        moss_transcribe_diarize: ["09b_v2"]
