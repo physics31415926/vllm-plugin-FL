@@ -44,6 +44,11 @@ op_backends:
     - reference
 
 # FlagOS operator blacklist
+# These ops are excluded from FlagGems dispatch due to known incompatibilities.
+# - index_put_, index_put, _index_put_impl_, nonzero, copy_, to_copy, index:
+#     FlagGems dispatch issues on NVIDIA
+# - rsqrt, reciprocal:
+#     FlagGems kernel bug (NotImplementedError in flag_gems)
 flagos_blacklist:
   - index_put_
   - index_put
@@ -52,5 +57,7 @@ flagos_blacklist:
   - copy_
   - to_copy
   - index
+  - rsqrt
+  - reciprocal
 # OOT (Out-of-Tree) operator blacklist
 # oot_blacklist: []
