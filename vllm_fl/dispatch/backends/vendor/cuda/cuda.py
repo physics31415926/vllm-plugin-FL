@@ -181,6 +181,14 @@ class CudaBackend(Backend):
                 return AttentionBackendEnum.FLASHMLA_SPARSE.get_path()
             return AttentionBackendEnum.FLASHMLA.get_path()
 
+        # Respect VLLM_ATTENTION_BACKEND env var if set
+        import os
+        env_backend = os.environ.get("VLLM_ATTENTION_BACKEND", "").upper()
+        if env_backend:
+            backend_map = {member.name: member for member in AttentionBackendEnum}
+            if env_backend in backend_map:
+                return backend_map[env_backend].get_path()
+
         # Default to FLASH_ATTN
         return AttentionBackendEnum.FLASH_ATTN.get_path()
 

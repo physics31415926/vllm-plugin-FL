@@ -4,15 +4,20 @@ import json
 import os
 from typing import Optional, Tuple
 
-import flag_gems
-
-try:
-    # FlagGems<=5.0.2: DeviceDetector lives in device.
-    from flag_gems.runtime.backend.device import DeviceDetector
-except (ImportError, FileNotFoundError):
-    # FlagGems>5.0.2: DeviceDetector lives in device_finder.
-    from flag_gems.runtime.backend.device_finder import DeviceDetector
-from flag_gems.runtime import backend
+_FLAGGEMS_AVAILABLE = False
+if os.environ.get("VLLM_FL_DISABLE_FLAGGEMS", "0") not in ("1", "true", "True"):
+    try:
+        import flag_gems
+        try:
+            # FlagGems<=5.0.2: DeviceDetector lives in device.
+            from flag_gems.runtime.backend.device import DeviceDetector
+        except (ImportError, FileNotFoundError):
+            # FlagGems>5.0.2: DeviceDetector lives in device_finder.
+            from flag_gems.runtime.backend.device_finder import DeviceDetector
+        from flag_gems.runtime import backend
+        _FLAGGEMS_AVAILABLE = True
+    except (ImportError, RuntimeError):
+        pass
 
 _OP_CONFIG: Optional[dict[str, str]] = None
 
@@ -104,6 +109,10 @@ def get_device_control_env_var(vendor_name: str) -> str:
 
 
 def use_flaggems(default: bool = True) -> bool:
+    if os.environ.get("VLLM_FL_DISABLE_FLAGGEMS", "0") in ("1", "true", "True"):
+        return False
+    if not _FLAGGEMS_AVAILABLE:
+        return False
     if os.environ.get("VLLM_FL_PREFER_ENABLED", "True").lower() not in ("true", "1"):
         return False
     prefer_backend = os.environ.get("VLLM_FL_PREFER", "").strip()
@@ -236,6 +245,11 @@ _load_op_config_from_env()
 
 class DeviceInfo:
     def __init__(self):
+        if not _FLAGGEMS_AVAILABLE:
+            raise RuntimeError(
+                "FlagGems is not available. Install flag_gems or unset "
+                "VLLM_FL_DISABLE_FLAGGEMS to use DeviceInfo."
+            )
         self.device = DeviceDetector()
         self.supported_device = ["nvidia", "ascend", "metax", "mthreads", "sunrise", "thead"]
         backend.set_torch_backend_device_fn(self.device.vendor_name)
@@ -272,6 +286,8 @@ def get_flaggems_all_ops() -> list[str]:
     """
     Get all FlagGems operator names from flag_gems._FULL_CONFIG.
     """
+    if not _FLAGGEMS_AVAILABLE:
+        return []
     try:
         # _FULL_CONFIG is a tuple of (op_name, function, ...) tuples
         # Some entries have 2 elements, some have 3

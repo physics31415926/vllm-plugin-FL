@@ -38,6 +38,7 @@ from vllm_fl.utils import (
     get_device_control_env_var,
     get_device_name,
     get_device_type,
+    _FLAGGEMS_AVAILABLE,
 )
 
 logger = init_logger(__name__)
@@ -54,19 +55,28 @@ dist_backend_dict = {
 
 class PlatformFL(Platform):
     _enum = PlatformEnum.OOT
-    device_info = DeviceInfo()
-    vendor_name = device_info.vendor_name
-    device_type = get_device_type(vendor_name)
-    device_name = get_device_name(vendor_name)
-    # cuda_alike (nvidia/metax): device_name = vendor_name (not used in torch.device)
-    # non-cuda_alike (iluvatar/ascend): device_name = device_type (used in torch.device)
-    device_name = device_info.vendor_name if (
-        device_info.device_type == "cuda"
-        and device_info.vendor_name not in ("iluvatar", "hygon")
-    ) else device_info.device_type
-    device_type = device_info.device_type
-    dispatch_key = device_info.dispatch_key
-    torch_device_fn = device_info.torch_device_fn
+    if _FLAGGEMS_AVAILABLE:
+        device_info = DeviceInfo()
+        vendor_name = device_info.vendor_name
+        device_type = get_device_type(vendor_name)
+        device_name = get_device_name(vendor_name)
+        # cuda_alike (nvidia/metax): device_name = vendor_name (not used in torch.device)
+        # non-cuda_alike (iluvatar/ascend): device_name = device_type (used in torch.device)
+        device_name = device_info.vendor_name if (
+            device_info.device_type == "cuda"
+            and device_info.vendor_name not in ("iluvatar", "hygon")
+        ) else device_info.device_type
+        device_type = device_info.device_type
+        dispatch_key = device_info.dispatch_key
+        torch_device_fn = device_info.torch_device_fn
+    else:
+        # Fallback for NVIDIA when FlagGems is not available
+        device_info = None
+        vendor_name = "nvidia"
+        device_type = "cuda"
+        device_name = "nvidia"
+        dispatch_key = "CUDA"
+        torch_device_fn = torch.cuda
     ray_device_key: str = "GPU"
     dist_backend: str = (
         "flagcx" if "FLAGCX_PATH" in os.environ else dist_backend_dict.get(device_name, "nccl")

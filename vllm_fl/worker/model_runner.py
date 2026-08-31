@@ -50,9 +50,16 @@ from vllm.distributed.parallel_state import (
     get_tp_group,
     GraphCaptureContext,
     is_global_first_rank,
-    prepare_communication_buffer_for_model,
 )
-from vllm.distributed.weight_transfer.base import SparseWeightPatch
+try:
+    from vllm.distributed.parallel_state import (
+        prepare_communication_buffer_for_model,
+    )
+except ImportError:
+    # Removed in vLLM 0.28+; communication buffers are now managed automatically
+    def prepare_communication_buffer_for_model(model):
+        pass
+from vllm.distributed.weight_transfer.sparse_nccl_engine import SparseWeightPatch
 from vllm.forward_context import (
     BatchDescriptor,
     set_forward_context,
@@ -243,12 +250,20 @@ from vllm.v1.utils import CpuGpuBuffer, record_function_or_nullcontext
 from vllm.v1.worker import mamba_utils
 from vllm.v1.worker.cp_utils import (
     check_attention_cp_compatibility,
-    get_total_cp_world_size,
 )
+
+def get_total_cp_world_size():
+    """Compat shim: removed in vLLM 0.28, replaced by dcp_size on ModelRunner."""
+    from vllm.distributed import get_world_group
+    try:
+        from vllm.distributed import get_cp_group
+        return get_cp_group().world_size
+    except (ImportError, RuntimeError):
+        return 1
 from vllm.v1.worker.dp_utils import coordinate_batch_across_dp
 from vllm.v1.worker.ec_connector_model_runner_mixin import ECConnectorModelRunnerMixin
 from vllm.v1.worker.gpu.attn_utils import _reshape_attention_kv_cache
-from vllm.v1.worker.gpu.pool.late_interaction_runner import LateInteractionRunner
+from vllm.v1.pool.late_interaction_runner import LateInteractionRunner
 from vllm.v1.worker.gpu_input_batch import CachedRequestState, InputBatch
 from vllm.utils.torch_utils import PIN_MEMORY
 
@@ -521,7 +536,8 @@ class ModelRunnerFL(
         self.max_model_len = model_config.max_model_len
 
         # Always set to false after the first forward pass
-        self.calculate_kv_scales = self.cache_config.calculate_kv_scales
+        # Removed in vLLM 0.28+; kv scales are now handled automatically
+        self.calculate_kv_scales = getattr(self.cache_config, 'calculate_kv_scales', False)
         self.dcp_world_size = self.parallel_config.decode_context_parallel_size
         self.dcp_rank = 0 if self.dcp_world_size <= 1 else get_dcp_group().rank_in_group
         self.max_num_tokens = scheduler_config.max_num_batched_tokens
@@ -728,6 +744,7 @@ class ModelRunnerFL(
             vocab_size=self.model_config.get_vocab_size(),
             block_sizes=[placeholder_block_size],
             kernel_block_sizes=[placeholder_block_size],
+            max_num_blocks_per_req=[cdiv(max(self.max_model_len, self.max_encoder_len), placeholder_block_size)],
             num_spec_tokens=self.num_spec_tokens,
             logitsprocs=build_logitsprocs(
                 self.vllm_config,
@@ -7240,27 +7257,15 @@ class ModelRunnerFL(
                 elif isinstance(kv_cache_spec, MambaSpec):
                     has_mamba = True
                     raw_tensor = kv_cache_raw_tensors[layer_name]
-                    state_tensors = []
-                    storage_offset_bytes = 0
-                    for shape, dtype in zip(kv_cache_spec.shapes, kv_cache_spec.dtypes):
-                        dtype_size = get_dtype_size(dtype)
-                        num_element_per_page = (
-                            kv_cache_spec.page_size_bytes // dtype_size
-                        )
-                        target_shape = (num_blocks, *shape)
-                        stride = torch.empty(target_shape).stride()
-                        target_stride = (num_element_per_page, *stride[1:])
-                        assert storage_offset_bytes % dtype_size == 0
-                        tensor = torch.as_strided(
-                            raw_tensor.view(dtype),
-                            size=target_shape,
-                            stride=target_stride,
-                            storage_offset=storage_offset_bytes // dtype_size,
-                        )
-                        state_tensors.append(tensor)
-                        storage_offset_bytes += stride[0] * dtype_size
-
-                    kv_caches[layer_name] = state_tensors
+                    page_size_bytes = kv_cache_spec.page_size_bytes
+                    # Hold a single contiguous [num_blocks, 1, 1, page_size_bytes]
+                    # int8 page view per layer; the layer's bind_kv_cache unpacks
+                    # each block's bytes into its conv/ssm state views. Keeping
+                    # one tensor per layer lets the KV connector register it
+                    # without special-casing Mamba.
+                    kv_caches[layer_name] = raw_tensor[
+                        : num_blocks * page_size_bytes
+                    ].view(num_blocks, 1, 1, page_size_bytes)
                 else:
                     raise NotImplementedError
 

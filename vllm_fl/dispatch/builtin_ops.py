@@ -135,13 +135,16 @@ def register_builtins(registry: OpRegistry) -> None:
         registry: Registry to register into
     """
     # Register FlagGems (DEFAULT) implementations
-    try:
-        from .backends.flaggems.register_ops import register_builtins as register_flaggems
+    if os.environ.get("VLLM_FL_DISABLE_FLAGGEMS", "0") != "1":
+        try:
+            from .backends.flaggems.register_ops import register_builtins as register_flaggems
 
-        register_flaggems(registry)
-        logger.debug("Registered FlagGems operators")
-    except Exception as e:
-        logger.warning(f"Failed to register FlagGems operators: {e}")
+            register_flaggems(registry)
+            logger.debug("Registered FlagGems operators")
+        except Exception as e:
+            logger.warning(f"Failed to register FlagGems operators: {e}")
+    else:
+        logger.info("FlagGems registration skipped (VLLM_FL_DISABLE_FLAGGEMS=1)")
 
     # Register PyTorch (REFERENCE) implementations
     try:

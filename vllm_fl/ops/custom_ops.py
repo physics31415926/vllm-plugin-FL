@@ -23,9 +23,10 @@ OOT_OPS = {
     "rms_norm": (RMSNormFL, "RMSNorm"),  # noqa F405
     "rotary_embedding": (RotaryEmbeddingFL, "RotaryEmbedding"),  # noqa F405
     # NOTE: fused_moe is NOT registered via PluggableLayer/CustomOp.register_oot.
-    # In vllm >= 0.24.0, FusedMoE is a factory function (not a class), so the
-    # PluggableLayer OOT path is incompatible.  Instead, FusedMoEFL is injected
-    # via monkey-patch in register_oot_ops() below.
+    # In vllm >= 0.24.0, FusedMoE became a factory function (not a class),
+    # renamed to FusedMoEFactory in 0.28.0, so the PluggableLayer OOT path is
+    # incompatible.  Instead, FusedMoEFL is injected via monkey-patch in
+    # register_oot_ops() below.
     # "fused_moe": (FusedMoEFL, "FusedMoE"),
     # unquantized_fused_moe_method is also handled via FusedMoEFL factory —
     # no separate registration needed.
@@ -141,11 +142,11 @@ def _patch_fused_moe_factory() -> None:
     import vllm.model_executor.layers.fused_moe as _fused_moe_pkg
     import vllm.model_executor.layers.fused_moe.layer as _fused_moe_layer
 
-    if getattr(_fused_moe_layer, "FusedMoE", None) is FusedMoEFL:  # noqa F405
+    if getattr(_fused_moe_layer, "FusedMoEFactory", None) is FusedMoEFL:  # noqa F405
         # Already patched — idempotent.
         return
 
-    # Patch at the module level so `from vllm...fused_moe import FusedMoE` picks it up.
-    _fused_moe_layer.FusedMoE = FusedMoEFL  # noqa F405
-    _fused_moe_pkg.FusedMoE = FusedMoEFL   # noqa F405
-    logger.info("Monkey-patched FusedMoE factory -> FusedMoEFL")
+    # Patch at the module level so `from vllm...fused_moe import FusedMoEFactory` picks it up.
+    _fused_moe_layer.FusedMoEFactory = FusedMoEFL  # noqa F405
+    _fused_moe_pkg.FusedMoEFactory = FusedMoEFL   # noqa F405
+    logger.info("Monkey-patched FusedMoEFactory -> FusedMoEFL")
