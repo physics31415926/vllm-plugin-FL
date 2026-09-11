@@ -2,6 +2,65 @@
 
 """Runner-selection contracts for vLLM 0.28.0."""
 
+import pytest
+
+
+@pytest.mark.parametrize("requested, expected", [(None, "0"), ("0", "0"), ("1", "1")])
+def test_ascend_defaults_to_fl_runner(monkeypatch, requested, expected):
+    import os
+    from types import SimpleNamespace
+
+    import vllm_fl
+    import vllm_fl.utils
+
+    if requested is None:
+        monkeypatch.delenv("VLLM_USE_V2_MODEL_RUNNER", raising=False)
+    else:
+        monkeypatch.setenv("VLLM_USE_V2_MODEL_RUNNER", requested)
+    monkeypatch.setattr(vllm_fl, "_arm_cpu_platform", lambda: None)
+    monkeypatch.setattr(vllm_fl, "_patch_custom_ops", lambda: None)
+    monkeypatch.setattr(vllm_fl, "_patch_flash_attn_import", lambda: None)
+    monkeypatch.setattr(vllm_fl, "_get_op_config", lambda: None)
+    monkeypatch.setattr(
+        vllm_fl.utils, "DeviceInfo", lambda: SimpleNamespace(vendor_name="ascend")
+    )
+
+    assert vllm_fl.register() == "vllm_fl.platform.PlatformFL"
+    assert os.environ["VLLM_USE_V2_MODEL_RUNNER"] == expected
+
+
+def test_ascend_rejects_explicit_upstream_v2_runner(monkeypatch):
+    from types import SimpleNamespace
+
+    from vllm_fl.platform import PlatformFL
+
+    monkeypatch.setattr(PlatformFL, "device_type", "npu")
+    with pytest.raises(ValueError, match="VLLM_USE_V2_MODEL_RUNNER=0"):
+        PlatformFL.check_and_update_config(SimpleNamespace(use_v2_model_runner=True))
+
+
+def test_ascend_rejects_non_eager_execution(monkeypatch):
+    from types import SimpleNamespace
+
+    from vllm_fl.platform import PlatformFL
+
+    monkeypatch.setattr(PlatformFL, "device_type", "npu")
+    config = SimpleNamespace(
+        use_v2_model_runner=False,
+        model_config=SimpleNamespace(enforce_eager=False),
+    )
+    with pytest.raises(ValueError, match="--enforce-eager"):
+        PlatformFL.check_and_update_config(config)
+
+
+def test_ascend_does_not_advertise_static_graph_support(monkeypatch):
+    from vllm_fl.platform import PlatformFL
+
+    monkeypatch.setattr(PlatformFL, "device_type", "npu")
+    monkeypatch.setattr(PlatformFL, "vendor_name", "ascend")
+
+    assert not PlatformFL.support_static_graph_mode()
+
 
 def test_register_preserves_upstream_runner_selection(monkeypatch):
     from types import SimpleNamespace

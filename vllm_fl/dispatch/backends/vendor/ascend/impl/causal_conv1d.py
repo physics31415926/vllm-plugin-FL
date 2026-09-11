@@ -15,7 +15,7 @@ import torch
 import torch.nn.functional as F
 import triton
 import triton.language as tl
-from vllm.v1.attention.backends.utils import PAD_SLOT_ID
+from vllm.v1.attention.backends.utils import NULL_BLOCK_ID, PAD_SLOT_ID
 
 
 def causal_conv1d_ref(
@@ -64,14 +64,21 @@ def causal_conv1d_ref(
 def causal_conv1d_fn(
     x: torch.Tensor,
     weight: torch.Tensor,
-    bias: Optional[torch.Tensor] = None,
-    activation: Optional[str] = "silu",
-    conv_states: Optional[torch.Tensor] = None,
-    has_initial_state: Optional[torch.Tensor] = None,
+    bias: Optional[torch.Tensor],
+    conv_states: torch.Tensor,
+    query_start_loc: torch.Tensor,
     cache_indices: Optional[torch.Tensor] = None,
-    query_start_loc: Optional[torch.Tensor] = None,
-    metadata: Optional[Any] = None,
+    has_initial_state: Optional[torch.Tensor] = None,
+    activation: Optional[str] = "silu",
     pad_slot_id: int = PAD_SLOT_ID,
+    null_block_id: int = NULL_BLOCK_ID,
+    block_idx_first_scheduled_token=None,
+    block_idx_last_scheduled_token=None,
+    initial_state_idx=None,
+    num_computed_tokens=None,
+    block_size_to_align=0,
+    metadata: Optional[Any] = None,
+    validate_data=False,
 ):
     """
     x: (batch, dim, seqlen) or (dim,cu_seq_len) for varlen
@@ -100,39 +107,49 @@ def causal_conv1d_fn(
             indices 0 and 3
     out: (batch, dim, seqlen)
     """
+    if any(arg is not None for arg in (
+        block_idx_first_scheduled_token, block_idx_last_scheduled_token,
+        initial_state_idx, num_computed_tokens,
+    )) or block_size_to_align:
+        raise NotImplementedError("Ascend causal conv prefill requires prefix caching disabled")
+    if cache_indices is not None and cache_indices.ndim != 1:
+        raise NotImplementedError("Ascend causal conv prefill requires one state per sequence")
+    if activation is True:
+        activation = "silu"
     if activation not in [None, "silu", "swish"]:
         raise NotImplementedError("activation must be None, silu, or swish")
     if x.stride(-1) != 1:
         x = x.contiguous()
     bias = bias.contiguous() if bias is not None else None
 
-    out_ref = []
-    out_ref_b = []
     seqlens = query_start_loc[1:] - query_start_loc[:-1]
     seqlens = seqlens.tolist()
     splits = torch.split(x, seqlens, dim=-1)
     width = weight.shape[1]
 
-    for i in range(len(seqlens)):
-        x_s = splits[i]
-        if cache_indices[i] == PAD_SLOT_ID:
+    # The caller transposes [channels, tokens] back to [tokens, channels].
+    # vLLM 0.28's fused_post_conv_prep assumes unit channel stride, so
+    # return channel-contiguous storage even though conv1d uses time last.
+    output = torch.zeros_like(x.T, memory_format=torch.contiguous_format).T
+    start = 0
+    for i, x_s in enumerate(splits):
+        end = start + seqlens[i]
+        cache_index = int(cache_indices[i]) if cache_indices is not None else i
+        if seqlens[i] == 0 or (
+            cache_indices is not None and cache_index in (pad_slot_id, null_block_id)
+        ):
+            start = end
             continue
-        out_ref_b.append(
-            causal_conv1d_ref(
-                x_s,
-                weight,
-                bias,
-                activation=activation,
-                return_final_states=True,
-                final_states_out=conv_states[cache_indices[i]][..., : (width - 1)].unsqueeze(0),
-                initial_states=conv_states[cache_indices[i]][..., : (width - 1)]
-                if has_initial_state[i]
-                else None,
-            )
+        state = conv_states[cache_index][..., :width - 1]
+        result, _ = causal_conv1d_ref(
+            x_s.unsqueeze(0), weight, bias, activation=activation,
+            return_final_states=True, final_states_out=state.unsqueeze(0),
+            initial_states=state.unsqueeze(0)
+            if has_initial_state is not None and has_initial_state[i] else None,
         )
-    out_ref.append(torch.cat([t[0] for t in out_ref_b], dim=-1))
-    out_ref_tensor = torch.cat(out_ref, dim=0)
-    return out_ref_tensor
+        output[:, start:end] = result.squeeze(0)
+        start = end
+    return output
 
 
 @triton.jit
@@ -167,7 +184,7 @@ def _causal_conv1d_update_kernel_npu_tiled(
     stride_o_dim: tl.constexpr,
     stride_o_token: tl.constexpr,
     # others
-    pad_slot_id: tl.constexpr,
+    null_block_id: tl.constexpr,
     # Meta
     HAS_BIAS: tl.constexpr,
     KERNEL_WIDTH: tl.constexpr,  # <= 6
@@ -176,7 +193,7 @@ def _causal_conv1d_update_kernel_npu_tiled(
     IS_APC_ENABLED: tl.constexpr,
     IS_SPEC_DECODING: tl.constexpr,
     NP2_STATELEN: tl.constexpr,
-    USE_PAD_SLOT: tl.constexpr,
+    HAS_NULL_BLOCK: tl.constexpr,
     # tiling
     BLOCK_N: tl.constexpr,  # channel tile (C_TILE)
     B_TILE: tl.constexpr,  # batch tile
@@ -245,8 +262,8 @@ def _causal_conv1d_update_kernel_npu_tiled(
             other=0,
         ).to(tl.int64)
 
-        if USE_PAD_SLOT:
-            lane_active = lane_active & (conv_states_input_coord != pad_slot_id)
+        if HAS_NULL_BLOCK:
+            lane_active = lane_active & (conv_states_input_coord != null_block_id)
 
         # -------------------------
         # varlen (optional): revise seqlen_run and state_len_run like original kernel does
@@ -540,10 +557,11 @@ def causal_conv1d_update_npu(
     num_accepted_tokens: torch.Tensor | None = None,
     query_start_loc: torch.Tensor | None = None,
     max_query_len: int = -1,
-    pad_slot_id: int = PAD_SLOT_ID,
+    null_block_id: int = NULL_BLOCK_ID,
     block_idx_last_scheduled_token: torch.Tensor | None = None,
     initial_state_idx: torch.Tensor | None = None,
     validate_data=False,
+    out: torch.Tensor | None = None,
 ):
     """
     x: Input tensor which can take the following shapes:
@@ -575,16 +593,17 @@ def causal_conv1d_update_npu(
     max_query_len: int
         If query_start_loc is not None, this indicates the maximum query
         length in the batch.
-    pad_slot_id: int
-            if conv_state_indices is passed, lets the kernel identify padded
-            entries that will not be processed,
-            for example: conv_state_indices = [pad_slot_id, 1 ,20 ,pad_slot_id]
+    null_block_id: int
+            Block ID used to identify padded entries in conv_state_indices.
+            Block 0 is the null block.
+            for example: conv_state_indices = [null_block_id, 1, 20, null_block_id]
             in this case, the kernel will not process entries at
             indices 0 and 3
-    out: (batch, dim) or (batch, dim, seqlen) or (num_tokens, dim), same shape as `x`
+    out: optional output tensor with the same shape as `x`. When omitted,
+        the input is overwritten.
     """
     if validate_data:
-        assert pad_slot_id is not None
+        assert null_block_id is not None
         assert x.stride(1) == 1
     if isinstance(activation, bool):
         activation = "silu" if activation is True else None
@@ -593,10 +612,22 @@ def causal_conv1d_update_npu(
 
     original_x_dtype = x.dtype
     x = x.to(conv_state.dtype)
+    if out is None:
+        out = x
+    else:
+        if out.shape != x.shape:
+            raise ValueError(
+                f"`out` shape {tuple(out.shape)} must match `x` shape {tuple(x.shape)}."
+            )
+        if out.dtype != original_x_dtype or out.device != x.device:
+            raise ValueError(
+                "`out` must have the same dtype and device as the input `x`."
+            )
     unsqueeze = query_start_loc is None and x.dim() == 2
     if unsqueeze:
         # make it (batch, dim, seqlen) with seqlen == 1
         x = x.unsqueeze(-1)
+        out = out.unsqueeze(-1)
 
     if query_start_loc is None:
         batch, dim, seqlen = x.shape
@@ -615,9 +646,6 @@ def causal_conv1d_update_npu(
         assert state_len_total >= width - 1
         assert num_cache_lines >= batch
         assert weight.stride(1) == 1
-
-    # overwrite-on-x strategy same as original
-    out = x
 
     stride_w_dim, stride_w_width = weight.stride()
     if query_start_loc is None:
@@ -696,7 +724,7 @@ def causal_conv1d_update_npu(
         stride_o_seq,
         stride_o_dim,
         stride_o_token,
-        pad_slot_id,
+        null_block_id,
         HAS_BIAS=bias is not None,
         KERNEL_WIDTH=width,
         SILU_ACTIVATION=activation in ["silu", "swish"],
@@ -704,7 +732,7 @@ def causal_conv1d_update_npu(
         IS_APC_ENABLED=block_idx_last_scheduled_token is not None,
         IS_SPEC_DECODING=num_accepted_tokens is not None,
         NP2_STATELEN=np2_statelen,
-        USE_PAD_SLOT=pad_slot_id is not None,
+        HAS_NULL_BLOCK=null_block_id is not None,
         BLOCK_N=block_n,
         B_TILE=b_tile,
         T_CHUNK=t_chunk,

@@ -32,11 +32,13 @@ from vllm.v1.attention.backend import (
     AttentionBackend,
     AttentionImpl,
     AttentionLayer,
+    AttentionMetadataBuilder,
     AttentionType,
 )
 from vllm.config import VllmConfig, get_current_vllm_config
 from vllm.utils.math_utils import cdiv
 from vllm.v1.attention.backend import AttentionCGSupport
+from vllm.v1.attention.backends.registry import AttentionBackendEnum, register_backend
 from vllm.v1.attention.backends.utils import CommonAttentionMetadata
 
 from vllm_fl.dispatch.backends.vendor.ascend.impl.attention_mask import (
@@ -209,17 +211,17 @@ class AscendCommonAttentionMetadata(CommonAttentionMetadata):
         )
 
 
-class AscendAttentionMetadataBuilder:
+class AscendAttentionMetadataBuilder(AttentionMetadataBuilder[AscendMetadata]):
     """Builder for Ascend attention metadata."""
 
-    # ACL graph support - ALWAYS means full graph capture is supported
-    aclgraph_support: ClassVar[AttentionCGSupport] = AttentionCGSupport.ALWAYS
+    # Ascend is eager-only until the full vLLM graph path is NPU-safe.
+    aclgraph_support: ClassVar[AttentionCGSupport] = AttentionCGSupport.NEVER
     reorder_batch_threshold: ClassVar[int] = 1
 
     @staticmethod
     def get_cudagraph_support(vllm_config, kv_cache_spec) -> AttentionCGSupport:
         """Get CUDAGraph support level for Ascend backend."""
-        return AttentionCGSupport.ALWAYS
+        return AttentionCGSupport.NEVER
 
     # Class-level mask builder cache
     _mask_builder: ClassVar[Optional[AttentionMaskBuilder]] = None
@@ -232,12 +234,13 @@ class AscendAttentionMetadataBuilder:
         vllm_config: VllmConfig,
         device: torch.device,
     ):
+        super().__init__(kv_cache_spec, layer_names, vllm_config, device)
         self.vllm_config = vllm_config
         self.model_config = vllm_config.model_config
         self.device = device
         self.max_num_blocks_per_req = cdiv(
             self.model_config.max_model_len,
-            AscendAttentionBackend.get_supported_block_size()[0]
+            AscendAttentionBackend.get_supported_kernel_block_sizes()[0]
         )
 
         self.speculative_config = vllm_config.speculative_config
@@ -295,7 +298,7 @@ class AscendAttentionMetadataBuilder:
         self,
         common_prefix_len: int,
         common_attn_metadata,
-        model: Optional[nn.Module] = None,
+        fast_build: bool = False,
     ):
         """Build AscendMetadata from common attention metadata."""
         num_reqs = common_attn_metadata.num_reqs
@@ -422,6 +425,7 @@ class AscendAttentionMetadataBuilder:
         return False
 
 
+@register_backend(AttentionBackendEnum.CUSTOM)
 class AscendAttentionBackend(AttentionBackend):
     """
     Ascend NPU native attention backend.
@@ -433,7 +437,7 @@ class AscendAttentionBackend(AttentionBackend):
 
     @staticmethod
     def get_name() -> str:
-        return "ASCEND_FL"
+        return "CUSTOM"
 
     @staticmethod
     def get_impl_cls() -> Type["AscendAttentionBackendImpl"]:
@@ -484,7 +488,9 @@ class AscendAttentionBackend(AttentionBackend):
             value_caches[dst_indices] = value_caches[src_indices]
 
     @staticmethod
-    def get_supported_block_size() -> list[int]:
+    def get_supported_kernel_block_sizes() -> list[int]:
+        # vLLM 0.28 uses this contract for validation and hybrid KV blocks.
+        # Inheriting AttentionBackend's default would accept every block size.
         return [128]
 
 
@@ -553,29 +559,15 @@ class AscendAttentionBackendImpl(AttentionImpl):
             block_size = 128
             block_table = None
             actual_seq_lengths_kv = attn_metadata.actual_seq_lengths_q
-        elif attn_metadata.attn_state == AscendAttentionState.PrefillCacheHit:
-            batch_size = attn_metadata.seq_lens.shape[0]
-            block_table = attn_metadata.block_tables[:batch_size, :]
-            num_block, block_size, _, _ = self.key_cache.shape
-            key = self.key_cache.view(num_block, block_size, -1)
-            value = self.value_cache.view(num_block, block_size, -1)
-            actual_seq_lengths_kv = attn_metadata.seq_lens_list
-        elif attn_metadata.attn_state == AscendAttentionState.DecodeOnly:
-            # num_block, block_size, _, _ = self.key_cache.shape
-            # key = self.key_cache.view(num_block, block_size, -1)
-            # value = self.value_cache.view(num_block, block_size, -1)
-            key = self.key_cache.view(-1, block_size, 256)
-            value = self.value_cache.view(-1, block_size, 256)
-            block_table = attn_metadata.block_tables
-            actual_seq_lengths_kv = attn_metadata.seq_lens_list
         else:
-            # ChunkedPrefill
-            # num_block, block_size, _, _ = self.key_cache.shape
-            # key = self.key_cache.view(num_block, block_size, -1)
-            # value = self.value_cache.view(num_block, block_size, -1)
-            key = self.key_cache.view(-1, block_size, 256)
-            value = self.value_cache.view(-1, block_size, 256)
+            # Cached FIA uses [blocks, block_size, kv_heads * head_size].
+            # The KV width varies with the model and tensor parallel size.
+            num_blocks, block_size, _, _ = self.key_cache.shape
+            key = self.key_cache.view(num_blocks, block_size, -1).contiguous()
+            value = self.value_cache.view(num_blocks, block_size, -1).contiguous()
             block_table = attn_metadata.block_tables
+            if attn_metadata.attn_state == AscendAttentionState.PrefillCacheHit:
+                block_table = block_table[:attn_metadata.seq_lens.shape[0], :]
             actual_seq_lengths_kv = attn_metadata.seq_lens_list
 
         return key, value, block_size, block_table, actual_seq_lengths_kv
@@ -589,20 +581,32 @@ class AscendAttentionBackendImpl(AttentionImpl):
     ):
         """Reshape and cache key/value tensors."""
         if len(kv_cache) > 1:
-            if self.key_cache is None:
-                self.key_cache, self.value_cache = kv_cache[0], kv_cache[1]
-            slots = attn_metadata.slot_mapping
+            self.key_cache, self.value_cache = kv_cache[0], kv_cache[1]
+            num_tokens = attn_metadata.num_actual_tokens
+            slots = attn_metadata.slot_mapping[:num_tokens]
+            if not (self.key_cache.is_contiguous() and self.value_cache.is_contiguous()):
+                # Hybrid caches interleave K/V blocks. The native cache op
+                # requires contiguous outputs; update the actual strided
+                # storage instead of retaining a disconnected cache copy.
+                valid = slots >= 0
+                slots = slots[valid].long()
+                block_size = self.key_cache.shape[1]
+                blocks = slots // block_size
+                offsets = slots % block_size
+                self.key_cache[blocks, offsets] = key[:num_tokens][valid]
+                self.value_cache[blocks, offsets] = value[:num_tokens][valid]
+                return key, value
             # torch_npu requires int32 for slot_indices
             # TODO(yxa): block_table.py: CUDA uses int64, NPU uses int32.
             if slots.dtype != torch.int32:
                 slots = slots.to(torch.int32)
             # Use torch_npu reshape_and_cache
             torch_npu._npu_reshape_and_cache(
-                key=key[:attn_metadata.num_actual_tokens],
-                value=value[:attn_metadata.num_actual_tokens],
+                key=key[:num_tokens],
+                value=value[:num_tokens],
                 key_cache=self.key_cache,
                 value_cache=self.value_cache,
-                slot_indices=slots[:attn_metadata.num_actual_tokens]
+                slot_indices=slots
             )
         return key, value
 
@@ -657,8 +661,8 @@ class AscendAttentionBackendImpl(AttentionImpl):
         """Forward pass using paged attention for decode."""
         torch_npu._npu_paged_attention(
             query=query,
-            key_cache=self.key_cache,
-            value_cache=self.value_cache,
+            key_cache=self.key_cache.contiguous(),
+            value_cache=self.value_cache.contiguous(),
             num_kv_heads=self.num_kv_heads,
             num_heads=self.num_heads,
             scale_value=self.scale,
@@ -779,8 +783,6 @@ class AscendAttentionBackendImpl(AttentionImpl):
             return output.fill_(0)
 
         # Reshape and cache KV
-        if attn_metadata != AscendAttentionState.DecodeOnly:
-            kv_cache = [i.contiguous() for i in kv_cache]
         if key is not None and value is not None:
             key = key.contiguous()
             value = value.contiguous()
