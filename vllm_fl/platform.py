@@ -222,9 +222,37 @@ class PlatformFL(Platform):
 
     @classmethod
     def check_and_update_config(cls, vllm_config: "VllmConfig") -> None:
-        parallel_config = vllm_config.parallel_config
+        if cls.device_type == "npu" and vllm_config.use_v2_model_runner:
+            raise ValueError(
+                "Ascend requires ModelRunnerFL; the upstream V2 runner uses "
+                "unsupported CUDA/UVA APIs. Set VLLM_USE_V2_MODEL_RUNNER=0."
+            )
         model_config = vllm_config.model_config
+        if (
+            cls.device_type == "npu"
+            and model_config is not None
+            and not model_config.enforce_eager
+        ):
+            raise ValueError(
+                "Ascend with vLLM 0.28 empty requires eager execution. "
+                "Set --enforce-eager; torch.compile and CUDA graph paths "
+                "still contain CUDA-only assumptions."
+            )
+        parallel_config = vllm_config.parallel_config
+        if cls.device_type == "npu" and model_config is not None:
+            from vllm_fl.patches.ascend_glm_dsa import (
+                prepare_glm_dsa_dense_fallback,
+            )
 
+            if prepare_glm_dsa_dense_fallback(model_config):
+                logger.warning_once(
+                    "Ascend uses dense attention for GLM DSA because sparse MLA "
+                    "is not available; max_model_len is limited to index_topk."
+                )
+                # VllmConfig validates parallelism before the platform hook.
+                # Revalidate after changing MLA/KV-head semantics so DCP and TP
+                # constraints are checked against the dense architecture.
+                model_config.verify_with_parallel_config(parallel_config)
         parallel_config.worker_cls = "vllm_fl.worker.worker.WorkerFL"
 
         scheduler_config = vllm_config.scheduler_config
@@ -418,7 +446,7 @@ class PlatformFL(Platform):
 
     @classmethod
     def support_static_graph_mode(cls) -> bool:
-        return cls.vendor_name in [
+        return cls.device_type != "npu" and cls.vendor_name in [
             "nvidia",
             "ascend",
             "metax",
@@ -466,14 +494,12 @@ class PlatformFL(Platform):
 
     @classmethod
     def use_custom_allreduce(cls) -> bool:
-        if cls.vendor_name == "hygon":
-            return False
-        return cls.dist_backend != "flagcx"
+        return cls.vendor_name != "hygon" and cls.dist_backend != "flagcx"
 
     @classmethod
     def pre_register_and_update(cls, parser=None) -> None:
         if cls.device_name == "npu":
-            pass
+            importlib.import_module("vllm_fl.dispatch.backends.vendor.ascend")
         if cls.vendor_name == "iluvatar":
             # Patches are applied at module import time in iluvatar.py.
             # Also call chained-or patch here explicitly from the main process,
