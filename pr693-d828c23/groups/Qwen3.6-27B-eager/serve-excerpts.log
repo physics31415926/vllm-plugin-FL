@@ -1,0 +1,19 @@
+Selected vLLM log lines. Process IDs omitted.
+Replay columns: Unpadded Tokens | Padded Tokens | Num Paddings | Runtime Mode | Count
+
+Worker INFO 11-14 09:27:13 [metax_v2.py:46] MetaX V2 uses upstream NonUvaBuffer: no native mapped CPU-view kernel.
+Worker INFO 11-14 09:27:14 [worker.py:572] MetaX V2 model runner: vllm.v1.worker.gpu.model_runner.GPUModelRunner
+INFO:     Application startup complete.
+
+[2026-11-14 09:25:51] [INFO] [vllm_fl.dispatch.backends.vendor.metax.patches.moe_topk_compat] MetaX moe topk compat applied: vllm._custom_ops.topk_softmax/topk_sigmoid rebound to FlagGems-vllm public operators
+[2026-11-14 09:26:21] [INFO] [vllm_fl.dispatch.backends.vendor.metax.patches.moe_topk_compat] MetaX moe topk compat applied: vllm._custom_ops.topk_softmax/topk_sigmoid rebound to FlagGems-vllm public operators
+[2026-11-14 09:26:49] [INFO] [vllm_fl.dispatch.backends.vendor.metax.patches.moe_topk_compat] MetaX moe topk compat applied: vllm._custom_ops.topk_softmax/topk_sigmoid rebound to FlagGems-vllm public operators
+[2026-11-14 09:27:09] [INFO] [vllm_fl.dispatch.backends.vendor.metax.patches.moe_topk_compat] MetaX moe topk compat applied: vllm._custom_ops.topk_softmax/topk_sigmoid rebound to FlagGems-vllm public operators
+[2026-11-14 09:27:09] [INFO] [vllm_fl.dispatch.backends.vendor.metax.patches.moe_topk_compat] MetaX moe topk compat applied: vllm._custom_ops.topk_softmax/topk_sigmoid rebound to FlagGems-vllm public operators
+[2026-11-14 09:27:10] [INFO] [vllm_fl.dispatch.backends.vendor.metax.patches.moe_topk_compat] MetaX moe topk compat applied: vllm._custom_ops.topk_softmax/topk_sigmoid rebound to FlagGems-vllm public operators
+[2026-11-14 09:27:10] [INFO] [vllm_fl.dispatch.backends.vendor.metax.patches.moe_topk_compat] MetaX moe topk compat applied: vllm._custom_ops.topk_softmax/topk_sigmoid rebound to FlagGems-vllm public operators
+[2026-11-14 09:27:10] [INFO] [vllm_fl.dispatch.backends.vendor.metax.patches.moe_topk_compat] MetaX moe topk compat applied: vllm._custom_ops.topk_softmax/topk_sigmoid rebound to FlagGems-vllm public operators
+[2026-11-14 09:27:10] [INFO] [vllm_fl.dispatch.backends.vendor.metax.patches.moe_topk_compat] MetaX moe topk compat applied: vllm._custom_ops.topk_softmax/topk_sigmoid rebound to FlagGems-vllm public operators
+[2026-11-14 09:27:10] [INFO] [vllm_fl.dispatch.backends.vendor.metax.patches.moe_topk_compat] MetaX moe topk compat applied: vllm._custom_ops.topk_softmax/topk_sigmoid rebound to FlagGems-vllm public operators
+[2026-11-14 09:27:10] [INFO] [vllm_fl.dispatch.backends.vendor.metax.patches.moe_topk_compat] MetaX moe topk compat applied: vllm._custom_ops.topk_softmax/topk_sigmoid rebound to FlagGems-vllm public operators
+[2026-11-14 09:34:10] [INFO] [vllm_fl.dispatch.backends.vendor.metax.patches.moe_topk_compat] MetaX moe topk compat applied: vllm._custom_ops.topk_softmax/topk_sigmoid rebound to FlagGems-vllm public operators

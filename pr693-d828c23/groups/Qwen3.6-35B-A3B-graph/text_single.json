@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "case": {
+    "scenario": "text_single",
+    "model_path": "/data/models/Qwen/Qwen3.6-35B-A3B",
+    "served_model_name": "Qwen3.6-35B-A3B",
+    "port": "18774",
+    "concurrency": 1
+  },
+  "started_at": "2026-11-14T09:58:19.327810+00:00",
+  "finished_at": "2026-11-14T09:58:29.360965+00:00",
+  "input": [
+    {
+      "request_id": "text-llm-details",
+      "kind": "text",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Introduce large language models (LLMs) in detail. Explain what they are, how training and inference work, typical capabilities, limitations, and responsible use. Write a coherent response of at least 256 characters. Do not repeat words or phrases unnecessarily."
+        }
+      ],
+      "required_terms": [
+        "large language model",
+        "training",
+        "inference",
+        "limitations"
+      ],
+      "min_length": 256,
+      "max_tokens": 512
+    }
+  ],
+  "output": [
+    {
+      "request_id": "text-llm-details",
+      "kind": "text",
+      "latency_seconds": 10.011,
+      "text": "Large language models represent a transformative leap in artificial intelligence, leveraging deep neural networks to process and generate human-like text. These systems are primarily built upon the transformer architecture, which utilizes self-attention mechanisms to weigh the significance of different words within a sequence, allowing the model to capture complex contextual relationships. Training occurs in two distinct phases: pre-training on vast, diverse datasets to learn general language patterns, followed by fine-tuning on specific tasks to enhance performance. During inference, the model predicts the next token in a sequence based on probabilistic calculations, creating coherent and contextually relevant outputs. Capabilities include natural language understanding, code generation, creative writing, and logical reasoning. However, limitations such as hallucinations, bias, and high computational costs persist. Responsible use requires rigorous validation, transparency about model origins, and continuous monitoring to mitigate risks associated with misinformation and ethical concerns.",
+      "checks": {
+        "non_empty": true,
+        "minimum_length": true,
+        "expected_semantics": true,
+        "expected_order": true,
+        "no_bang_triplet": true,
+        "no_mojibake": true,
+        "no_control_characters": true,
+        "no_long_character_run": true,
+        "no_repeated_word_run": true,
+        "no_repeated_phrase": true
+      },
+      "passed": true,
+      "response": {
+        "id": "chatcmpl-81175da8c6244e95",
+        "choices": [
+          {
+            "finish_reason": "stop",
+            "index": 0,
+            "logprobs": null,
+            "message": {
+              "content": "Large language models represent a transformative leap in artificial intelligence, leveraging deep neural networks to process and generate human-like text. These systems are primarily built upon the transformer architecture, which utilizes self-attention mechanisms to weigh the significance of different words within a sequence, allowing the model to capture complex contextual relationships. Training occurs in two distinct phases: pre-training on vast, diverse datasets to learn general language patterns, followed by fine-tuning on specific tasks to enhance performance. During inference, the model predicts the next token in a sequence based on probabilistic calculations, creating coherent and contextually relevant outputs. Capabilities include natural language understanding, code generation, creative writing, and logical reasoning. However, limitations such as hallucinations, bias, and high computational costs persist. Responsible use requires rigorous validation, transparency about model origins, and continuous monitoring to mitigate risks associated with misinformation and ethical concerns.",
+              "refusal": null,
+              "role": "assistant",
+              "annotations": null,
+              "audio": null,
+              "function_call": null,
+              "tool_calls": null,
+              "reasoning": null
+            },
+            "stop_reason": null,
+            "token_ids": null,
+            "routed_experts": null
+          }
+        ],
+        "created": 1794650299,
+        "model": "Qwen3.6-35B-A3B",
+        "object": "chat.completion",
+        "metadata": null,
+        "moderation": null,
+        "service_tier": null,
+        "system_fingerprint": "vllm-0.32.0-tp4-c81900f0",
+        "usage": {
+          "completion_tokens": 175,
+          "prompt_tokens": 65,
+          "total_tokens": 240,
+          "completion_tokens_details": null,
+          "prompt_tokens_details": null
+        },
+        "prompt_logprobs": null,
+        "prompt_token_ids": null,
+        "prompt_text": null,
+        "kv_transfer_params": null,
+        "ec_transfer_params": null,
+        "metrics": null
+      }
+    }
+  ],
+  "summary": {
+    "request_count": 1,
+    "passed_count": 1,
+    "failed_count": 0,
+    "passed": true
+  }
+}

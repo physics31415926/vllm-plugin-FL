@@ -1,0 +1,42 @@
+Selected vLLM log lines. Process IDs omitted.
+Replay columns: Unpadded Tokens | Padded Tokens | Num Paddings | Runtime Mode | Count
+
+Worker INFO 11-14 09:39:57 [metax_v2.py:46] MetaX V2 uses upstream NonUvaBuffer: no native mapped CPU-view kernel.
+Worker INFO 11-14 09:39:57 [worker.py:572] MetaX V2 model runner: vllm.v1.worker.gpu.model_runner.GPUModelRunner
+Worker_TP0 INFO 11-14 09:58:09 [model_runner.py:1127] Graph capturing finished in 626 secs, took 0.00 GiB
+Worker_TP1 INFO 11-14 09:58:09 [model_runner.py:1127] Graph capturing finished in 626 secs, took 0.38 GiB
+Worker_TP2 INFO 11-14 09:58:09 [model_runner.py:1127] Graph capturing finished in 626 secs, took 0.37 GiB
+Worker_TP3 INFO 11-14 09:58:09 [model_runner.py:1127] Graph capturing finished in 626 secs, took 0.38 GiB
+Worker_TP3 INFO 11-14 09:58:36 [model_runner.py:1127] Graph capturing finished in 4 secs, took 0.05 GiB
+Worker_TP2 INFO 11-14 09:58:36 [model_runner.py:1127] Graph capturing finished in 5 secs, took 0.05 GiB
+Worker_TP1 INFO 11-14 09:58:36 [model_runner.py:1127] Graph capturing finished in 5 secs, took 0.05 GiB
+Worker_TP0 INFO 11-14 09:58:36 [model_runner.py:1127] Graph capturing finished in 5 secs, took 0.05 GiB
+INFO:     Application startup complete.
+APIServer INFO 11-14 10:01:47 [cuda_graph.py:123] | 1               | 1             | 0            | PIECEWISE    | 211   |
+APIServer INFO 11-14 10:01:47 [cuda_graph.py:123] | 65              | 128           | 63           | PIECEWISE    | 1     |
+APIServer INFO 11-14 10:01:57 [cuda_graph.py:123] | 8               | 8             | 0            | PIECEWISE    | 2     |
+APIServer INFO 11-14 10:01:57 [cuda_graph.py:123] | 203             | 256           | 53           | PIECEWISE    | 1     |
+APIServer INFO 11-14 10:01:57 [cuda_graph.py:123] | 4               | 4             | 0            | PIECEWISE    | 1     |
+APIServer INFO 11-14 10:01:57 [cuda_graph.py:123] | 1               | 1             | 0            | PIECEWISE    | 1     |
+APIServer INFO 11-14 10:12:17 [cuda_graph.py:123] | 1               | 1             | 0            | PIECEWISE    | 7     |
+APIServer INFO 11-14 10:12:27 [cuda_graph.py:123] | 201             | 256           | 55           | PIECEWISE    | 1     |
+APIServer INFO 11-14 10:12:27 [cuda_graph.py:123] | 1               | 1             | 0            | PIECEWISE    | 1     |
+APIServer INFO 11-14 10:15:07 [cuda_graph.py:123] | 3               | 4             | 1            | PIECEWISE    | 3     |
+APIServer INFO 11-14 10:15:07 [cuda_graph.py:123] | 1               | 1             | 0            | PIECEWISE    | 2     |
+APIServer INFO 11-14 10:15:07 [cuda_graph.py:123] | 8               | 8             | 0            | PIECEWISE    | 1     |
+APIServer INFO 11-14 10:15:07 [cuda_graph.py:123] | 4               | 4             | 0            | PIECEWISE    | 1     |
+APIServer INFO 11-14 10:15:07 [cuda_graph.py:123] | 27              | 32            | 5            | PIECEWISE    | 1     |
+APIServer INFO 11-14 10:15:07 [cuda_graph.py:123] | 25              | 32            | 7            | PIECEWISE    | 1     |
+
+[2026-11-14 09:39:04] [INFO] [vllm_fl.dispatch.backends.vendor.metax.patches.moe_topk_compat] MetaX moe topk compat applied: vllm._custom_ops.topk_softmax/topk_sigmoid rebound to FlagGems-vllm public operators
+[2026-11-14 09:39:05] [INFO] [vllm_fl.dispatch.backends.vendor.metax.patches.moe_topk_compat] MetaX moe topk compat applied: vllm._custom_ops.topk_softmax/topk_sigmoid rebound to FlagGems-vllm public operators
+[2026-11-14 09:39:33] [INFO] [vllm_fl.dispatch.backends.vendor.metax.patches.moe_topk_compat] MetaX moe topk compat applied: vllm._custom_ops.topk_softmax/topk_sigmoid rebound to FlagGems-vllm public operators
+[2026-11-14 09:39:53] [INFO] [vllm_fl.dispatch.backends.vendor.metax.patches.moe_topk_compat] MetaX moe topk compat applied: vllm._custom_ops.topk_softmax/topk_sigmoid rebound to FlagGems-vllm public operators
+[2026-11-14 09:39:54] [INFO] [vllm_fl.dispatch.backends.vendor.metax.patches.moe_topk_compat] MetaX moe topk compat applied: vllm._custom_ops.topk_softmax/topk_sigmoid rebound to FlagGems-vllm public operators
+[2026-11-14 09:39:54] [INFO] [vllm_fl.dispatch.backends.vendor.metax.patches.moe_topk_compat] MetaX moe topk compat applied: vllm._custom_ops.topk_softmax/topk_sigmoid rebound to FlagGems-vllm public operators
+[2026-11-14 09:39:54] [INFO] [vllm_fl.dispatch.backends.vendor.metax.patches.moe_topk_compat] MetaX moe topk compat applied: vllm._custom_ops.topk_softmax/topk_sigmoid rebound to FlagGems-vllm public operators
+[2026-11-14 09:39:54] [INFO] [vllm_fl.dispatch.backends.vendor.metax.patches.moe_topk_compat] MetaX moe topk compat applied: vllm._custom_ops.topk_softmax/topk_sigmoid rebound to FlagGems-vllm public operators
+[2026-11-14 09:39:54] [INFO] [vllm_fl.dispatch.backends.vendor.metax.patches.moe_topk_compat] MetaX moe topk compat applied: vllm._custom_ops.topk_softmax/topk_sigmoid rebound to FlagGems-vllm public operators
+[2026-11-14 09:39:54] [INFO] [vllm_fl.dispatch.backends.vendor.metax.patches.moe_topk_compat] MetaX moe topk compat applied: vllm._custom_ops.topk_softmax/topk_sigmoid rebound to FlagGems-vllm public operators
+[2026-11-14 09:39:55] [INFO] [vllm_fl.dispatch.backends.vendor.metax.patches.moe_topk_compat] MetaX moe topk compat applied: vllm._custom_ops.topk_softmax/topk_sigmoid rebound to FlagGems-vllm public operators
+[2026-11-14 10:01:26] [INFO] [vllm_fl.dispatch.backends.vendor.metax.patches.moe_topk_compat] MetaX moe topk compat applied: vllm._custom_ops.topk_softmax/topk_sigmoid rebound to FlagGems-vllm public operators

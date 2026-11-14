@@ -1,0 +1,182 @@
+{
+  "plugin_commit": "d828c23d982f689acb4699599fd75fb3f76aebd1",
+  "provider_commit": "e00557103e284db5b57168386db60faa051989ef",
+  "provider_source_archive_sha256": "2e19546b78a838c188b2e4e4f12b1a40b395a13fc75f24fbabb7229e63461656",
+  "driver_exit": 0,
+  "passed": 104,
+  "total": 104,
+  "groups": {
+    "Qwen3.6-27B-eager": {
+      "scenarios": {
+        "text_single": {
+          "request_count": 1,
+          "passed_count": 1,
+          "failed_count": 0,
+          "passed": true
+        },
+        "text_concurrent_8": {
+          "request_count": 8,
+          "passed_count": 8,
+          "failed_count": 0,
+          "passed": true
+        },
+        "image_single": {
+          "request_count": 1,
+          "passed_count": 1,
+          "failed_count": 0,
+          "passed": true
+        },
+        "image_concurrent_8": {
+          "request_count": 8,
+          "passed_count": 8,
+          "failed_count": 0,
+          "passed": true
+        },
+        "mixed_concurrent_8": {
+          "request_count": 8,
+          "passed_count": 8,
+          "failed_count": 0,
+          "passed": true
+        }
+      },
+      "passed": 26,
+      "total": 26,
+      "native_runner_v2": true,
+      "server_revision_argument": null,
+      "graph_capture_finished": false,
+      "positive_piecewise_replay_rows": 0,
+      "piecewise_replay_count_sum": 0,
+      "exit": 0,
+      "provider_bridge_bound": true
+    },
+    "Qwen3.6-27B-graph": {
+      "scenarios": {
+        "text_single": {
+          "request_count": 1,
+          "passed_count": 1,
+          "failed_count": 0,
+          "passed": true
+        },
+        "text_concurrent_8": {
+          "request_count": 8,
+          "passed_count": 8,
+          "failed_count": 0,
+          "passed": true
+        },
+        "image_single": {
+          "request_count": 1,
+          "passed_count": 1,
+          "failed_count": 0,
+          "passed": true
+        },
+        "image_concurrent_8": {
+          "request_count": 8,
+          "passed_count": 8,
+          "failed_count": 0,
+          "passed": true
+        },
+        "mixed_concurrent_8": {
+          "request_count": 8,
+          "passed_count": 8,
+          "failed_count": 0,
+          "passed": true
+        }
+      },
+      "passed": 26,
+      "total": 26,
+      "native_runner_v2": true,
+      "server_revision_argument": null,
+      "graph_capture_finished": true,
+      "positive_piecewise_replay_rows": 15,
+      "piecewise_replay_count_sum": 235,
+      "exit": 0,
+      "provider_bridge_bound": true
+    },
+    "Qwen3.6-35B-A3B-eager": {
+      "scenarios": {
+        "text_single": {
+          "request_count": 1,
+          "passed_count": 1,
+          "failed_count": 0,
+          "passed": true
+        },
+        "text_concurrent_8": {
+          "request_count": 8,
+          "passed_count": 8,
+          "failed_count": 0,
+          "passed": true
+        },
+        "image_single": {
+          "request_count": 1,
+          "passed_count": 1,
+          "failed_count": 0,
+          "passed": true
+        },
+        "image_concurrent_8": {
+          "request_count": 8,
+          "passed_count": 8,
+          "failed_count": 0,
+          "passed": true
+        },
+        "mixed_concurrent_8": {
+          "request_count": 8,
+          "passed_count": 8,
+          "failed_count": 0,
+          "passed": true
+        }
+      },
+      "passed": 26,
+      "total": 26,
+      "native_runner_v2": true,
+      "server_revision_argument": null,
+      "graph_capture_finished": false,
+      "positive_piecewise_replay_rows": 0,
+      "piecewise_replay_count_sum": 0,
+      "exit": 0,
+      "provider_bridge_bound": true
+    },
+    "Qwen3.6-35B-A3B-graph": {
+      "scenarios": {
+        "text_single": {
+          "request_count": 1,
+          "passed_count": 1,
+          "failed_count": 0,
+          "passed": true
+        },
+        "text_concurrent_8": {
+          "request_count": 8,
+          "passed_count": 8,
+          "failed_count": 0,
+          "passed": true
+        },
+        "image_single": {
+          "request_count": 1,
+          "passed_count": 1,
+          "failed_count": 0,
+          "passed": true
+        },
+        "image_concurrent_8": {
+          "request_count": 8,
+          "passed_count": 8,
+          "failed_count": 0,
+          "passed": true
+        },
+        "mixed_concurrent_8": {
+          "request_count": 8,
+          "passed_count": 8,
+          "failed_count": 0,
+          "passed": true
+        }
+      },
+      "passed": 26,
+      "total": 26,
+      "native_runner_v2": true,
+      "server_revision_argument": null,
+      "graph_capture_finished": true,
+      "positive_piecewise_replay_rows": 20,
+      "piecewise_replay_count_sum": 202,
+      "exit": 0,
+      "provider_bridge_bound": true
+    }
+  }
+}
