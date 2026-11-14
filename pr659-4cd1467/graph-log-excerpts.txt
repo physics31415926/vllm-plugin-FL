@@ -1,0 +1,44 @@
+Qwen3.6-27B-graph.serve.log:[2026-11-14 08:38:49] [INFO] [vllm_fl.dispatch.backends.vendor.amd.v2_runner_compat] AMD V2 uses explicit-copy input buffers.
+Qwen3.6-27B-graph.serve.log:(Worker_TP0 pid=84030) INFO 11-14 08:38:49 [model_runner.py:392] Loading model from scratch...
+Qwen3.6-27B-graph.serve.log:(Worker_TP6 pid=84036) INFO 11-14 08:40:01 [model_runner.py:1127] Graph capturing finished in 41 secs, took 6.89 GiB
+Qwen3.6-27B-graph.serve.log:(Worker_TP5 pid=84035) INFO 11-14 08:40:01 [model_runner.py:1127] Graph capturing finished in 40 secs, took 6.89 GiB
+Qwen3.6-27B-graph.serve.log:(Worker_TP7 pid=84037) INFO 11-14 08:40:01 [model_runner.py:1127] Graph capturing finished in 41 secs, took 6.89 GiB
+Qwen3.6-27B-graph.serve.log:(Worker_TP2 pid=84032) INFO 11-14 08:40:01 [model_runner.py:1127] Graph capturing finished in 41 secs, took 6.89 GiB
+Qwen3.6-27B-graph.serve.log:(Worker_TP3 pid=84033) INFO 11-14 08:40:01 [model_runner.py:1127] Graph capturing finished in 41 secs, took 6.89 GiB
+Qwen3.6-27B-graph.serve.log:(Worker_TP4 pid=84034) INFO 11-14 08:40:01 [model_runner.py:1127] Graph capturing finished in 41 secs, took 6.89 GiB
+Qwen3.6-27B-graph.serve.log:(Worker_TP0 pid=84030) INFO 11-14 08:40:01 [model_runner.py:1127] Graph capturing finished in 41 secs, took 6.89 GiB
+Qwen3.6-27B-graph.serve.log:(Worker_TP1 pid=84031) INFO 11-14 08:40:01 [model_runner.py:1127] Graph capturing finished in 41 secs, took 6.89 GiB
+Qwen3.6-27B-graph.serve.log:(Worker_TP6 pid=84036) INFO 11-14 08:41:04 [model_runner.py:1127] Graph capturing finished in 60 secs, took 6.94 GiB
+Qwen3.6-27B-graph.serve.log:(Worker_TP3 pid=84033) INFO 11-14 08:41:04 [model_runner.py:1127] Graph capturing finished in 60 secs, took 6.94 GiB
+Qwen3.6-27B-graph.serve.log:(Worker_TP5 pid=84035) INFO 11-14 08:41:04 [model_runner.py:1127] Graph capturing finished in 60 secs, took 6.94 GiB
+Qwen3.6-27B-graph.serve.log:(Worker_TP4 pid=84034) INFO 11-14 08:41:04 [model_runner.py:1127] Graph capturing finished in 60 secs, took 6.94 GiB
+Qwen3.6-27B-graph.serve.log:(Worker_TP7 pid=84037) INFO 11-14 08:41:04 [model_runner.py:1127] Graph capturing finished in 60 secs, took 6.94 GiB
+Qwen3.6-27B-graph.serve.log:(Worker_TP2 pid=84032) INFO 11-14 08:41:04 [model_runner.py:1127] Graph capturing finished in 60 secs, took 6.94 GiB
+Qwen3.6-27B-graph.serve.log:(Worker_TP0 pid=84030) INFO 11-14 08:41:04 [model_runner.py:1127] Graph capturing finished in 60 secs, took 6.94 GiB
+Qwen3.6-27B-graph.serve.log:(Worker_TP1 pid=84031) INFO 11-14 08:41:04 [model_runner.py:1127] Graph capturing finished in 60 secs, took 6.94 GiB
+Qwen3.6-27B-graph.serve.log:INFO:     Application startup complete.
+Qwen3.6-27B-graph.serve.log:(APIServer pid=83186) INFO 11-14 08:41:22 [cuda_graph.py:123] | 1               | 1             | 0            | FULL         | 194   |
+Qwen3.6-27B-graph.serve.log:(APIServer pid=83186) INFO 11-14 08:41:22 [cuda_graph.py:123] | 6               | 8             | 2            | FULL         | 1     |
+Qwen3.6-27B-graph.serve.log:(APIServer pid=83186) INFO 11-14 08:41:22 [cuda_graph.py:123] | 5               | 8             | 3            | FULL         | 1     |
+Qwen3.6-27B-graph.serve.log:(APIServer pid=83186) INFO 11-14 08:41:22 [cuda_graph.py:123] | 4               | 4             | 0            | FULL         | 1     |
+Qwen3.6-35B-A3B-graph.serve.log:[2026-11-14 08:35:44] [INFO] [vllm_fl.dispatch.backends.vendor.amd.v2_runner_compat] AMD V2 uses explicit-copy input buffers.
+Qwen3.6-35B-A3B-graph.serve.log:(Worker_TP0 pid=81915) INFO 11-14 08:35:45 [model_runner.py:392] Loading model from scratch...
+Qwen3.6-35B-A3B-graph.serve.log:(Worker_TP2 pid=81917) INFO 11-14 08:36:26 [model_runner.py:1127] Graph capturing finished in 19 secs, took 0.24 GiB
+Qwen3.6-35B-A3B-graph.serve.log:(Worker_TP4 pid=81919) INFO 11-14 08:36:26 [model_runner.py:1127] Graph capturing finished in 19 secs, took 0.24 GiB
+Qwen3.6-35B-A3B-graph.serve.log:(Worker_TP7 pid=81922) INFO 11-14 08:36:26 [model_runner.py:1127] Graph capturing finished in 19 secs, took 0.24 GiB
+Qwen3.6-35B-A3B-graph.serve.log:(Worker_TP1 pid=81916) INFO 11-14 08:36:26 [model_runner.py:1127] Graph capturing finished in 19 secs, took 0.24 GiB
+Qwen3.6-35B-A3B-graph.serve.log:(Worker_TP3 pid=81918) INFO 11-14 08:36:26 [model_runner.py:1127] Graph capturing finished in 19 secs, took 0.24 GiB
+Qwen3.6-35B-A3B-graph.serve.log:(Worker_TP6 pid=81921) INFO 11-14 08:36:26 [model_runner.py:1127] Graph capturing finished in 19 secs, took 0.24 GiB
+Qwen3.6-35B-A3B-graph.serve.log:(Worker_TP0 pid=81915) INFO 11-14 08:36:26 [model_runner.py:1127] Graph capturing finished in 19 secs, took 0.24 GiB
+Qwen3.6-35B-A3B-graph.serve.log:(Worker_TP5 pid=81920) INFO 11-14 08:36:26 [model_runner.py:1127] Graph capturing finished in 19 secs, took 0.24 GiB
+Qwen3.6-35B-A3B-graph.serve.log:INFO:     Application startup complete.
+Qwen3.6-35B-A3B-graph.serve.log:(APIServer pid=81071) INFO 11-14 08:36:52 [cuda_graph.py:123] | 1               | 1             | 0            | FULL         | 288   |
+Qwen3.6-35B-A3B-graph.serve.log:(APIServer pid=81071) INFO 11-14 08:37:02 [cuda_graph.py:123] | 8               | 8             | 0            | FULL         | 1     |
+Qwen3.6-35B-A3B-graph.serve.log:(APIServer pid=81071) INFO 11-14 08:37:02 [cuda_graph.py:123] | 4               | 4             | 0            | FULL         | 1     |
+Qwen3.6-35B-A3B-graph.serve.log:(APIServer pid=81071) INFO 11-14 08:37:02 [cuda_graph.py:123] | 3               | 4             | 1            | FULL         | 1     |
+Qwen3.6-35B-A3B-graph.serve.log:(APIServer pid=81071) INFO 11-14 08:37:02 [cuda_graph.py:123] | 1               | 1             | 0            | FULL         | 1     |
+Qwen3.6-35B-A3B-graph.serve.log:(APIServer pid=81071) INFO 11-14 08:37:12 [cuda_graph.py:123] | 1               | 1             | 0            | FULL         | 7     |
+Qwen3.6-35B-A3B-graph.serve.log:(APIServer pid=81071) INFO 11-14 08:37:22 [cuda_graph.py:123] | 1               | 1             | 0            | FULL         | 3     |
+Qwen3.6-35B-A3B-graph.serve.log:(APIServer pid=81071) INFO 11-14 08:37:22 [cuda_graph.py:123] | 4               | 4             | 0            | FULL         | 2     |
+Qwen3.6-35B-A3B-graph.serve.log:(APIServer pid=81071) INFO 11-14 08:37:22 [cuda_graph.py:123] | 3               | 4             | 1            | FULL         | 2     |
+Qwen3.6-35B-A3B-graph.serve.log:(APIServer pid=81071) INFO 11-14 08:37:22 [cuda_graph.py:123] | 8               | 8             | 0            | FULL         | 1     |

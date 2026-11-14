@@ -1,0 +1,184 @@
+{
+  "head": "4cd14672156c8d6fbb8a637ecb2e54c6dd8c221c",
+  "requests_passed": 104,
+  "requests": 104,
+  "groups": {
+    "Qwen3.6-27B-eager": {
+      "scenarios": {
+        "image_concurrent_8": {
+          "request_count": 8,
+          "passed_count": 8,
+          "failed_count": 0,
+          "passed": true
+        },
+        "image_single": {
+          "request_count": 1,
+          "passed_count": 1,
+          "failed_count": 0,
+          "passed": true
+        },
+        "mixed_concurrent_8": {
+          "request_count": 8,
+          "passed_count": 8,
+          "failed_count": 0,
+          "passed": true
+        },
+        "text_concurrent_8": {
+          "request_count": 8,
+          "passed_count": 8,
+          "failed_count": 0,
+          "passed": true
+        },
+        "text_single": {
+          "request_count": 1,
+          "passed_count": 1,
+          "failed_count": 0,
+          "passed": true
+        }
+      },
+      "passed": 26,
+      "requests": 26
+    },
+    "Qwen3.6-27B-graph": {
+      "scenarios": {
+        "image_concurrent_8": {
+          "request_count": 8,
+          "passed_count": 8,
+          "failed_count": 0,
+          "passed": true
+        },
+        "image_single": {
+          "request_count": 1,
+          "passed_count": 1,
+          "failed_count": 0,
+          "passed": true
+        },
+        "mixed_concurrent_8": {
+          "request_count": 8,
+          "passed_count": 8,
+          "failed_count": 0,
+          "passed": true
+        },
+        "text_concurrent_8": {
+          "request_count": 8,
+          "passed_count": 8,
+          "failed_count": 0,
+          "passed": true
+        },
+        "text_single": {
+          "request_count": 1,
+          "passed_count": 1,
+          "failed_count": 0,
+          "passed": true
+        }
+      },
+      "passed": 26,
+      "requests": 26,
+      "full_replays": 197
+    },
+    "Qwen3.6-35B-A3B-eager": {
+      "scenarios": {
+        "image_concurrent_8": {
+          "request_count": 8,
+          "passed_count": 8,
+          "failed_count": 0,
+          "passed": true
+        },
+        "image_single": {
+          "request_count": 1,
+          "passed_count": 1,
+          "failed_count": 0,
+          "passed": true
+        },
+        "mixed_concurrent_8": {
+          "request_count": 8,
+          "passed_count": 8,
+          "failed_count": 0,
+          "passed": true
+        },
+        "text_concurrent_8": {
+          "request_count": 8,
+          "passed_count": 8,
+          "failed_count": 0,
+          "passed": true
+        },
+        "text_single": {
+          "request_count": 1,
+          "passed_count": 1,
+          "failed_count": 0,
+          "passed": true
+        }
+      },
+      "passed": 26,
+      "requests": 26
+    },
+    "Qwen3.6-35B-A3B-graph": {
+      "scenarios": {
+        "image_concurrent_8": {
+          "request_count": 8,
+          "passed_count": 8,
+          "failed_count": 0,
+          "passed": true
+        },
+        "image_single": {
+          "request_count": 1,
+          "passed_count": 1,
+          "failed_count": 0,
+          "passed": true
+        },
+        "mixed_concurrent_8": {
+          "request_count": 8,
+          "passed_count": 8,
+          "failed_count": 0,
+          "passed": true
+        },
+        "text_concurrent_8": {
+          "request_count": 8,
+          "passed_count": 8,
+          "failed_count": 0,
+          "passed": true
+        },
+        "text_single": {
+          "request_count": 1,
+          "passed_count": 1,
+          "failed_count": 0,
+          "passed": true
+        }
+      },
+      "passed": 26,
+      "requests": 26,
+      "full_replays": 307
+    }
+  },
+  "receipt_sha256": "805ce3a9a75544b53bf21ab3d427da14e00991a0682013600829802476b2fddb",
+  "path_redactions": {
+    "work_area": "/gate-work",
+    "models": "/models"
+  },
+  "models": {
+    "Qwen3.6-27B": {
+      "recorded_revision": null,
+      "config_sha256": "69db4eb7196bc8190813231b3018ca05d8c2e3abc7b1af19d55c157af44a9d9c",
+      "weight_index_sha256": "a8ad2c26fb707ff8c245806315b03e3b4b74595528492423af5dae0ce39b4d9b"
+    },
+    "Qwen3.6-35B-A3B": {
+      "recorded_revision": null,
+      "config_sha256": "93a4693fa9d8392fbfccd4b3c9873f4bfdcb14fdede978b123d07d19675efe99",
+      "weight_index_sha256": "41b9356101ebf8e7519e150dc811f80c4226e727301fbb032b890f006ed0be83"
+    }
+  },
+  "environment": {
+    "GEMS_VENDOR": "amd",
+    "VLLM_PLUGINS": "fl",
+    "USE_FLAGGEMS": "1",
+    "HSA_TOOLS_DISABLE_REGISTER": "1",
+    "VLLM_USE_V2_MODEL_RUNNER": null,
+    "VLLM_FL_FLAGOS_WHITELIST": null,
+    "TENSOR_PARALLEL_SIZE": 8,
+    "MAX_MODEL_LEN": 32768,
+    "runtime": "ROCm 7.2.3",
+    "amdgpu": "6.16.13",
+    "rccl": "2.27.7.70203-90~22.04",
+    "container_image_id": "sha256:14f6a575e1fb0a580b0f633c09e06f648709d60405b85f6a7ff3f80d49f39905"
+  }
+}
