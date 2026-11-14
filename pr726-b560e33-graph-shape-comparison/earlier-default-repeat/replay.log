@@ -1,0 +1,12 @@
+(Worker_TP3 pid=815) INFO 11-14 12:16:45 [model_runner.py:1127] Graph capturing finished in 6 secs, took 0.13 GiB
+(Worker_TP1 pid=813) INFO 11-14 12:16:45 [model_runner.py:1127] Graph capturing finished in 6 secs, took 0.13 GiB
+(Worker_TP2 pid=814) INFO 11-14 12:16:46 [model_runner.py:1127] Graph capturing finished in 6 secs, took 0.13 GiB
+(Worker_TP0 pid=812) INFO 11-14 12:16:46 [model_runner.py:1127] Graph capturing finished in 6 secs, took 0.13 GiB
+(Worker_TP3 pid=815) INFO 11-14 12:16:55 [model_runner.py:1127] Graph capturing finished in 9 secs, took 0.13 GiB
+(Worker_TP1 pid=813) INFO 11-14 12:16:55 [model_runner.py:1127] Graph capturing finished in 9 secs, took 0.13 GiB
+(Worker_TP2 pid=814) INFO 11-14 12:16:55 [model_runner.py:1127] Graph capturing finished in 9 secs, took 0.13 GiB
+(Worker_TP0 pid=812) INFO 11-14 12:16:55 [model_runner.py:1127] Graph capturing finished in 9 secs, took 0.13 GiB
+(EngineCore pid=508) INFO 11-14 12:17:29 [core.py:402] init engine (profile, create kv cache, warmup model) took 321.65 s
+(APIServer pid=9) INFO 11-14 12:18:38 [cuda_graph.py:123] | 3               | 4             | 1            | FULL         | 1     |
+(APIServer pid=9) INFO 11-14 12:19:08 [cuda_graph.py:123] | 3               | 4             | 1            | FULL         | 60    |
+(APIServer pid=9) INFO 11-14 12:19:18 [cuda_graph.py:123] | 3               | 4             | 1            | FULL         | 64    |

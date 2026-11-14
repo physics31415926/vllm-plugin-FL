@@ -1,0 +1,20 @@
+{
+  "with-size-3": {
+    "original_passes": 26,
+    "original_total": 26,
+    "batch_order_passes": 33,
+    "three_active_full_replays_in_log": 24
+  },
+  "default-sizes": {
+    "original_passes": 26,
+    "original_total": 26,
+    "batch_order_passes": 33,
+    "three_active_full_replays_in_log": 29
+  },
+  "earlier-default-repeat": {
+    "original_passes": 23,
+    "original_total": 26,
+    "batch_order_passes": 0,
+    "three_active_full_replays_in_log": 125
+  }
+}
