@@ -1,0 +1,45 @@
+(APIServer pid=19362) INFO 11-14 11:43:54 [entrypoints/.../utils/api_utils.py:286] non-default args: {'model_tag': '/models/Qwen3.6-35B-A3B', 'host': '127.0.0.1', 'port': 33701, 'model': '/models/Qwen3.6-35B-A3B', 'trust_remote_code': True, 'allowed_local_media_path': '/gate/images', 'max_model_len': 8192, 'served_model_name': ['sunrise-gate-df1a8644f8264d95b4c72d52c0154acd'], 'tensor_parallel_size': 2, 'disable_custom_all_reduce': True, 'kv_cache_memory_bytes': 4294967296, 'skip_mm_profiling': True, 'cudagraph_metrics': True, 'max_num_batched_tokens': 8192, 'max_num_seqs': 8, 'async_scheduling': True, 'compilation_config': {'mode': <CompilationMode.NONE: 0>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'eager', 'custom_ops': [], 'ir_enable_torch_wrap': None, 'splitting_ops': None, 'compile_mm_encoder': False, 'cudagraph_mm_encoder': False, 'encoder_cudagraph_token_budgets': [], 'encoder_cudagraph_max_vision_items_per_batch': 0, 'encoder_cudagraph_max_frames_per_batch': None, 'cudagraph_decoder_replay': True, 'decoder_replay_cudagraph_capture_sizes': [], 'decoder_replay_trim_threshold': 768, 'compile_sizes': None, 'compile_ranges_endpoints': None, 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'size_asserts': True, 'alignment_asserts': True, 'scalar_asserts': True, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_DECODE_ONLY: (2, 0)>, 'cudagraph_num_of_warmups': 0, 'cudagraph_capture_sizes': [1, 2, 4, 8], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': None, 'pass_config': {}, 'max_cudagraph_capture_size': None, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False, 'assume_32_bit_indexing': False}, 'local_cache_dir': None, 'fast_moe_cold_start': None, 'static_all_moe_layers': []}}
+(APIServer pid=19362) INFO 11-14 11:43:55 [config/kernel.py:467] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'], gelu_and_mul_sparse=['native'])
+(Worker pid=19852) INFO 11-14 11:44:33 [sunrise_worker.py:139] Using Sunrise Model Runner V2
+(Worker pid=19853) INFO 11-14 11:44:33 [sunrise_worker.py:139] Using Sunrise Model Runner V2
+(EngineCore pid=19568) INFO 11-14 11:45:01 [v1/core/kv_cache_utils.py:2327] PTPU KV cache size: 232,301 tokens, Maximum concurrency for 8,192 tokens per request: 28.36x
+(Worker_TP1 pid=19853) INFO 11-14 11:45:18 [v1/worker/gpu/model_runner.py:1127] Graph capturing finished in 6 secs, took 0.00 GiB
+(Worker_TP0 pid=19852) INFO 11-14 11:45:18 [v1/worker/gpu/model_runner.py:1127] Graph capturing finished in 6 secs, took 0.00 GiB
+(EngineCore pid=19568) INFO 11-14 11:45:25 [config/kernel.py:467] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'], gelu_and_mul_sparse=['native'])
+INFO:     Application startup complete.
+(APIServer pid=19362) INFO 11-14 11:45:36 [v1/metrics/loggers.py:335] Engine 000: Avg prompt throughput: 5.7 tokens/s, Avg generation throughput: 4.9 tokens/s, Running: 1 reqs, Waiting: 0 reqs, PTPU KV cache usage: 1.0%, Prefix cache hit rate: 0.0%
+(APIServer pid=19362) INFO 11-14 11:45:36 [compilation/cuda_graph.py:123] **CUDAGraph Stats:**
+(APIServer pid=19362) INFO 11-14 11:45:36 [compilation/cuda_graph.py:123] | 1               | 1             | 0            | FULL         | 55    |
+(APIServer pid=19362) INFO 11-14 11:45:46 [v1/metrics/loggers.py:335] Engine 000: Avg prompt throughput: 0.0 tokens/s, Avg generation throughput: 7.5 tokens/s, Running: 1 reqs, Waiting: 0 reqs, PTPU KV cache usage: 1.0%, Prefix cache hit rate: 0.0%
+(APIServer pid=19362) INFO 11-14 11:45:46 [compilation/cuda_graph.py:123] **CUDAGraph Stats:**
+(APIServer pid=19362) INFO 11-14 11:45:46 [compilation/cuda_graph.py:123] | 1               | 1             | 0            | FULL         | 75    |
+(APIServer pid=19362) INFO 11-14 11:45:56 [v1/metrics/loggers.py:335] Engine 000: Avg prompt throughput: 0.0 tokens/s, Avg generation throughput: 7.5 tokens/s, Running: 1 reqs, Waiting: 0 reqs, PTPU KV cache usage: 1.0%, Prefix cache hit rate: 0.0%
+(APIServer pid=19362) INFO 11-14 11:45:56 [compilation/cuda_graph.py:123] **CUDAGraph Stats:**
+(APIServer pid=19362) INFO 11-14 11:45:56 [compilation/cuda_graph.py:123] | 1               | 1             | 0            | FULL         | 75    |
+(APIServer pid=19362) INFO 11-14 11:46:06 [v1/metrics/loggers.py:335] Engine 000: Avg prompt throughput: 0.0 tokens/s, Avg generation throughput: 7.5 tokens/s, Running: 1 reqs, Waiting: 0 reqs, PTPU KV cache usage: 1.0%, Prefix cache hit rate: 0.0%
+(APIServer pid=19362) INFO 11-14 11:46:06 [compilation/cuda_graph.py:123] **CUDAGraph Stats:**
+(APIServer pid=19362) INFO 11-14 11:46:06 [compilation/cuda_graph.py:123] | 1               | 1             | 0            | FULL         | 75    |
+(APIServer pid=19362) INFO 11-14 11:46:16 [v1/metrics/loggers.py:335] Engine 000: Avg prompt throughput: 0.0 tokens/s, Avg generation throughput: 7.4 tokens/s, Running: 1 reqs, Waiting: 0 reqs, PTPU KV cache usage: 1.0%, Prefix cache hit rate: 0.0%
+(APIServer pid=19362) INFO 11-14 11:46:16 [compilation/cuda_graph.py:123] **CUDAGraph Stats:**
+(APIServer pid=19362) INFO 11-14 11:46:16 [compilation/cuda_graph.py:123] | 1               | 1             | 0            | FULL         | 74    |
+(APIServer pid=19362) INFO 11-14 11:46:26 [v1/metrics/loggers.py:335] Engine 000: Avg prompt throughput: 20.3 tokens/s, Avg generation throughput: 7.3 tokens/s, Running: 0 reqs, Waiting: 0 reqs, PTPU KV cache usage: 0.0%, Prefix cache hit rate: 0.0%
+(APIServer pid=19362) INFO 11-14 11:46:26 [compilation/cuda_graph.py:123] **CUDAGraph Stats:**
+(APIServer pid=19362) INFO 11-14 11:46:26 [compilation/cuda_graph.py:123] | 1               | 1             | 0            | FULL         | 54    |
+(APIServer pid=19362) INFO 11-14 11:46:26 [compilation/cuda_graph.py:123] | 8               | 8             | 0            | FULL         | 2     |
+(APIServer pid=19362) INFO 11-14 11:46:26 [compilation/cuda_graph.py:123] | 4               | 4             | 0            | FULL         | 1     |
+(APIServer pid=19362) INFO 11-14 11:46:36 [v1/metrics/loggers.py:335] Engine 000: Avg prompt throughput: 106.2 tokens/s, Avg generation throughput: 0.4 tokens/s, Running: 0 reqs, Waiting: 0 reqs, PTPU KV cache usage: 0.0%, Prefix cache hit rate: 0.0%, MM cache hit rate: 0.0%
+(APIServer pid=19362) INFO 11-14 11:46:36 [compilation/cuda_graph.py:123] **CUDAGraph Stats:**
+(APIServer pid=19362) INFO 11-14 11:46:36 [compilation/cuda_graph.py:123] | 1               | 1             | 0            | FULL         | 4     |
+(APIServer pid=19362) INFO 11-14 11:46:46 [v1/metrics/loggers.py:335] Engine 000: Avg prompt throughput: 18.9 tokens/s, Avg generation throughput: 0.2 tokens/s, Running: 8 reqs, Waiting: 0 reqs, PTPU KV cache usage: 8.1%, Prefix cache hit rate: 0.0%, MM cache hit rate: 11.1%
+(APIServer pid=19362) INFO 11-14 11:46:46 [compilation/cuda_graph.py:123] **CUDAGraph Stats:**
+(APIServer pid=19362) INFO 11-14 11:46:46 [compilation/cuda_graph.py:123] | 1               | 1             | 0            | FULL         | 1     |
+(APIServer pid=19362) INFO 11-14 11:46:56 [v1/metrics/loggers.py:335] Engine 000: Avg prompt throughput: 0.0 tokens/s, Avg generation throughput: 0.0 tokens/s, Running: 8 reqs, Waiting: 0 reqs, PTPU KV cache usage: 8.1%, Prefix cache hit rate: 0.0%, MM cache hit rate: 11.1%
+(APIServer pid=19362) INFO 11-14 11:47:06 [v1/metrics/loggers.py:335] Engine 000: Avg prompt throughput: 220.5 tokens/s, Avg generation throughput: 3.1 tokens/s, Running: 0 reqs, Waiting: 0 reqs, PTPU KV cache usage: 0.0%, Prefix cache hit rate: 0.0%, MM cache hit rate: 11.1%
+(APIServer pid=19362) INFO 11-14 11:47:06 [compilation/cuda_graph.py:123] **CUDAGraph Stats:**
+(APIServer pid=19362) INFO 11-14 11:47:06 [compilation/cuda_graph.py:123] | 2               | 2             | 0            | FULL         | 4     |
+(APIServer pid=19362) INFO 11-14 11:47:06 [compilation/cuda_graph.py:123] | 8               | 8             | 0            | FULL         | 2     |
+(APIServer pid=19362) INFO 11-14 11:47:06 [compilation/cuda_graph.py:123] | 4               | 4             | 0            | FULL         | 1     |
+(APIServer pid=19362) INFO 11-14 11:47:06 [compilation/cuda_graph.py:123] | 3               | 4             | 1            | FULL         | 1     |
+(APIServer pid=19362) INFO 11-14 11:47:16 [v1/metrics/loggers.py:335] Engine 000: Avg prompt throughput: 87.9 tokens/s, Avg generation throughput: 0.9 tokens/s, Running: 7 reqs, Waiting: 0 reqs, PTPU KV cache usage: 7.1%, Prefix cache hit rate: 0.0%, MM cache hit rate: 38.5%
+(APIServer pid=19362) INFO 11-14 11:47:16 [compilation/cuda_graph.py:123] **CUDAGraph Stats:**
+(APIServer pid=19362) INFO 11-14 11:47:16 [compilation/cuda_graph.py:123] | 1               | 1             | 0            | FULL         | 1     |

@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/checkout/.github/scripts/sunrise/verify_gate_matrix.py", line 167, in <module>
+    main()
+  File "/checkout/.github/scripts/sunrise/verify_gate_matrix.py", line 161, in main
+    result = validate_matrix(args.directories)
+  File "/checkout/.github/scripts/sunrise/verify_gate_matrix.py", line 72, in validate_matrix
+    raise ValueError("Gate receipt did not pass V2/quality/owned cleanup")
+ValueError: Gate receipt did not pass V2/quality/owned cleanup

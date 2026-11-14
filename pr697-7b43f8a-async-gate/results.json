@@ -1,0 +1,84 @@
+{
+  "shared_total": 104,
+  "shared_passed": 102,
+  "groups": {
+    "Qwen3.6-27B-eager-async": {
+      "passed": true,
+      "shared_passed": 26,
+      "shared_total": 26,
+      "measured_long_prefill_tokens": 4118,
+      "native_full_replay_count_from_runtime_logs": 0,
+      "failures": [],
+      "async_scheduling": true,
+      "only_owned_cleanup_complete": true
+    },
+    "Qwen3.6-27B-graph-async": {
+      "passed": false,
+      "shared_passed": 25,
+      "shared_total": 26,
+      "measured_long_prefill_tokens": null,
+      "native_full_replay_count_from_runtime_logs": 332,
+      "failures": [
+        {
+          "scenario": "image_concurrent_8",
+          "request_id": "image-08",
+          "text": "",
+          "finish_reason": "length",
+          "usage": {
+            "completion_tokens": 128,
+            "prompt_tokens": 189,
+            "total_tokens": 317,
+            "completion_tokens_details": null,
+            "prompt_tokens_details": null
+          },
+          "failed_checks": [
+            "non_empty",
+            "minimum_length",
+            "expected_semantics",
+            "expected_order"
+          ]
+        }
+      ],
+      "async_scheduling": true,
+      "only_owned_cleanup_complete": true
+    },
+    "Qwen3.6-35B-A3B-eager-async": {
+      "passed": true,
+      "shared_passed": 26,
+      "shared_total": 26,
+      "measured_long_prefill_tokens": 4118,
+      "native_full_replay_count_from_runtime_logs": 0,
+      "failures": [],
+      "async_scheduling": true,
+      "only_owned_cleanup_complete": true
+    },
+    "Qwen3.6-35B-A3B-graph-async": {
+      "passed": false,
+      "shared_passed": 25,
+      "shared_total": 26,
+      "measured_long_prefill_tokens": null,
+      "native_full_replay_count_from_runtime_logs": 425,
+      "failures": [
+        {
+          "scenario": "image_single",
+          "request_id": "image-05",
+          "text": "VLLM",
+          "finish_reason": "stop",
+          "usage": {
+            "completion_tokens": 4,
+            "prompt_tokens": 1062,
+            "total_tokens": 1066,
+            "completion_tokens_details": null,
+            "prompt_tokens_details": null
+          },
+          "failed_checks": [
+            "expected_semantics",
+            "expected_order"
+          ]
+        }
+      ],
+      "async_scheduling": true,
+      "only_owned_cleanup_complete": true
+    }
+  }
+}

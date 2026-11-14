@@ -1,0 +1,38 @@
+============================= test session starts ==============================
+platform linux -- Python 3.10.20, pytest-9.2.0, pluggy-1.7.0 -- /flagos/bin/python
+cachedir: .pytest_cache
+metadata: {'Python': '3.10.20', 'Platform': 'Linux-5.14.0-284.25.1.el9_2.x86_64-x86_64-with-glibc2.39', 'Packages': {'pytest': '9.2.0', 'pluggy': '1.7.0'}, 'Plugins': {'timeout': '2.4.0', 'json-report': '1.5.0', 'cov': '7.1.0', 'metadata': '3.1.1', 'platformdirs': '4.12.4', 'anyio': '4.15.1'}}
+rootdir: /checkout
+configfile: pyproject.toml
+plugins: timeout-2.4.0, json-report-1.5.0, cov-7.1.0, metadata-3.1.1, platformdirs-4.12.4, anyio-4.15.1
+collecting ... collected 2 items
+
+test_text.py::test_text_single PASSED
+test_text.py::test_text_concurrent_8 PASSED
+
+======================== 2 passed in 232.55s (0:03:52) =========================
+============================= test session starts ==============================
+platform linux -- Python 3.10.20, pytest-9.2.0, pluggy-1.7.0 -- /flagos/bin/python
+cachedir: .pytest_cache
+metadata: {'Python': '3.10.20', 'Platform': 'Linux-5.14.0-284.25.1.el9_2.x86_64-x86_64-with-glibc2.39', 'Packages': {'pytest': '9.2.0', 'pluggy': '1.7.0'}, 'Plugins': {'timeout': '2.4.0', 'json-report': '1.5.0', 'cov': '7.1.0', 'metadata': '3.1.1', 'platformdirs': '4.12.4', 'anyio': '4.15.1'}}
+rootdir: /checkout
+configfile: pyproject.toml
+plugins: timeout-2.4.0, json-report-1.5.0, cov-7.1.0, metadata-3.1.1, platformdirs-4.12.4, anyio-4.15.1
+collecting ... collected 2 items
+
+test_image.py::test_image_single PASSED
+test_image.py::test_image_concurrent_8 PASSED
+
+======================== 2 passed in 191.17s (0:03:11) =========================
+============================= test session starts ==============================
+platform linux -- Python 3.10.20, pytest-9.2.0, pluggy-1.7.0 -- /flagos/bin/python
+cachedir: .pytest_cache
+metadata: {'Python': '3.10.20', 'Platform': 'Linux-5.14.0-284.25.1.el9_2.x86_64-x86_64-with-glibc2.39', 'Packages': {'pytest': '9.2.0', 'pluggy': '1.7.0'}, 'Plugins': {'timeout': '2.4.0', 'json-report': '1.5.0', 'cov': '7.1.0', 'metadata': '3.1.1', 'platformdirs': '4.12.4', 'anyio': '4.15.1'}}
+rootdir: /checkout
+configfile: pyproject.toml
+plugins: timeout-2.4.0, json-report-1.5.0, cov-7.1.0, metadata-3.1.1, platformdirs-4.12.4, anyio-4.15.1
+collecting ... collected 1 item
+
+test_mix_text_image.py::test_mix_text_image_concurrent_8 PASSED
+
+============================== 1 passed in 40.44s ==============================

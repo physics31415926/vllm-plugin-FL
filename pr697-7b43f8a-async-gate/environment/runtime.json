@@ -1,0 +1,30 @@
+{
+  "python": "3.10.20",
+  "visible_devices": "3,7",
+  "packages": {
+    "vllm": "0.32.0+empty",
+    "torch": "2.11.0+cpu",
+    "torch-ptpu": "0.2.3+torch2.11",
+    "flag-gems": "5.4.0",
+    "flagtree": "0.7.0+sunrise3.6",
+    "flagcx": "0.14.0+tangrt1.2.0"
+  },
+  "provider": {
+    "url": "https://github.com/flagos-ai/FlagGems-vllm.git",
+    "vcs_info": {
+      "commit_id": "3b0f3880b2a781699462eacb7dd3e00cc24f2d43",
+      "requested_revision": "3b0f3880b2a781699462eacb7dd3e00cc24f2d43",
+      "vcs": "git"
+    }
+  },
+  "provider_package_version": "0.1.0",
+  "origins": {
+    "vllm": "/flagos/lib/python3.10/site-packages/vllm/__init__.py",
+    "vllm_fl": "/checkout/vllm_fl/__init__.py",
+    "torch_ptpu": "/flagos/lib/python3.10/site-packages/torch_ptpu/__init__.py",
+    "flag_gems": "/flagos/lib/python3.10/site-packages/flag_gems/__init__.py",
+    "flaggems_vllm": "/flagos/lib/python3.10/site-packages/flaggems_vllm/__init__.py",
+    "triton": "/opt/flagtree/triton/__init__.py",
+    "flagcx": "/flagos/lib/python3.10/site-packages/flagcx/__init__.py"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "source": "startup_log",
+  "model": "/models/Qwen3.6-27B",
+  "served_model_name": "sunrise-gate-34080edfe52445ed8450cf7d6a6384d4",
+  "port": 53173,
+  "configuration": {
+    "tensor_parallel_size": 2,
+    "max_model_len": 8192,
+    "max_num_seqs": 8,
+    "kv_cache_memory_bytes": 4294967296,
+    "enforce_eager": false,
+    "use_v2_model_runner": true,
+    "compilation_mode": 0,
+    "compilation_backend": "eager",
+    "cudagraph_mode": "FULL_DECODE_ONLY",
+    "cudagraph_capture_sizes": [
+      1,
+      2,
+      4,
+      8
+    ]
+  }
+}
