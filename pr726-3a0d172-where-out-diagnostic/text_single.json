@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "case": {
+    "scenario": "text_single",
+    "model_path": "/data/models/Qwen/Qwen3.6-27B",
+    "served_model_name": "Qwen3.6-27B",
+    "port": "18070",
+    "concurrency": 1
+  },
+  "started_at": "2026-11-14T10:54:05.943704+00:00",
+  "finished_at": "2026-11-14T10:56:06.638484+00:00",
+  "input": [
+    {
+      "request_id": "text-llm-details",
+      "kind": "text",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Introduce large language models (LLMs) in detail. Explain what they are, how training and inference work, typical capabilities, limitations, and responsible use. Write a coherent response of at least 256 characters. Do not repeat words or phrases unnecessarily."
+        }
+      ],
+      "required_terms": [
+        "large language model",
+        "training",
+        "inference",
+        "limitations"
+      ],
+      "min_length": 256,
+      "max_tokens": 512
+    }
+  ],
+  "output": [
+    {
+      "request_id": "text-llm-details",
+      "kind": "text",
+      "latency_seconds": 120.674,
+      "text": "Large language models are advanced artificial intelligence systems trained on vast datasets to understand and generate human-like text. They operate using deep learning architectures, primarily transformers, which allow them to process sequential data efficiently. Training involves adjusting billions of parameters through exposure to diverse textual information, enabling the model to learn patterns, grammar, and factual knowledge. During inference, the model predicts the next likely word in a sequence based on user input, facilitating tasks such as translation, summarization, and creative writing. Despite their impressive capabilities, LLMs possess significant limitations, including the potential for hallucinations, where they generate plausible but incorrect information, and inherent biases derived from their training data. Consequently, responsible use requires rigorous evaluation, transparency, and human oversight to mitigate risks and ensure ethical deployment across various applications.",
+      "checks": {
+        "non_empty": true,
+        "minimum_length": true,
+        "expected_semantics": true,
+        "expected_order": true,
+        "no_bang_triplet": true,
+        "no_mojibake": true,
+        "no_control_characters": true,
+        "no_long_character_run": true,
+        "no_repeated_word_run": true,
+        "no_repeated_phrase": true
+      },
+      "passed": true,
+      "response": {
+        "id": "chatcmpl-bda594b2680037c8",
+        "choices": [
+          {
+            "finish_reason": "stop",
+            "index": 0,
+            "logprobs": null,
+            "message": {
+              "content": "Large language models are advanced artificial intelligence systems trained on vast datasets to understand and generate human-like text. They operate using deep learning architectures, primarily transformers, which allow them to process sequential data efficiently. Training involves adjusting billions of parameters through exposure to diverse textual information, enabling the model to learn patterns, grammar, and factual knowledge. During inference, the model predicts the next likely word in a sequence based on user input, facilitating tasks such as translation, summarization, and creative writing. Despite their impressive capabilities, LLMs possess significant limitations, including the potential for hallucinations, where they generate plausible but incorrect information, and inherent biases derived from their training data. Consequently, responsible use requires rigorous evaluation, transparency, and human oversight to mitigate risks and ensure ethical deployment across various applications.",
+              "refusal": null,
+              "role": "assistant",
+              "annotations": null,
+              "audio": null,
+              "function_call": null,
+              "tool_calls": null,
+              "reasoning": null
+            },
+            "stop_reason": null,
+            "token_ids": null,
+            "routed_experts": null
+          }
+        ],
+        "created": 1794653645,
+        "model": "Qwen3.6-27B",
+        "object": "chat.completion",
+        "metadata": null,
+        "moderation": null,
+        "service_tier": null,
+        "system_fingerprint": "vllm-0.32.0-tp4-25eeb493",
+        "usage": {
+          "completion_tokens": 157,
+          "prompt_tokens": 65,
+          "total_tokens": 222,
+          "completion_tokens_details": null,
+          "prompt_tokens_details": null
+        },
+        "prompt_logprobs": null,
+        "prompt_token_ids": null,
+        "prompt_text": null,
+        "kv_transfer_params": null,
+        "ec_transfer_params": null,
+        "metrics": null
+      }
+    }
+  ],
+  "summary": {
+    "request_count": 1,
+    "passed_count": 1,
+    "failed_count": 0,
+    "passed": true
+  }
+}

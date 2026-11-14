@@ -1,0 +1,4966 @@
+[
+  {
+    "scenario": "text_concurrent_8",
+    "variant": "alone",
+    "round": 1,
+    "submission_order": [
+      "text-06"
+    ],
+    "requests": [
+      {
+        "request_id": "text-06",
+        "kind": "text",
+        "latency_seconds": 12.485,
+        "text": "Pacific Ocean",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      }
+    ]
+  },
+  {
+    "scenario": "text_concurrent_8",
+    "variant": "original",
+    "round": 1,
+    "submission_order": [
+      "text-01",
+      "text-02",
+      "text-03",
+      "text-04",
+      "text-05",
+      "text-06",
+      "text-07",
+      "text-08"
+    ],
+    "requests": [
+      {
+        "request_id": "text-01",
+        "kind": "text",
+        "latency_seconds": 16.608,
+        "text": "42",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-02",
+        "kind": "text",
+        "latency_seconds": 16.608,
+        "text": "Paris",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-03",
+        "kind": "text",
+        "latency_seconds": 16.608,
+        "text": "Cold",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-04",
+        "kind": "text",
+        "latency_seconds": 16.608,
+        "text": "7",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-05",
+        "kind": "text",
+        "latency_seconds": 18.132,
+        "text": "H₂O",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-06",
+        "kind": "text",
+        "latency_seconds": 17.384,
+        "text": "Pacific Ocean",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-07",
+        "kind": "text",
+        "latency_seconds": 17.384,
+        "text": "30",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-08",
+        "kind": "text",
+        "latency_seconds": 16.605,
+        "text": "Green",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      }
+    ]
+  },
+  {
+    "scenario": "text_concurrent_8",
+    "variant": "reversed",
+    "round": 1,
+    "submission_order": [
+      "text-08",
+      "text-07",
+      "text-06",
+      "text-05",
+      "text-04",
+      "text-03",
+      "text-02",
+      "text-01"
+    ],
+    "requests": [
+      {
+        "request_id": "text-08",
+        "kind": "text",
+        "latency_seconds": 2.477,
+        "text": "Green",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-07",
+        "kind": "text",
+        "latency_seconds": 4.038,
+        "text": "30",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-06",
+        "kind": "text",
+        "latency_seconds": 4.038,
+        "text": "Pacific Ocean",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-05",
+        "kind": "text",
+        "latency_seconds": 4.786,
+        "text": "H₂O",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-04",
+        "kind": "text",
+        "latency_seconds": 3.258,
+        "text": "7",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-03",
+        "kind": "text",
+        "latency_seconds": 3.258,
+        "text": "Cold",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-02",
+        "kind": "text",
+        "latency_seconds": 3.258,
+        "text": "Paris",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-01",
+        "kind": "text",
+        "latency_seconds": 4.035,
+        "text": "42",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      }
+    ]
+  },
+  {
+    "scenario": "text_concurrent_8",
+    "variant": "target_first",
+    "round": 1,
+    "submission_order": [
+      "text-06",
+      "text-07",
+      "text-08",
+      "text-01",
+      "text-02",
+      "text-03",
+      "text-04",
+      "text-05"
+    ],
+    "requests": [
+      {
+        "request_id": "text-06",
+        "kind": "text",
+        "latency_seconds": 16.106,
+        "text": "Pacific Ocean",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-07",
+        "kind": "text",
+        "latency_seconds": 16.876,
+        "text": "30",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-08",
+        "kind": "text",
+        "latency_seconds": 16.106,
+        "text": "Green",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-01",
+        "kind": "text",
+        "latency_seconds": 16.875,
+        "text": "42",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-02",
+        "kind": "text",
+        "latency_seconds": 16.105,
+        "text": "Paris",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-03",
+        "kind": "text",
+        "latency_seconds": 16.103,
+        "text": "Cold",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-04",
+        "kind": "text",
+        "latency_seconds": 16.104,
+        "text": "7",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-05",
+        "kind": "text",
+        "latency_seconds": 17.613,
+        "text": "H₂O",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      }
+    ]
+  },
+  {
+    "scenario": "text_concurrent_8",
+    "variant": "target_last",
+    "round": 1,
+    "submission_order": [
+      "text-07",
+      "text-08",
+      "text-01",
+      "text-02",
+      "text-03",
+      "text-04",
+      "text-05",
+      "text-06"
+    ],
+    "requests": [
+      {
+        "request_id": "text-07",
+        "kind": "text",
+        "latency_seconds": 26.691,
+        "text": "30",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-08",
+        "kind": "text",
+        "latency_seconds": 26.691,
+        "text": "Green",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-01",
+        "kind": "text",
+        "latency_seconds": 27.464,
+        "text": "42",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-02",
+        "kind": "text",
+        "latency_seconds": 26.69,
+        "text": "Paris",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-03",
+        "kind": "text",
+        "latency_seconds": 26.69,
+        "text": "Cold",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-04",
+        "kind": "text",
+        "latency_seconds": 26.687,
+        "text": "7",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-05",
+        "kind": "text",
+        "latency_seconds": 28.206,
+        "text": "H₂O",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-06",
+        "kind": "text",
+        "latency_seconds": 27.461,
+        "text": "Pacific Ocean",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      }
+    ]
+  },
+  {
+    "scenario": "text_concurrent_8",
+    "variant": "alone",
+    "round": 2,
+    "submission_order": [
+      "text-06"
+    ],
+    "requests": [
+      {
+        "request_id": "text-06",
+        "kind": "text",
+        "latency_seconds": 2.384,
+        "text": "Pacific Ocean",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      }
+    ]
+  },
+  {
+    "scenario": "text_concurrent_8",
+    "variant": "original",
+    "round": 2,
+    "submission_order": [
+      "text-01",
+      "text-02",
+      "text-03",
+      "text-04",
+      "text-05",
+      "text-06",
+      "text-07",
+      "text-08"
+    ],
+    "requests": [
+      {
+        "request_id": "text-01",
+        "kind": "text",
+        "latency_seconds": 3.26,
+        "text": "42",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-02",
+        "kind": "text",
+        "latency_seconds": 3.26,
+        "text": "Paris",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-03",
+        "kind": "text",
+        "latency_seconds": 3.26,
+        "text": "Cold",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-04",
+        "kind": "text",
+        "latency_seconds": 3.26,
+        "text": "7",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-05",
+        "kind": "text",
+        "latency_seconds": 4.781,
+        "text": "H₂O",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-06",
+        "kind": "text",
+        "latency_seconds": 4.032,
+        "text": "Pacific Ocean",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-07",
+        "kind": "text",
+        "latency_seconds": 4.032,
+        "text": "30",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-08",
+        "kind": "text",
+        "latency_seconds": 3.257,
+        "text": "Green",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      }
+    ]
+  },
+  {
+    "scenario": "text_concurrent_8",
+    "variant": "reversed",
+    "round": 2,
+    "submission_order": [
+      "text-08",
+      "text-07",
+      "text-06",
+      "text-05",
+      "text-04",
+      "text-03",
+      "text-02",
+      "text-01"
+    ],
+    "requests": [
+      {
+        "request_id": "text-08",
+        "kind": "text",
+        "latency_seconds": 2.728,
+        "text": "Green",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-07",
+        "kind": "text",
+        "latency_seconds": 4.286,
+        "text": "30",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-06",
+        "kind": "text",
+        "latency_seconds": 4.286,
+        "text": "Pacific Ocean",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-05",
+        "kind": "text",
+        "latency_seconds": 5.03,
+        "text": "H₂O",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-04",
+        "kind": "text",
+        "latency_seconds": 3.508,
+        "text": "7",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-03",
+        "kind": "text",
+        "latency_seconds": 3.506,
+        "text": "Cold",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-02",
+        "kind": "text",
+        "latency_seconds": 3.507,
+        "text": "Paris",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-01",
+        "kind": "text",
+        "latency_seconds": 4.283,
+        "text": "42",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      }
+    ]
+  },
+  {
+    "scenario": "text_concurrent_8",
+    "variant": "target_first",
+    "round": 2,
+    "submission_order": [
+      "text-06",
+      "text-07",
+      "text-08",
+      "text-01",
+      "text-02",
+      "text-03",
+      "text-04",
+      "text-05"
+    ],
+    "requests": [
+      {
+        "request_id": "text-06",
+        "kind": "text",
+        "latency_seconds": 3.266,
+        "text": "Pacific Ocean",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-07",
+        "kind": "text",
+        "latency_seconds": 4.043,
+        "text": "30",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-08",
+        "kind": "text",
+        "latency_seconds": 3.265,
+        "text": "Green",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-01",
+        "kind": "text",
+        "latency_seconds": 4.042,
+        "text": "42",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-02",
+        "kind": "text",
+        "latency_seconds": 3.264,
+        "text": "Paris",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-03",
+        "kind": "text",
+        "latency_seconds": 3.262,
+        "text": "Cold",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-04",
+        "kind": "text",
+        "latency_seconds": 3.263,
+        "text": "7",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-05",
+        "kind": "text",
+        "latency_seconds": 4.786,
+        "text": "H₂O",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      }
+    ]
+  },
+  {
+    "scenario": "text_concurrent_8",
+    "variant": "target_last",
+    "round": 2,
+    "submission_order": [
+      "text-07",
+      "text-08",
+      "text-01",
+      "text-02",
+      "text-03",
+      "text-04",
+      "text-05",
+      "text-06"
+    ],
+    "requests": [
+      {
+        "request_id": "text-07",
+        "kind": "text",
+        "latency_seconds": 3.266,
+        "text": "30",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-08",
+        "kind": "text",
+        "latency_seconds": 3.266,
+        "text": "Green",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-01",
+        "kind": "text",
+        "latency_seconds": 4.038,
+        "text": "42",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-02",
+        "kind": "text",
+        "latency_seconds": 3.265,
+        "text": "Paris",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-03",
+        "kind": "text",
+        "latency_seconds": 3.265,
+        "text": "Cold",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-04",
+        "kind": "text",
+        "latency_seconds": 3.262,
+        "text": "7",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-05",
+        "kind": "text",
+        "latency_seconds": 4.782,
+        "text": "H₂O",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-06",
+        "kind": "text",
+        "latency_seconds": 4.035,
+        "text": "Pacific Ocean",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      }
+    ]
+  },
+  {
+    "scenario": "image_concurrent_8",
+    "variant": "alone",
+    "round": 1,
+    "submission_order": [
+      "image-03"
+    ],
+    "requests": [
+      {
+        "request_id": "image-03",
+        "kind": "image",
+        "latency_seconds": 4.847,
+        "text": "Circle, Square, Triangle",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      }
+    ]
+  },
+  {
+    "scenario": "image_concurrent_8",
+    "variant": "original",
+    "round": 1,
+    "submission_order": [
+      "image-01",
+      "image-02",
+      "image-03",
+      "image-04",
+      "image-05",
+      "image-06",
+      "image-07",
+      "image-08"
+    ],
+    "requests": [
+      {
+        "request_id": "image-01",
+        "kind": "image",
+        "latency_seconds": 50.785,
+        "text": "Red, Green, Blue, Yellow",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-02",
+        "kind": "image",
+        "latency_seconds": 50.785,
+        "text": "Blue, Yellow, Red, Green",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-03",
+        "kind": "image",
+        "latency_seconds": 48.431,
+        "text": "Circle, Square, Triangle",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-04",
+        "kind": "image",
+        "latency_seconds": 46.071,
+        "text": "3",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-05",
+        "kind": "image",
+        "latency_seconds": 46.072,
+        "text": "yes",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-06",
+        "kind": "image",
+        "latency_seconds": 46.068,
+        "text": "square",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-07",
+        "kind": "image",
+        "latency_seconds": 46.069,
+        "text": "yellow",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-08",
+        "kind": "image",
+        "latency_seconds": 46.067,
+        "text": "4",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      }
+    ]
+  },
+  {
+    "scenario": "image_concurrent_8",
+    "variant": "reversed",
+    "round": 1,
+    "submission_order": [
+      "image-08",
+      "image-07",
+      "image-06",
+      "image-05",
+      "image-04",
+      "image-03",
+      "image-02",
+      "image-01"
+    ],
+    "requests": [
+      {
+        "request_id": "image-08",
+        "kind": "image",
+        "latency_seconds": 6.131,
+        "text": "4",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-07",
+        "kind": "image",
+        "latency_seconds": 6.131,
+        "text": "yellow",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-06",
+        "kind": "image",
+        "latency_seconds": 6.129,
+        "text": "square",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-05",
+        "kind": "image",
+        "latency_seconds": 6.13,
+        "text": "yes",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-04",
+        "kind": "image",
+        "latency_seconds": 6.128,
+        "text": "3",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-03",
+        "kind": "image",
+        "latency_seconds": 8.484,
+        "text": "Circle, Square, Triangle",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-02",
+        "kind": "image",
+        "latency_seconds": 10.836,
+        "text": "Blue, Yellow, Red, Green",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-01",
+        "kind": "image",
+        "latency_seconds": 10.836,
+        "text": "Red, Green, Blue, Yellow",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      }
+    ]
+  },
+  {
+    "scenario": "image_concurrent_8",
+    "variant": "target_first",
+    "round": 1,
+    "submission_order": [
+      "image-03",
+      "image-04",
+      "image-05",
+      "image-06",
+      "image-07",
+      "image-08",
+      "image-01",
+      "image-02"
+    ],
+    "requests": [
+      {
+        "request_id": "image-03",
+        "kind": "image",
+        "latency_seconds": 8.498,
+        "text": "Circle, Square, Triangle",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-04",
+        "kind": "image",
+        "latency_seconds": 6.129,
+        "text": "3",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-05",
+        "kind": "image",
+        "latency_seconds": 6.131,
+        "text": "yes",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-06",
+        "kind": "image",
+        "latency_seconds": 6.128,
+        "text": "square",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-07",
+        "kind": "image",
+        "latency_seconds": 6.128,
+        "text": "yellow",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-08",
+        "kind": "image",
+        "latency_seconds": 6.125,
+        "text": "4",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-01",
+        "kind": "image",
+        "latency_seconds": 10.851,
+        "text": "Red, Green, Blue, Yellow",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-02",
+        "kind": "image",
+        "latency_seconds": 10.851,
+        "text": "Blue, Yellow, Red, Green",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      }
+    ]
+  },
+  {
+    "scenario": "image_concurrent_8",
+    "variant": "target_last",
+    "round": 1,
+    "submission_order": [
+      "image-04",
+      "image-05",
+      "image-06",
+      "image-07",
+      "image-08",
+      "image-01",
+      "image-02",
+      "image-03"
+    ],
+    "requests": [
+      {
+        "request_id": "image-04",
+        "kind": "image",
+        "latency_seconds": 58.179,
+        "text": "3",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-05",
+        "kind": "image",
+        "latency_seconds": 59.017,
+        "text": "yes",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-06",
+        "kind": "image",
+        "latency_seconds": 59.013,
+        "text": "square",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-07",
+        "kind": "image",
+        "latency_seconds": 59.013,
+        "text": "yellow",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-08",
+        "kind": "image",
+        "latency_seconds": 59.012,
+        "text": "4",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-01",
+        "kind": "image",
+        "latency_seconds": 63.734,
+        "text": "Red, Green, Blue, Yellow",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-02",
+        "kind": "image",
+        "latency_seconds": 63.733,
+        "text": "Blue, Yellow, Red, Green",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-03",
+        "kind": "image",
+        "latency_seconds": 62.166,
+        "text": "Circle, Square, Triangle",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      }
+    ]
+  },
+  {
+    "scenario": "image_concurrent_8",
+    "variant": "alone",
+    "round": 2,
+    "submission_order": [
+      "image-03"
+    ],
+    "requests": [
+      {
+        "request_id": "image-03",
+        "kind": "image",
+        "latency_seconds": 4.869,
+        "text": "Circle, Square, Triangle",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      }
+    ]
+  },
+  {
+    "scenario": "image_concurrent_8",
+    "variant": "original",
+    "round": 2,
+    "submission_order": [
+      "image-01",
+      "image-02",
+      "image-03",
+      "image-04",
+      "image-05",
+      "image-06",
+      "image-07",
+      "image-08"
+    ],
+    "requests": [
+      {
+        "request_id": "image-01",
+        "kind": "image",
+        "latency_seconds": 10.826,
+        "text": "Red, Green, Blue, Yellow",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-02",
+        "kind": "image",
+        "latency_seconds": 10.825,
+        "text": "Blue, Yellow, Red, Green",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-03",
+        "kind": "image",
+        "latency_seconds": 9.263,
+        "text": "Circle, Square, Triangle",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-04",
+        "kind": "image",
+        "latency_seconds": 6.127,
+        "text": "3",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-05",
+        "kind": "image",
+        "latency_seconds": 6.128,
+        "text": "yes",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-06",
+        "kind": "image",
+        "latency_seconds": 5.334,
+        "text": "square",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-07",
+        "kind": "image",
+        "latency_seconds": 6.124,
+        "text": "yellow",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-08",
+        "kind": "image",
+        "latency_seconds": 6.123,
+        "text": "4",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      }
+    ]
+  },
+  {
+    "scenario": "image_concurrent_8",
+    "variant": "reversed",
+    "round": 2,
+    "submission_order": [
+      "image-08",
+      "image-07",
+      "image-06",
+      "image-05",
+      "image-04",
+      "image-03",
+      "image-02",
+      "image-01"
+    ],
+    "requests": [
+      {
+        "request_id": "image-08",
+        "kind": "image",
+        "latency_seconds": 5.341,
+        "text": "4",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-07",
+        "kind": "image",
+        "latency_seconds": 6.128,
+        "text": "yellow",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-06",
+        "kind": "image",
+        "latency_seconds": 6.126,
+        "text": "square",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-05",
+        "kind": "image",
+        "latency_seconds": 6.127,
+        "text": "yes",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-04",
+        "kind": "image",
+        "latency_seconds": 6.125,
+        "text": "3",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-03",
+        "kind": "image",
+        "latency_seconds": 9.264,
+        "text": "Circle, Square, Triangle",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-02",
+        "kind": "image",
+        "latency_seconds": 10.826,
+        "text": "Blue, Yellow, Red, Green",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-01",
+        "kind": "image",
+        "latency_seconds": 10.826,
+        "text": "Red, Green, Blue, Yellow",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      }
+    ]
+  },
+  {
+    "scenario": "image_concurrent_8",
+    "variant": "target_first",
+    "round": 2,
+    "submission_order": [
+      "image-03",
+      "image-04",
+      "image-05",
+      "image-06",
+      "image-07",
+      "image-08",
+      "image-01",
+      "image-02"
+    ],
+    "requests": [
+      {
+        "request_id": "image-03",
+        "kind": "image",
+        "latency_seconds": 9.266,
+        "text": "Circle, Square, Triangle",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-04",
+        "kind": "image",
+        "latency_seconds": 6.13,
+        "text": "3",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-05",
+        "kind": "image",
+        "latency_seconds": 6.13,
+        "text": "yes",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-06",
+        "kind": "image",
+        "latency_seconds": 6.126,
+        "text": "square",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-07",
+        "kind": "image",
+        "latency_seconds": 6.127,
+        "text": "yellow",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-08",
+        "kind": "image",
+        "latency_seconds": 5.336,
+        "text": "4",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-01",
+        "kind": "image",
+        "latency_seconds": 10.82,
+        "text": "Red, Green, Blue, Yellow",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-02",
+        "kind": "image",
+        "latency_seconds": 10.82,
+        "text": "Blue, Yellow, Red, Green",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      }
+    ]
+  },
+  {
+    "scenario": "image_concurrent_8",
+    "variant": "target_last",
+    "round": 2,
+    "submission_order": [
+      "image-04",
+      "image-05",
+      "image-06",
+      "image-07",
+      "image-08",
+      "image-01",
+      "image-02",
+      "image-03"
+    ],
+    "requests": [
+      {
+        "request_id": "image-04",
+        "kind": "image",
+        "latency_seconds": 5.346,
+        "text": "3",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-05",
+        "kind": "image",
+        "latency_seconds": 6.136,
+        "text": "yes",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-06",
+        "kind": "image",
+        "latency_seconds": 6.132,
+        "text": "square",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-07",
+        "kind": "image",
+        "latency_seconds": 6.132,
+        "text": "yellow",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-08",
+        "kind": "image",
+        "latency_seconds": 6.131,
+        "text": "4",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-01",
+        "kind": "image",
+        "latency_seconds": 10.836,
+        "text": "Red, Green, Blue, Yellow",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-02",
+        "kind": "image",
+        "latency_seconds": 10.835,
+        "text": "Blue, Yellow, Red, Green",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-03",
+        "kind": "image",
+        "latency_seconds": 9.268,
+        "text": "Circle, Square, Triangle",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      }
+    ]
+  },
+  {
+    "scenario": "mixed_concurrent_8",
+    "variant": "alone",
+    "round": 1,
+    "submission_order": [
+      "image-02"
+    ],
+    "requests": [
+      {
+        "request_id": "image-02",
+        "kind": "image",
+        "latency_seconds": 20.393,
+        "text": "Blue, Yellow, Red, Green",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      }
+    ]
+  },
+  {
+    "scenario": "mixed_concurrent_8",
+    "variant": "alone",
+    "round": 1,
+    "submission_order": [
+      "image-03"
+    ],
+    "requests": [
+      {
+        "request_id": "image-03",
+        "kind": "image",
+        "latency_seconds": 4.915,
+        "text": "Circle, Square, Triangle",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      }
+    ]
+  },
+  {
+    "scenario": "mixed_concurrent_8",
+    "variant": "original",
+    "round": 1,
+    "submission_order": [
+      "text-01",
+      "text-02",
+      "text-03",
+      "text-04",
+      "image-01",
+      "image-02",
+      "image-03",
+      "image-04"
+    ],
+    "requests": [
+      {
+        "request_id": "text-01",
+        "kind": "text",
+        "latency_seconds": 41.827,
+        "text": "42",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-02",
+        "kind": "text",
+        "latency_seconds": 40.244,
+        "text": "Paris",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-03",
+        "kind": "text",
+        "latency_seconds": 41.037,
+        "text": "Cold",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-04",
+        "kind": "text",
+        "latency_seconds": 41.037,
+        "text": "7",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-01",
+        "kind": "image",
+        "latency_seconds": 45.753,
+        "text": "Red, Green, Blue, Yellow",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-02",
+        "kind": "image",
+        "latency_seconds": 45.75,
+        "text": "Blue, Yellow, Red, Green",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-03",
+        "kind": "image",
+        "latency_seconds": 44.182,
+        "text": "Circle, Square, Triangle",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-04",
+        "kind": "image",
+        "latency_seconds": 41.033,
+        "text": "3",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      }
+    ]
+  },
+  {
+    "scenario": "mixed_concurrent_8",
+    "variant": "reversed",
+    "round": 1,
+    "submission_order": [
+      "image-04",
+      "image-03",
+      "image-02",
+      "image-01",
+      "text-04",
+      "text-03",
+      "text-02",
+      "text-01"
+    ],
+    "requests": [
+      {
+        "request_id": "image-04",
+        "kind": "image",
+        "latency_seconds": 51.753,
+        "text": "3",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-03",
+        "kind": "image",
+        "latency_seconds": 54.938,
+        "text": "Circle, Square, Triangle",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-02",
+        "kind": "image",
+        "latency_seconds": 56.524,
+        "text": "Blue, Yellow, Red, Green",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-01",
+        "kind": "image",
+        "latency_seconds": 56.521,
+        "text": "Red, Green, Blue, Yellow",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-04",
+        "kind": "text",
+        "latency_seconds": 51.746,
+        "text": "7",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-03",
+        "kind": "text",
+        "latency_seconds": 50.941,
+        "text": "Cold",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-02",
+        "kind": "text",
+        "latency_seconds": 51.745,
+        "text": "Paris",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-01",
+        "kind": "text",
+        "latency_seconds": 52.542,
+        "text": "42",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      }
+    ]
+  },
+  {
+    "scenario": "mixed_concurrent_8",
+    "variant": "target_first",
+    "round": 1,
+    "submission_order": [
+      "image-02",
+      "image-03",
+      "image-04",
+      "text-01",
+      "text-02",
+      "text-03",
+      "text-04",
+      "image-01"
+    ],
+    "requests": [
+      {
+        "request_id": "image-02",
+        "kind": "image",
+        "latency_seconds": 9.649,
+        "text": "Blue, Yellow, Red, Green",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-03",
+        "kind": "image",
+        "latency_seconds": 8.069,
+        "text": "Circle, Square, Triangle",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-04",
+        "kind": "image",
+        "latency_seconds": 4.907,
+        "text": "3",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-01",
+        "kind": "text",
+        "latency_seconds": 5.695,
+        "text": "42",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-02",
+        "kind": "text",
+        "latency_seconds": 4.903,
+        "text": "Paris",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-03",
+        "kind": "text",
+        "latency_seconds": 4.105,
+        "text": "Cold",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-04",
+        "kind": "text",
+        "latency_seconds": 4.902,
+        "text": "7",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-01",
+        "kind": "image",
+        "latency_seconds": 9.643,
+        "text": "Red, Green, Blue, Yellow",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      }
+    ]
+  },
+  {
+    "scenario": "mixed_concurrent_8",
+    "variant": "target_last",
+    "round": 1,
+    "submission_order": [
+      "image-03",
+      "image-04",
+      "text-01",
+      "text-02",
+      "text-03",
+      "text-04",
+      "image-01",
+      "image-02"
+    ],
+    "requests": [
+      {
+        "request_id": "image-03",
+        "kind": "image",
+        "latency_seconds": 43.799,
+        "text": "Circle, Square, Triangle",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-04",
+        "kind": "image",
+        "latency_seconds": 40.63,
+        "text": "3",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-01",
+        "kind": "text",
+        "latency_seconds": 41.421,
+        "text": "42",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-02",
+        "kind": "text",
+        "latency_seconds": 40.626,
+        "text": "Paris",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-03",
+        "kind": "text",
+        "latency_seconds": 40.626,
+        "text": "Cold",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-04",
+        "kind": "text",
+        "latency_seconds": 39.826,
+        "text": "7",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-01",
+        "kind": "image",
+        "latency_seconds": 45.37,
+        "text": "Red, Green, Blue, Yellow",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-02",
+        "kind": "image",
+        "latency_seconds": 45.37,
+        "text": "Blue, Yellow, Red, Green",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      }
+    ]
+  },
+  {
+    "scenario": "mixed_concurrent_8",
+    "variant": "target_first",
+    "round": 1,
+    "submission_order": [
+      "image-03",
+      "image-04",
+      "text-01",
+      "text-02",
+      "text-03",
+      "text-04",
+      "image-01",
+      "image-02"
+    ],
+    "requests": [
+      {
+        "request_id": "image-03",
+        "kind": "image",
+        "latency_seconds": 8.042,
+        "text": "Circle, Square, Triangle",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-04",
+        "kind": "image",
+        "latency_seconds": 4.882,
+        "text": "3",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-01",
+        "kind": "text",
+        "latency_seconds": 5.669,
+        "text": "42",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-02",
+        "kind": "text",
+        "latency_seconds": 4.878,
+        "text": "Paris",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-03",
+        "kind": "text",
+        "latency_seconds": 4.878,
+        "text": "Cold",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-04",
+        "kind": "text",
+        "latency_seconds": 4.079,
+        "text": "7",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-01",
+        "kind": "image",
+        "latency_seconds": 9.616,
+        "text": "Red, Green, Blue, Yellow",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-02",
+        "kind": "image",
+        "latency_seconds": 9.615,
+        "text": "Blue, Yellow, Red, Green",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      }
+    ]
+  },
+  {
+    "scenario": "mixed_concurrent_8",
+    "variant": "target_last",
+    "round": 1,
+    "submission_order": [
+      "image-04",
+      "text-01",
+      "text-02",
+      "text-03",
+      "text-04",
+      "image-01",
+      "image-02",
+      "image-03"
+    ],
+    "requests": [
+      {
+        "request_id": "image-04",
+        "kind": "image",
+        "latency_seconds": 4.876,
+        "text": "3",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-01",
+        "kind": "text",
+        "latency_seconds": 4.871,
+        "text": "42",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-02",
+        "kind": "text",
+        "latency_seconds": 4.871,
+        "text": "Paris",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-03",
+        "kind": "text",
+        "latency_seconds": 4.871,
+        "text": "Cold",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-04",
+        "kind": "text",
+        "latency_seconds": 4.871,
+        "text": "7",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-01",
+        "kind": "image",
+        "latency_seconds": 9.592,
+        "text": "Red, Green, Blue, Yellow",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-02",
+        "kind": "image",
+        "latency_seconds": 9.592,
+        "text": "Blue, Yellow, Red, Green",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-03",
+        "kind": "image",
+        "latency_seconds": 8.015,
+        "text": "Circle, Square, Triangle",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      }
+    ]
+  },
+  {
+    "scenario": "mixed_concurrent_8",
+    "variant": "alone",
+    "round": 2,
+    "submission_order": [
+      "image-02"
+    ],
+    "requests": [
+      {
+        "request_id": "image-02",
+        "kind": "image",
+        "latency_seconds": 6.433,
+        "text": "Blue, Yellow, Red, Green",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      }
+    ]
+  },
+  {
+    "scenario": "mixed_concurrent_8",
+    "variant": "alone",
+    "round": 2,
+    "submission_order": [
+      "image-03"
+    ],
+    "requests": [
+      {
+        "request_id": "image-03",
+        "kind": "image",
+        "latency_seconds": 4.913,
+        "text": "Circle, Square, Triangle",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      }
+    ]
+  },
+  {
+    "scenario": "mixed_concurrent_8",
+    "variant": "original",
+    "round": 2,
+    "submission_order": [
+      "text-01",
+      "text-02",
+      "text-03",
+      "text-04",
+      "image-01",
+      "image-02",
+      "image-03",
+      "image-04"
+    ],
+    "requests": [
+      {
+        "request_id": "text-01",
+        "kind": "text",
+        "latency_seconds": 4.874,
+        "text": "42",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-02",
+        "kind": "text",
+        "latency_seconds": 4.874,
+        "text": "Paris",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-03",
+        "kind": "text",
+        "latency_seconds": 4.874,
+        "text": "Cold",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-04",
+        "kind": "text",
+        "latency_seconds": 4.874,
+        "text": "7",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-01",
+        "kind": "image",
+        "latency_seconds": 9.587,
+        "text": "Red, Green, Blue, Yellow",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-02",
+        "kind": "image",
+        "latency_seconds": 9.587,
+        "text": "Blue, Yellow, Red, Green",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-03",
+        "kind": "image",
+        "latency_seconds": 8.015,
+        "text": "Circle, Square, Triangle",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-04",
+        "kind": "image",
+        "latency_seconds": 4.869,
+        "text": "3",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      }
+    ]
+  },
+  {
+    "scenario": "mixed_concurrent_8",
+    "variant": "reversed",
+    "round": 2,
+    "submission_order": [
+      "image-04",
+      "image-03",
+      "image-02",
+      "image-01",
+      "text-04",
+      "text-03",
+      "text-02",
+      "text-01"
+    ],
+    "requests": [
+      {
+        "request_id": "image-04",
+        "kind": "image",
+        "latency_seconds": 4.889,
+        "text": "3",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-03",
+        "kind": "image",
+        "latency_seconds": 8.058,
+        "text": "Circle, Square, Triangle",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-02",
+        "kind": "image",
+        "latency_seconds": 9.636,
+        "text": "Blue, Yellow, Red, Green",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-01",
+        "kind": "image",
+        "latency_seconds": 9.636,
+        "text": "Red, Green, Blue, Yellow",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-04",
+        "kind": "text",
+        "latency_seconds": 4.881,
+        "text": "7",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-03",
+        "kind": "text",
+        "latency_seconds": 4.081,
+        "text": "Cold",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-02",
+        "kind": "text",
+        "latency_seconds": 4.88,
+        "text": "Paris",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-01",
+        "kind": "text",
+        "latency_seconds": 5.672,
+        "text": "42",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      }
+    ]
+  },
+  {
+    "scenario": "mixed_concurrent_8",
+    "variant": "target_first",
+    "round": 2,
+    "submission_order": [
+      "image-02",
+      "image-03",
+      "image-04",
+      "text-01",
+      "text-02",
+      "text-03",
+      "text-04",
+      "image-01"
+    ],
+    "requests": [
+      {
+        "request_id": "image-02",
+        "kind": "image",
+        "latency_seconds": 9.597,
+        "text": "Blue, Yellow, Red, Green",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-03",
+        "kind": "image",
+        "latency_seconds": 8.023,
+        "text": "Circle, Square, Triangle",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-04",
+        "kind": "image",
+        "latency_seconds": 4.872,
+        "text": "3",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-01",
+        "kind": "text",
+        "latency_seconds": 4.867,
+        "text": "42",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-02",
+        "kind": "text",
+        "latency_seconds": 4.867,
+        "text": "Paris",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-03",
+        "kind": "text",
+        "latency_seconds": 4.867,
+        "text": "Cold",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-04",
+        "kind": "text",
+        "latency_seconds": 4.867,
+        "text": "7",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-01",
+        "kind": "image",
+        "latency_seconds": 9.59,
+        "text": "Red, Green, Blue, Yellow",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      }
+    ]
+  },
+  {
+    "scenario": "mixed_concurrent_8",
+    "variant": "target_last",
+    "round": 2,
+    "submission_order": [
+      "image-03",
+      "image-04",
+      "text-01",
+      "text-02",
+      "text-03",
+      "text-04",
+      "image-01",
+      "image-02"
+    ],
+    "requests": [
+      {
+        "request_id": "image-03",
+        "kind": "image",
+        "latency_seconds": 8.041,
+        "text": "Circle, Square, Triangle",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-04",
+        "kind": "image",
+        "latency_seconds": 4.873,
+        "text": "3",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-01",
+        "kind": "text",
+        "latency_seconds": 5.662,
+        "text": "42",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-02",
+        "kind": "text",
+        "latency_seconds": 4.869,
+        "text": "Paris",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-03",
+        "kind": "text",
+        "latency_seconds": 4.869,
+        "text": "Cold",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-04",
+        "kind": "text",
+        "latency_seconds": 4.07,
+        "text": "7",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-01",
+        "kind": "image",
+        "latency_seconds": 9.617,
+        "text": "Red, Green, Blue, Yellow",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-02",
+        "kind": "image",
+        "latency_seconds": 9.615,
+        "text": "Blue, Yellow, Red, Green",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      }
+    ]
+  },
+  {
+    "scenario": "mixed_concurrent_8",
+    "variant": "target_first",
+    "round": 2,
+    "submission_order": [
+      "image-03",
+      "image-04",
+      "text-01",
+      "text-02",
+      "text-03",
+      "text-04",
+      "image-01",
+      "image-02"
+    ],
+    "requests": [
+      {
+        "request_id": "image-03",
+        "kind": "image",
+        "latency_seconds": 8.046,
+        "text": "Circle, Square, Triangle",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-04",
+        "kind": "image",
+        "latency_seconds": 4.878,
+        "text": "3",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-01",
+        "kind": "text",
+        "latency_seconds": 5.668,
+        "text": "42",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-02",
+        "kind": "text",
+        "latency_seconds": 4.874,
+        "text": "Paris",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-03",
+        "kind": "text",
+        "latency_seconds": 4.874,
+        "text": "Cold",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-04",
+        "kind": "text",
+        "latency_seconds": 4.076,
+        "text": "7",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-01",
+        "kind": "image",
+        "latency_seconds": 9.625,
+        "text": "Red, Green, Blue, Yellow",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-02",
+        "kind": "image",
+        "latency_seconds": 9.623,
+        "text": "Blue, Yellow, Red, Green",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      }
+    ]
+  },
+  {
+    "scenario": "mixed_concurrent_8",
+    "variant": "target_last",
+    "round": 2,
+    "submission_order": [
+      "image-04",
+      "text-01",
+      "text-02",
+      "text-03",
+      "text-04",
+      "image-01",
+      "image-02",
+      "image-03"
+    ],
+    "requests": [
+      {
+        "request_id": "image-04",
+        "kind": "image",
+        "latency_seconds": 4.869,
+        "text": "3",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-01",
+        "kind": "text",
+        "latency_seconds": 4.865,
+        "text": "42",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-02",
+        "kind": "text",
+        "latency_seconds": 4.865,
+        "text": "Paris",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-03",
+        "kind": "text",
+        "latency_seconds": 4.864,
+        "text": "Cold",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "text-04",
+        "kind": "text",
+        "latency_seconds": 4.865,
+        "text": "7",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-01",
+        "kind": "image",
+        "latency_seconds": 9.581,
+        "text": "Red, Green, Blue, Yellow",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-02",
+        "kind": "image",
+        "latency_seconds": 9.581,
+        "text": "Blue, Yellow, Red, Green",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      },
+      {
+        "request_id": "image-03",
+        "kind": "image",
+        "latency_seconds": 8.005,
+        "text": "Circle, Square, Triangle",
+        "checks": {
+          "non_empty": true,
+          "minimum_length": true,
+          "expected_semantics": true,
+          "expected_order": true,
+          "no_bang_triplet": true,
+          "no_mojibake": true,
+          "no_control_characters": true,
+          "no_long_character_run": true,
+          "no_repeated_word_run": true,
+          "no_repeated_phrase": true
+        },
+        "passed": true
+      }
+    ]
+  }
+]
