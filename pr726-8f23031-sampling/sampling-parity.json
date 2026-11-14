@@ -1,0 +1,143 @@
+{
+  "vllm_plugin_fl_head": "515fa947e71f6e4fc34674fd25c296025056ab32",
+  "runtime_equivalent_policy_commit": "8f230319c1452bee6872ca306f70d6f7a0b8ec0a",
+  "candidate_plugin_head": "a44774d19513cb144eb099a4839ef0625ba63be6",
+  "additional_operator_exclusions": [
+    "le",
+    "softmax"
+  ],
+  "vocab_size": 248320,
+  "vllm": "0.32.0+flagos",
+  "torch_reference": "vendor native P800 values before enabling FlagGems",
+  "sampler": "actual V2 _sample_random filter with deterministic final argmax",
+  "tests": [
+    {
+      "batch_size": 1,
+      "route": "grammar_masked_top_p",
+      "diff_vs_native_p800": 0,
+      "native_cpu_gpu_diffs": 0
+    },
+    {
+      "batch_size": 1,
+      "route": "top_p",
+      "diff_vs_native_p800": 0,
+      "native_cpu_gpu_diffs": 0
+    },
+    {
+      "batch_size": 1,
+      "route": "top_k",
+      "diff_vs_native_p800": 0,
+      "native_cpu_gpu_diffs": 0
+    },
+    {
+      "batch_size": 1,
+      "route": "top_kp",
+      "diff_vs_native_p800": 0,
+      "native_cpu_gpu_diffs": 0
+    },
+    {
+      "batch_size": 1,
+      "route": "mixed",
+      "diff_vs_native_p800": 0,
+      "native_cpu_gpu_diffs": 0
+    },
+    {
+      "batch_size": 4,
+      "route": "grammar_masked_top_p",
+      "diff_vs_native_p800": 0,
+      "native_cpu_gpu_diffs": 0
+    },
+    {
+      "batch_size": 4,
+      "route": "top_p",
+      "diff_vs_native_p800": 0,
+      "native_cpu_gpu_diffs": 0
+    },
+    {
+      "batch_size": 4,
+      "route": "top_k",
+      "diff_vs_native_p800": 0,
+      "native_cpu_gpu_diffs": 0
+    },
+    {
+      "batch_size": 4,
+      "route": "top_kp",
+      "diff_vs_native_p800": 0,
+      "native_cpu_gpu_diffs": 0
+    },
+    {
+      "batch_size": 4,
+      "route": "mixed",
+      "diff_vs_native_p800": 0,
+      "native_cpu_gpu_diffs": 0
+    },
+    {
+      "batch_size": 8,
+      "route": "grammar_masked_top_p",
+      "diff_vs_native_p800": 0,
+      "native_cpu_gpu_diffs": 0
+    },
+    {
+      "batch_size": 8,
+      "route": "top_p",
+      "diff_vs_native_p800": 0,
+      "native_cpu_gpu_diffs": 3
+    },
+    {
+      "batch_size": 8,
+      "route": "top_k",
+      "diff_vs_native_p800": 0,
+      "native_cpu_gpu_diffs": 0
+    },
+    {
+      "batch_size": 8,
+      "route": "top_kp",
+      "diff_vs_native_p800": 0,
+      "native_cpu_gpu_diffs": 0
+    },
+    {
+      "batch_size": 8,
+      "route": "mixed",
+      "diff_vs_native_p800": 0,
+      "native_cpu_gpu_diffs": 0
+    },
+    {
+      "batch_size": 16,
+      "route": "grammar_masked_top_p",
+      "diff_vs_native_p800": 0,
+      "native_cpu_gpu_diffs": 0
+    },
+    {
+      "batch_size": 16,
+      "route": "top_p",
+      "diff_vs_native_p800": 0,
+      "native_cpu_gpu_diffs": 1
+    },
+    {
+      "batch_size": 16,
+      "route": "top_k",
+      "diff_vs_native_p800": 0,
+      "native_cpu_gpu_diffs": 0
+    },
+    {
+      "batch_size": 16,
+      "route": "top_kp",
+      "diff_vs_native_p800": 0,
+      "native_cpu_gpu_diffs": 0
+    },
+    {
+      "batch_size": 16,
+      "route": "mixed",
+      "diff_vs_native_p800": 0,
+      "native_cpu_gpu_diffs": 0
+    }
+  ],
+  "sha256": {
+    "top-p-full-vocab-parity.py": "8e06fe32434a6199b4ec7a774de19f5f87c665b18335ebab2f28763964f177b8",
+    "top-p-full-vocab-native-oracle.py": "f0aeba1e6aaf77fcac3e4977645c23ae2c354780b4682c69b0dd31bc7c26d35d",
+    "run-top-p-full-vocab-native-oracle.sh": "d6c05b94c12824d0862f391faf4eb7392c7ce3e7f515e476ea163d19dcf1562e",
+    "top-p-full-vocab-native-oracle.log": "bbd2d713d7d3aeea039684b6d97bf3c03f135e217eba45fd247d39e02da1ce8d",
+    "top-p-stages.py": "8d29686cbcf390db1457ee6e03825486473444d6c58d0dd4fee3a81d31a59e9a",
+    "top-p-stages.log": "e162bccb37c9b42412a3abc3d5d83fc7ef8053f5cf32b9e2352190ecc6cb5e33"
+  }
+}

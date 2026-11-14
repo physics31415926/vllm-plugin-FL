@@ -1,0 +1,143 @@
+XCCL /usr/local/xccl_Linux_x86_64/so/libbkcl.so loaded
+[35mSYMBOL_REWRITE [0m[32mtorch success[0m
+/flagos/lib/python3.10/site-packages/torch/library.py:364: UserWarning: Warning only once for all operators,  other operators may also be overridden.
+  Overriding a previously registered kernel for the same operator and the same dispatch key
+  operator: aten::range(Scalar start, Scalar end, *, ScalarType? dtype=None, Layout? layout=None, Device? device=None, bool? pin_memory=None) -> Tensor
+    registered at /pytorch/build/aten/src/ATen/RegisterSchema.cpp:6
+  dispatch key: BackendSelect
+  previous kernel: registered at /pytorch/build/aten/src/ATen/RegisterBackendSelect.cpp:792
+       new kernel: registered at /flagos/lib/python3.10/site-packages/flag_gems/runtime/backend/_kunlunxin/ops/range.py:68 (Triggered internally at /pytorch/aten/src/ATen/core/dispatch/OperatorEntry.cpp:218.)
+  self.m.impl(
+[2026-11-14 10:00:21] [INFO] [vllm_fl.dispatch.backends.vendor.kunlunxin.patches.topk_topp_compat] Enabled vLLM's PyTorch top-k/top-p filtering on Kunlunxin
+================================================================================
+WARNING: Libraries loaded from different directories!
+This may cause version mismatch issues.
+--------------------------------------------------------------------------------
+Directory: /usr/local/xcudart/lib
+  - libcuda.so.1
+  - libcuda.so.1
+  - libcupti.so.12
+  - libxpuml.so.1
+Directory: /usr/local/xpu/so
+  - libcudart.so.12
+  - libxpurt.so.2
+================================================================================
+OP_CONFIG None ['pow_scalar', 'copy_', '_scaled_dot_product_attention_math', 'zeros', 'zero_', 'nonzero', 'sort', 'sort_stable', 'lt', 'cumsum_out', 'le', 'softmax']
+REFERENCE 1 248320 grammar_masked_top_p
+REFERENCE 1 248320 top_p
+REFERENCE 1 248320 top_k
+REFERENCE 1 248320 top_kp
+REFERENCE 1 248320 mixed
+REFERENCE 4 248320 grammar_masked_top_p
+REFERENCE 4 248320 top_p
+REFERENCE 4 248320 top_k
+REFERENCE 4 248320 top_kp
+REFERENCE 4 248320 mixed
+REFERENCE 8 248320 grammar_masked_top_p
+REFERENCE 8 248320 top_p
+REFERENCE 8 248320 top_k
+REFERENCE 8 248320 top_kp
+REFERENCE 8 248320 mixed
+REFERENCE 16 248320 grammar_masked_top_p
+REFERENCE 16 248320 top_p
+REFERENCE 16 248320 top_k
+REFERENCE 16 248320 top_kp
+REFERENCE 16 248320 mixed
+WARNING:root:Skipped registering operator: This is not allowed since there's already a kernel registered from python overriding ne_.Scalar's behavior for CUDA dispatch key and aten namespace.
+WARNING:root:Skipped registering operator: This is not allowed since there's already a kernel registered from python overriding ne_.Tensor's behavior for CUDA dispatch key and aten namespace.
+START 1 248320 grammar_masked_top_p
+/flagos/lib/python3.10/site-packages/flag_gems/runtime/backend/_kunlunxin/ops/argmax.py:114: UserWarning: Logical operators 'and' and 'or' are deprecated for non-scalar tensors; please use '&' or '|' instead
+  mask = m_offset[:, None] < M and n_offset[None, :] < N
+UserWarning: Enable tracemalloc to get the object allocation traceback
+/flagos/lib/python3.10/site-packages/flag_gems/runtime/backend/_kunlunxin/ops/argmax.py:114: UserWarning: Logical operators 'and' and 'or' are deprecated for non-scalar tensors; please use '&' or '|' instead
+  mask = m_offset[:, None] < M and n_offset[None, :] < N
+UserWarning: Enable tracemalloc to get the object allocation traceback
+/flagos/lib/python3.10/site-packages/flag_gems/runtime/backend/_kunlunxin/ops/argmax.py:148: UserWarning: Logical operators 'and' and 'or' are deprecated for non-scalar tensors; please use '&' or '|' instead
+  mask = m_offset[:, None] < M and c_offset[None, :] < NUM_CHUNKS
+UserWarning: Enable tracemalloc to get the object allocation traceback
+/flagos/lib/python3.10/site-packages/flag_gems/runtime/backend/_kunlunxin/ops/argmax.py:148: UserWarning: Logical operators 'and' and 'or' are deprecated for non-scalar tensors; please use '&' or '|' instead
+  mask = m_offset[:, None] < M and c_offset[None, :] < NUM_CHUNKS
+UserWarning: Enable tracemalloc to get the object allocation traceback
+COUNTS 1 grammar_masked_top_p 0 0
+PASS 1 248320 grammar_masked_top_p
+START 1 248320 top_p
+COUNTS 1 top_p 0 0
+PASS 1 248320 top_p
+START 1 248320 top_k
+COUNTS 1 top_k 0 0
+PASS 1 248320 top_k
+START 1 248320 top_kp
+COUNTS 1 top_kp 0 0
+PASS 1 248320 top_kp
+START 1 248320 mixed
+COUNTS 1 mixed 0 0
+PASS 1 248320 mixed
+START 4 248320 grammar_masked_top_p
+/flagos/lib/python3.10/site-packages/flag_gems/runtime/backend/_kunlunxin/ops/argmax.py:114: UserWarning: Logical operators 'and' and 'or' are deprecated for non-scalar tensors; please use '&' or '|' instead
+  mask = m_offset[:, None] < M and n_offset[None, :] < N
+UserWarning: Enable tracemalloc to get the object allocation traceback
+/flagos/lib/python3.10/site-packages/flag_gems/runtime/backend/_kunlunxin/ops/argmax.py:114: UserWarning: Logical operators 'and' and 'or' are deprecated for non-scalar tensors; please use '&' or '|' instead
+  mask = m_offset[:, None] < M and n_offset[None, :] < N
+UserWarning: Enable tracemalloc to get the object allocation traceback
+/flagos/lib/python3.10/site-packages/flag_gems/runtime/backend/_kunlunxin/ops/argmax.py:148: UserWarning: Logical operators 'and' and 'or' are deprecated for non-scalar tensors; please use '&' or '|' instead
+  mask = m_offset[:, None] < M and c_offset[None, :] < NUM_CHUNKS
+UserWarning: Enable tracemalloc to get the object allocation traceback
+/flagos/lib/python3.10/site-packages/flag_gems/runtime/backend/_kunlunxin/ops/argmax.py:148: UserWarning: Logical operators 'and' and 'or' are deprecated for non-scalar tensors; please use '&' or '|' instead
+  mask = m_offset[:, None] < M and c_offset[None, :] < NUM_CHUNKS
+UserWarning: Enable tracemalloc to get the object allocation traceback
+COUNTS 4 grammar_masked_top_p 0 0
+PASS 4 248320 grammar_masked_top_p
+START 4 248320 top_p
+COUNTS 4 top_p 0 0
+PASS 4 248320 top_p
+START 4 248320 top_k
+COUNTS 4 top_k 0 0
+PASS 4 248320 top_k
+START 4 248320 top_kp
+COUNTS 4 top_kp 0 0
+PASS 4 248320 top_kp
+START 4 248320 mixed
+COUNTS 4 mixed 0 0
+PASS 4 248320 mixed
+START 8 248320 grammar_masked_top_p
+COUNTS 8 grammar_masked_top_p 0 0
+PASS 8 248320 grammar_masked_top_p
+START 8 248320 top_p
+COUNTS 8 top_p 0 3
+PASS 8 248320 top_p
+START 8 248320 top_k
+COUNTS 8 top_k 0 0
+PASS 8 248320 top_k
+START 8 248320 top_kp
+COUNTS 8 top_kp 0 0
+PASS 8 248320 top_kp
+START 8 248320 mixed
+COUNTS 8 mixed 0 0
+PASS 8 248320 mixed
+START 16 248320 grammar_masked_top_p
+/flagos/lib/python3.10/site-packages/flag_gems/runtime/backend/_kunlunxin/ops/argmax.py:114: UserWarning: Logical operators 'and' and 'or' are deprecated for non-scalar tensors; please use '&' or '|' instead
+  mask = m_offset[:, None] < M and n_offset[None, :] < N
+UserWarning: Enable tracemalloc to get the object allocation traceback
+/flagos/lib/python3.10/site-packages/flag_gems/runtime/backend/_kunlunxin/ops/argmax.py:114: UserWarning: Logical operators 'and' and 'or' are deprecated for non-scalar tensors; please use '&' or '|' instead
+  mask = m_offset[:, None] < M and n_offset[None, :] < N
+UserWarning: Enable tracemalloc to get the object allocation traceback
+/flagos/lib/python3.10/site-packages/flag_gems/runtime/backend/_kunlunxin/ops/argmax.py:148: UserWarning: Logical operators 'and' and 'or' are deprecated for non-scalar tensors; please use '&' or '|' instead
+  mask = m_offset[:, None] < M and c_offset[None, :] < NUM_CHUNKS
+UserWarning: Enable tracemalloc to get the object allocation traceback
+/flagos/lib/python3.10/site-packages/flag_gems/runtime/backend/_kunlunxin/ops/argmax.py:148: UserWarning: Logical operators 'and' and 'or' are deprecated for non-scalar tensors; please use '&' or '|' instead
+  mask = m_offset[:, None] < M and c_offset[None, :] < NUM_CHUNKS
+UserWarning: Enable tracemalloc to get the object allocation traceback
+COUNTS 16 grammar_masked_top_p 0 0
+PASS 16 248320 grammar_masked_top_p
+START 16 248320 top_p
+COUNTS 16 top_p 0 1
+PASS 16 248320 top_p
+START 16 248320 top_k
+COUNTS 16 top_k 0 0
+PASS 16 248320 top_k
+START 16 248320 top_kp
+COUNTS 16 top_kp 0 0
+PASS 16 248320 top_kp
+START 16 248320 mixed
+COUNTS 16 mixed 0 0
+PASS 16 248320 mixed
