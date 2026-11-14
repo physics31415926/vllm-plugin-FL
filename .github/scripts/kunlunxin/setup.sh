@@ -112,7 +112,7 @@ python -m pip install --index-url "$index_url" \
   pytest pytest-cov pytest-timeout pytest-json-report "pytest-xdist>=3.0.0" \
   requests openai pillow decorator pyyaml sqlalchemy pybind11
 
-PIP_INDEX_URL="$index_url" python .github/scripts/install_flaggems_vllm.py --source-archive
+PIP_INDEX_URL="$index_url" python .github/scripts/install_flaggems_vllm.py --source-archive kunlunxin-grammar
 
 python - <<'PY'
 import os
