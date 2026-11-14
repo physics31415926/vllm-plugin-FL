@@ -1,0 +1,21 @@
+(Worker_TP1 pid=813) INFO 11-14 11:55:15 [model_runner.py:1127] Graph capturing finished in 10 secs, took 0.02 GiB
+(Worker_TP3 pid=815) INFO 11-14 11:55:15 [model_runner.py:1127] Graph capturing finished in 10 secs, took 0.02 GiB
+(Worker_TP0 pid=812) INFO 11-14 11:55:15 [model_runner.py:1127] Graph capturing finished in 10 secs, took 0.02 GiB
+(Worker_TP2 pid=814) INFO 11-14 11:55:15 [model_runner.py:1127] Graph capturing finished in 10 secs, took 0.02 GiB
+(Worker_TP1 pid=813) INFO 11-14 11:55:23 [model_runner.py:1127] Graph capturing finished in 7 secs, took 0.02 GiB
+(Worker_TP3 pid=815) INFO 11-14 11:55:24 [model_runner.py:1127] Graph capturing finished in 7 secs, took 0.02 GiB
+(Worker_TP2 pid=814) INFO 11-14 11:55:24 [model_runner.py:1127] Graph capturing finished in 7 secs, took 0.02 GiB
+(Worker_TP0 pid=812) INFO 11-14 11:55:24 [model_runner.py:1127] Graph capturing finished in 7 secs, took 0.02 GiB
+(EngineCore pid=508) INFO 11-14 11:55:50 [core.py:402] init engine (profile, create kv cache, warmup model) took 307.89 s
+INFO:     Application startup complete.
+(APIServer pid=9) INFO 11-14 11:56:10 [cuda_graph.py:123] | 1               | 1             | 0            | FULL         | 21    |
+(APIServer pid=9) INFO 11-14 11:56:20 [cuda_graph.py:123] | 1               | 1             | 0            | FULL         | 198   |
+(APIServer pid=9) INFO 11-14 11:56:30 [cuda_graph.py:123] | 1               | 1             | 0            | FULL         | 77    |
+(APIServer pid=9) INFO 11-14 11:56:40 [cuda_graph.py:123] | 7               | 8             | 1            | FULL         | 1     |
+(APIServer pid=9) INFO 11-14 11:56:40 [cuda_graph.py:123] | 4               | 4             | 0            | FULL         | 1     |
+(APIServer pid=9) INFO 11-14 11:56:40 [cuda_graph.py:123] | 1               | 1             | 0            | FULL         | 1     |
+(APIServer pid=9) INFO 11-14 11:56:50 [cuda_graph.py:123] | 1               | 1             | 0            | FULL         | 2     |
+(APIServer pid=9) INFO 11-14 11:57:00 [cuda_graph.py:123] | 3               | 4             | 1            | FULL         | 3     |
+(APIServer pid=9) INFO 11-14 11:57:00 [cuda_graph.py:123] | 4               | 4             | 0            | FULL         | 1     |
+(APIServer pid=9) INFO 11-14 11:57:00 [cuda_graph.py:123] | 2               | 2             | 0            | FULL         | 1     |
+(APIServer pid=9) INFO 11-14 11:57:00 [cuda_graph.py:123] | 1               | 1             | 0            | FULL         | 1     |

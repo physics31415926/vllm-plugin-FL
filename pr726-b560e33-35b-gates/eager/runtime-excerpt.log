@@ -1,0 +1,2 @@
+(EngineCore pid=508) INFO 11-14 11:42:36 [core.py:402] init engine (profile, create kv cache, warmup model) took 354.98 s
+INFO:     Application startup complete.
