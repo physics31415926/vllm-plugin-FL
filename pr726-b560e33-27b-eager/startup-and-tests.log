@@ -1,0 +1,14 @@
+[2026-11-14 11:10:56] [INFO] [vllm_fl.dispatch.backends.vendor.kunlunxin.patches.uva_compat] kunlunxin uva_compat: reporting is_uva_available()=False in vllm.utils.platform_utils, vllm.v1.worker.gpu.buffer_utils, vllm.model_executor.offloader.uva; V2 model runner will use NonUvaBuffer explicit copies because P800 cannot map pinned host memory into the device address space
+[2026-11-14 11:10:56] [INFO] [vllm_fl.dispatch.backends.vendor.kunlunxin.patches.uva_compat] kunlunxin uva_compat: reporting is_uva_available()=False in vllm.utils.platform_utils, vllm.v1.worker.gpu.buffer_utils, vllm.model_executor.offloader.uva; V2 model runner will use NonUvaBuffer explicit copies because P800 cannot map pinned host memory into the device address space
+[2026-11-14 11:10:56] [INFO] [vllm_fl.dispatch.backends.vendor.kunlunxin.patches.uva_compat] kunlunxin uva_compat: reporting is_uva_available()=False in vllm.utils.platform_utils, vllm.v1.worker.gpu.buffer_utils, vllm.model_executor.offloader.uva; V2 model runner will use NonUvaBuffer explicit copies because P800 cannot map pinned host memory into the device address space
+[2026-11-14 11:10:57] [INFO] [vllm_fl.dispatch.backends.vendor.kunlunxin.patches.uva_compat] kunlunxin uva_compat: reporting is_uva_available()=False in vllm.utils.platform_utils, vllm.v1.worker.gpu.buffer_utils, vllm.model_executor.offloader.uva; V2 model runner will use NonUvaBuffer explicit copies because P800 cannot map pinned host memory into the device address space
+(EngineCore pid=508) INFO 11-14 11:16:14 [core.py:402] init engine (profile, create kv cache, warmup model) took 308.57 s
+INFO:     Application startup complete.
+test_text.py::test_text_single PASSED
+test_text.py::test_text_concurrent_8 PASSED
+======================== 2 passed in 134.63s (0:02:14) =========================
+test_image.py::test_image_single PASSED
+test_image.py::test_image_concurrent_8 PASSED
+======================== 2 passed in 107.80s (0:01:47) =========================
+test_mix_text_image.py::test_mix_text_image_concurrent_8 PASSED
+============================== 1 passed in 11.62s ==============================
