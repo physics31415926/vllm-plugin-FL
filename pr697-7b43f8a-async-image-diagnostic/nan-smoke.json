@@ -1,0 +1,1081 @@
+{
+  "platform": "ptpu",
+  "kernel": "/flagos/lib/python3.10/site-packages/vllm/v1/worker/gpu/metrics/logits.py",
+  "device": "0",
+  "width": 248320,
+  "cases": [
+    {
+      "dtype": "torch.float32",
+      "case": "finite-or-infinite",
+      "shape": [
+        1,
+        248320
+      ],
+      "stride": [
+        248320,
+        1
+      ],
+      "expected": [
+        0
+      ],
+      "sync": [
+        0
+      ],
+      "async_copy": [
+        0
+      ],
+      "exact": true,
+      "policy": "native"
+    },
+    {
+      "dtype": "torch.float32",
+      "case": "known-nans",
+      "shape": [
+        1,
+        248320
+      ],
+      "stride": [
+        248320,
+        1
+      ],
+      "expected": [
+        1
+      ],
+      "sync": [
+        1
+      ],
+      "async_copy": [
+        1
+      ],
+      "exact": true,
+      "policy": "native"
+    },
+    {
+      "dtype": "torch.float32",
+      "case": "finite-or-infinite",
+      "shape": [
+        1,
+        248320
+      ],
+      "stride": [
+        248576,
+        1
+      ],
+      "expected": [
+        0
+      ],
+      "sync": [
+        0
+      ],
+      "async_copy": [
+        0
+      ],
+      "exact": true,
+      "policy": "native"
+    },
+    {
+      "dtype": "torch.float32",
+      "case": "known-nans",
+      "shape": [
+        1,
+        248320
+      ],
+      "stride": [
+        248576,
+        1
+      ],
+      "expected": [
+        1
+      ],
+      "sync": [
+        1
+      ],
+      "async_copy": [
+        1
+      ],
+      "exact": true,
+      "policy": "native"
+    },
+    {
+      "dtype": "torch.float32",
+      "case": "finite-or-infinite",
+      "shape": [
+        8,
+        248320
+      ],
+      "stride": [
+        248320,
+        1
+      ],
+      "expected": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "sync": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "async_copy": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "exact": true,
+      "policy": "native"
+    },
+    {
+      "dtype": "torch.float32",
+      "case": "known-nans",
+      "shape": [
+        8,
+        248320
+      ],
+      "stride": [
+        248320,
+        1
+      ],
+      "expected": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "sync": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "async_copy": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "exact": true,
+      "policy": "native"
+    },
+    {
+      "dtype": "torch.float32",
+      "case": "finite-or-infinite",
+      "shape": [
+        8,
+        248320
+      ],
+      "stride": [
+        248576,
+        1
+      ],
+      "expected": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "sync": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "async_copy": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "exact": true,
+      "policy": "native"
+    },
+    {
+      "dtype": "torch.float32",
+      "case": "known-nans",
+      "shape": [
+        8,
+        248320
+      ],
+      "stride": [
+        248576,
+        1
+      ],
+      "expected": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "sync": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "async_copy": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "exact": true,
+      "policy": "native"
+    },
+    {
+      "dtype": "torch.bfloat16",
+      "case": "finite-or-infinite",
+      "shape": [
+        1,
+        248320
+      ],
+      "stride": [
+        248320,
+        1
+      ],
+      "expected": [
+        0
+      ],
+      "sync": [
+        0
+      ],
+      "async_copy": [
+        0
+      ],
+      "exact": true,
+      "policy": "native"
+    },
+    {
+      "dtype": "torch.bfloat16",
+      "case": "known-nans",
+      "shape": [
+        1,
+        248320
+      ],
+      "stride": [
+        248320,
+        1
+      ],
+      "expected": [
+        1
+      ],
+      "sync": [
+        1
+      ],
+      "async_copy": [
+        1
+      ],
+      "exact": true,
+      "policy": "native"
+    },
+    {
+      "dtype": "torch.bfloat16",
+      "case": "finite-or-infinite",
+      "shape": [
+        1,
+        248320
+      ],
+      "stride": [
+        248576,
+        1
+      ],
+      "expected": [
+        0
+      ],
+      "sync": [
+        0
+      ],
+      "async_copy": [
+        0
+      ],
+      "exact": true,
+      "policy": "native"
+    },
+    {
+      "dtype": "torch.bfloat16",
+      "case": "known-nans",
+      "shape": [
+        1,
+        248320
+      ],
+      "stride": [
+        248576,
+        1
+      ],
+      "expected": [
+        1
+      ],
+      "sync": [
+        1
+      ],
+      "async_copy": [
+        1
+      ],
+      "exact": true,
+      "policy": "native"
+    },
+    {
+      "dtype": "torch.bfloat16",
+      "case": "finite-or-infinite",
+      "shape": [
+        8,
+        248320
+      ],
+      "stride": [
+        248320,
+        1
+      ],
+      "expected": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "sync": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "async_copy": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "exact": true,
+      "policy": "native"
+    },
+    {
+      "dtype": "torch.bfloat16",
+      "case": "known-nans",
+      "shape": [
+        8,
+        248320
+      ],
+      "stride": [
+        248320,
+        1
+      ],
+      "expected": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "sync": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "async_copy": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "exact": true,
+      "policy": "native"
+    },
+    {
+      "dtype": "torch.bfloat16",
+      "case": "finite-or-infinite",
+      "shape": [
+        8,
+        248320
+      ],
+      "stride": [
+        248576,
+        1
+      ],
+      "expected": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "sync": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "async_copy": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "exact": true,
+      "policy": "native"
+    },
+    {
+      "dtype": "torch.bfloat16",
+      "case": "known-nans",
+      "shape": [
+        8,
+        248320
+      ],
+      "stride": [
+        248576,
+        1
+      ],
+      "expected": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "sync": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "async_copy": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "exact": true,
+      "policy": "native"
+    },
+    {
+      "dtype": "torch.float32",
+      "case": "finite-or-infinite",
+      "shape": [
+        1,
+        248320
+      ],
+      "stride": [
+        248320,
+        1
+      ],
+      "expected": [
+        0
+      ],
+      "sync": [
+        0
+      ],
+      "async_copy": [
+        0
+      ],
+      "exact": true,
+      "policy": "r7-dispatch"
+    },
+    {
+      "dtype": "torch.float32",
+      "case": "known-nans",
+      "shape": [
+        1,
+        248320
+      ],
+      "stride": [
+        248320,
+        1
+      ],
+      "expected": [
+        1
+      ],
+      "sync": [
+        1
+      ],
+      "async_copy": [
+        1
+      ],
+      "exact": true,
+      "policy": "r7-dispatch"
+    },
+    {
+      "dtype": "torch.float32",
+      "case": "finite-or-infinite",
+      "shape": [
+        1,
+        248320
+      ],
+      "stride": [
+        248576,
+        1
+      ],
+      "expected": [
+        0
+      ],
+      "sync": [
+        0
+      ],
+      "async_copy": [
+        0
+      ],
+      "exact": true,
+      "policy": "r7-dispatch"
+    },
+    {
+      "dtype": "torch.float32",
+      "case": "known-nans",
+      "shape": [
+        1,
+        248320
+      ],
+      "stride": [
+        248576,
+        1
+      ],
+      "expected": [
+        1
+      ],
+      "sync": [
+        1
+      ],
+      "async_copy": [
+        1
+      ],
+      "exact": true,
+      "policy": "r7-dispatch"
+    },
+    {
+      "dtype": "torch.float32",
+      "case": "finite-or-infinite",
+      "shape": [
+        8,
+        248320
+      ],
+      "stride": [
+        248320,
+        1
+      ],
+      "expected": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "sync": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "async_copy": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "exact": true,
+      "policy": "r7-dispatch"
+    },
+    {
+      "dtype": "torch.float32",
+      "case": "known-nans",
+      "shape": [
+        8,
+        248320
+      ],
+      "stride": [
+        248320,
+        1
+      ],
+      "expected": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "sync": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "async_copy": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "exact": true,
+      "policy": "r7-dispatch"
+    },
+    {
+      "dtype": "torch.float32",
+      "case": "finite-or-infinite",
+      "shape": [
+        8,
+        248320
+      ],
+      "stride": [
+        248576,
+        1
+      ],
+      "expected": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "sync": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "async_copy": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "exact": true,
+      "policy": "r7-dispatch"
+    },
+    {
+      "dtype": "torch.float32",
+      "case": "known-nans",
+      "shape": [
+        8,
+        248320
+      ],
+      "stride": [
+        248576,
+        1
+      ],
+      "expected": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "sync": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "async_copy": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "exact": true,
+      "policy": "r7-dispatch"
+    },
+    {
+      "dtype": "torch.bfloat16",
+      "case": "finite-or-infinite",
+      "shape": [
+        1,
+        248320
+      ],
+      "stride": [
+        248320,
+        1
+      ],
+      "expected": [
+        0
+      ],
+      "sync": [
+        0
+      ],
+      "async_copy": [
+        0
+      ],
+      "exact": true,
+      "policy": "r7-dispatch"
+    },
+    {
+      "dtype": "torch.bfloat16",
+      "case": "known-nans",
+      "shape": [
+        1,
+        248320
+      ],
+      "stride": [
+        248320,
+        1
+      ],
+      "expected": [
+        1
+      ],
+      "sync": [
+        1
+      ],
+      "async_copy": [
+        1
+      ],
+      "exact": true,
+      "policy": "r7-dispatch"
+    },
+    {
+      "dtype": "torch.bfloat16",
+      "case": "finite-or-infinite",
+      "shape": [
+        1,
+        248320
+      ],
+      "stride": [
+        248576,
+        1
+      ],
+      "expected": [
+        0
+      ],
+      "sync": [
+        0
+      ],
+      "async_copy": [
+        0
+      ],
+      "exact": true,
+      "policy": "r7-dispatch"
+    },
+    {
+      "dtype": "torch.bfloat16",
+      "case": "known-nans",
+      "shape": [
+        1,
+        248320
+      ],
+      "stride": [
+        248576,
+        1
+      ],
+      "expected": [
+        1
+      ],
+      "sync": [
+        1
+      ],
+      "async_copy": [
+        1
+      ],
+      "exact": true,
+      "policy": "r7-dispatch"
+    },
+    {
+      "dtype": "torch.bfloat16",
+      "case": "finite-or-infinite",
+      "shape": [
+        8,
+        248320
+      ],
+      "stride": [
+        248320,
+        1
+      ],
+      "expected": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "sync": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "async_copy": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "exact": true,
+      "policy": "r7-dispatch"
+    },
+    {
+      "dtype": "torch.bfloat16",
+      "case": "known-nans",
+      "shape": [
+        8,
+        248320
+      ],
+      "stride": [
+        248320,
+        1
+      ],
+      "expected": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "sync": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "async_copy": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "exact": true,
+      "policy": "r7-dispatch"
+    },
+    {
+      "dtype": "torch.bfloat16",
+      "case": "finite-or-infinite",
+      "shape": [
+        8,
+        248320
+      ],
+      "stride": [
+        248576,
+        1
+      ],
+      "expected": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "sync": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "async_copy": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "exact": true,
+      "policy": "r7-dispatch"
+    },
+    {
+      "dtype": "torch.bfloat16",
+      "case": "known-nans",
+      "shape": [
+        8,
+        248320
+      ],
+      "stride": [
+        248576,
+        1
+      ],
+      "expected": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "sync": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "async_copy": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "exact": true,
+      "policy": "r7-dispatch"
+    }
+  ],
+  "passed": true
+}
