@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "case": {
+    "scenario": "text_single",
+    "model_path": "/data/models/Qwen/Qwen3.6-35B-A3B",
+    "served_model_name": "Qwen3.6-35B-A3B",
+    "port": "18774",
+    "concurrency": 1
+  },
+  "started_at": "2026-11-14T08:42:12.143887+00:00",
+  "finished_at": "2026-11-14T08:42:27.577666+00:00",
+  "input": [
+    {
+      "request_id": "text-llm-details",
+      "kind": "text",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Introduce large language models (LLMs) in detail. Explain what they are, how training and inference work, typical capabilities, limitations, and responsible use. Write a coherent response of at least 256 characters. Do not repeat words or phrases unnecessarily."
+        }
+      ],
+      "required_terms": [
+        "large language model",
+        "training",
+        "inference",
+        "limitations"
+      ],
+      "min_length": 256,
+      "max_tokens": 512
+    }
+  ],
+  "output": [
+    {
+      "request_id": "text-llm-details",
+      "kind": "text",
+      "latency_seconds": 15.412,
+      "text": "Large language models (LLMs) are sophisticated artificial intelligence systems designed to understand, generate, and manipulate human language with remarkable fluency. These models are built upon deep learning architectures, primarily the transformer network, which utilizes self-attention mechanisms to process vast sequences of text data efficiently. Training involves exposing the model to massive datasets comprising books, articles, code, and web content, allowing it to learn complex linguistic patterns, factual knowledge, and reasoning structures through predictive tasks. During inference, the model generates text token by token, calculating probabilities for the next word based on the context provided by the user’s prompt. This process enables a wide array of capabilities, including natural conversation, creative writing, code generation, translation, and summarization. However, LLMs are not infallible; they can suffer from hallucinations, where they confidently present false information as fact, and may exhibit biases present in their training data. Furthermore, they lack true understanding or consciousness, relying instead on statistical correlations. Responsible use requires careful oversight, fact-checking, and ethical guidelines to mitigate risks such as misinformation, privacy violations, and harmful content generation. As technology evolves, ongoing research aims to improve accuracy, transparency, and safety, ensuring these powerful tools serve humanity beneficially.",
+      "checks": {
+        "non_empty": true,
+        "minimum_length": true,
+        "expected_semantics": false,
+        "expected_order": false,
+        "no_bang_triplet": true,
+        "no_mojibake": true,
+        "no_control_characters": true,
+        "no_long_character_run": true,
+        "no_repeated_word_run": true,
+        "no_repeated_phrase": true
+      },
+      "passed": false,
+      "response": {
+        "id": "chatcmpl-b781150ef9567159",
+        "choices": [
+          {
+            "finish_reason": "stop",
+            "index": 0,
+            "logprobs": null,
+            "message": {
+              "content": "Large language models (LLMs) are sophisticated artificial intelligence systems designed to understand, generate, and manipulate human language with remarkable fluency. These models are built upon deep learning architectures, primarily the transformer network, which utilizes self-attention mechanisms to process vast sequences of text data efficiently. Training involves exposing the model to massive datasets comprising books, articles, code, and web content, allowing it to learn complex linguistic patterns, factual knowledge, and reasoning structures through predictive tasks. During inference, the model generates text token by token, calculating probabilities for the next word based on the context provided by the user’s prompt. This process enables a wide array of capabilities, including natural conversation, creative writing, code generation, translation, and summarization. However, LLMs are not infallible; they can suffer from hallucinations, where they confidently present false information as fact, and may exhibit biases present in their training data. Furthermore, they lack true understanding or consciousness, relying instead on statistical correlations. Responsible use requires careful oversight, fact-checking, and ethical guidelines to mitigate risks such as misinformation, privacy violations, and harmful content generation. As technology evolves, ongoing research aims to improve accuracy, transparency, and safety, ensuring these powerful tools serve humanity beneficially.",
+              "refusal": null,
+              "role": "assistant",
+              "annotations": null,
+              "audio": null,
+              "function_call": null,
+              "tool_calls": null,
+              "reasoning": null
+            },
+            "stop_reason": null,
+            "token_ids": null,
+            "routed_experts": null
+          }
+        ],
+        "created": 1794645732,
+        "model": "Qwen3.6-35B-A3B",
+        "object": "chat.completion",
+        "metadata": null,
+        "moderation": null,
+        "service_tier": null,
+        "system_fingerprint": "vllm-0.32.0-tp4-c81900f0",
+        "usage": {
+          "completion_tokens": 252,
+          "prompt_tokens": 65,
+          "total_tokens": 317,
+          "completion_tokens_details": null,
+          "prompt_tokens_details": null
+        },
+        "prompt_logprobs": null,
+        "prompt_token_ids": null,
+        "prompt_text": null,
+        "kv_transfer_params": null,
+        "ec_transfer_params": null,
+        "metrics": null
+      }
+    }
+  ],
+  "summary": {
+    "request_count": 1,
+    "passed_count": 0,
+    "failed_count": 1,
+    "passed": false
+  }
+}

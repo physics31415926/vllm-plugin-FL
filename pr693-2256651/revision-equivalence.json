@@ -1,0 +1,14 @@
+{
+  "tested_commit": "2256651ac575dfacce82dce376f6a5256a4210ca",
+  "pr_commit": "20cc789d3a9dae89fcf95ea38e27e2ff48549e82",
+  "changed_files": [
+    "M\ttests/unit_tests/test_runner_selection.py"
+  ],
+  "python_ast_equal": true,
+  "identical_git_trees": {
+    "vllm_fl": "5f6c10aaf36ad61f077e56b153dabb66d6610648",
+    ".github": "7f7fa044f83866acc047a36bc5db8ad4cbc0b760",
+    "tests/models": "6d166dc9f1703971ff1b5a746d89a266803c6518",
+    "tools/adaptation-gate-cases": "640177b574f053e0ab6cc5b05d8ec10b1aa43f5d"
+  }
+}

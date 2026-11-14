@@ -1,0 +1,19 @@
+{
+  "checked_at_utc": "2026-11-14T08:48:51.051933+00:00",
+  "groups": {
+    "Qwen3.6-27B-graph": {
+      "initial_environment": {
+        "VLLM_USE_V2_MODEL_RUNNER": null,
+        "VLLM_FL_FLAGOS_WHITELIST": null,
+        "FLAGCX_PATH": null
+      }
+    },
+    "Qwen3.6-35B-A3B-graph": {
+      "initial_environment": {
+        "VLLM_USE_V2_MODEL_RUNNER": null,
+        "VLLM_FL_FLAGOS_WHITELIST": null,
+        "FLAGCX_PATH": null
+      }
+    }
+  }
+}

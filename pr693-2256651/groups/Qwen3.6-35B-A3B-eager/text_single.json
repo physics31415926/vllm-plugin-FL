@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "case": {
+    "scenario": "text_single",
+    "model_path": "/data/models/Qwen/Qwen3.6-35B-A3B",
+    "served_model_name": "Qwen3.6-35B-A3B",
+    "port": "18773",
+    "concurrency": 1
+  },
+  "started_at": "2026-11-14T08:15:48.342120+00:00",
+  "finished_at": "2026-11-14T08:18:31.053933+00:00",
+  "input": [
+    {
+      "request_id": "text-llm-details",
+      "kind": "text",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Introduce large language models (LLMs) in detail. Explain what they are, how training and inference work, typical capabilities, limitations, and responsible use. Write a coherent response of at least 256 characters. Do not repeat words or phrases unnecessarily."
+        }
+      ],
+      "required_terms": [
+        "large language model",
+        "training",
+        "inference",
+        "limitations"
+      ],
+      "min_length": 256,
+      "max_tokens": 512
+    }
+  ],
+  "output": [
+    {
+      "request_id": "text-llm-details",
+      "kind": "text",
+      "latency_seconds": 162.691,
+      "text": "Large language models (LLMs) are advanced artificial intelligence systems designed to understand and generate human-like text. These models are built upon deep learning architectures, primarily the transformer, which utilizes self-attention mechanisms to process vast amounts of data efficiently. Training involves exposing the model to massive datasets comprising books, articles, and code, allowing it to learn complex patterns, grammar, and factual knowledge through statistical prediction. During inference, the model generates responses token by token, calculating probabilities for the next word based on the provided context. LLMs demonstrate remarkable capabilities, including natural language translation, creative writing, code generation, and logical reasoning. However, they are not without limitations; they can hallucinate facts, exhibit biases present in training data, and lack true understanding or consciousness. Responsible use requires careful oversight, ensuring transparency, mitigating bias, and verifying outputs to prevent misinformation. As these technologies evolve, ethical considerations regarding privacy, security, and societal impact remain paramount for their safe integration into various industries.",
+      "checks": {
+        "non_empty": true,
+        "minimum_length": true,
+        "expected_semantics": true,
+        "expected_order": true,
+        "no_bang_triplet": true,
+        "no_mojibake": true,
+        "no_control_characters": true,
+        "no_long_character_run": true,
+        "no_repeated_word_run": true,
+        "no_repeated_phrase": true
+      },
+      "passed": true,
+      "response": {
+        "id": "chatcmpl-9b7fd629fc892ca4",
+        "choices": [
+          {
+            "finish_reason": "stop",
+            "index": 0,
+            "logprobs": null,
+            "message": {
+              "content": "Large language models (LLMs) are advanced artificial intelligence systems designed to understand and generate human-like text. These models are built upon deep learning architectures, primarily the transformer, which utilizes self-attention mechanisms to process vast amounts of data efficiently. Training involves exposing the model to massive datasets comprising books, articles, and code, allowing it to learn complex patterns, grammar, and factual knowledge through statistical prediction. During inference, the model generates responses token by token, calculating probabilities for the next word based on the provided context. LLMs demonstrate remarkable capabilities, including natural language translation, creative writing, code generation, and logical reasoning. However, they are not without limitations; they can hallucinate facts, exhibit biases present in training data, and lack true understanding or consciousness. Responsible use requires careful oversight, ensuring transparency, mitigating bias, and verifying outputs to prevent misinformation. As these technologies evolve, ethical considerations regarding privacy, security, and societal impact remain paramount for their safe integration into various industries.",
+              "refusal": null,
+              "role": "assistant",
+              "annotations": null,
+              "audio": null,
+              "function_call": null,
+              "tool_calls": null,
+              "reasoning": null
+            },
+            "stop_reason": null,
+            "token_ids": null,
+            "routed_experts": null
+          }
+        ],
+        "created": 1794644148,
+        "model": "Qwen3.6-35B-A3B",
+        "object": "chat.completion",
+        "metadata": null,
+        "moderation": null,
+        "service_tier": null,
+        "system_fingerprint": "vllm-0.32.0-tp4-97ce5477",
+        "usage": {
+          "completion_tokens": 199,
+          "prompt_tokens": 65,
+          "total_tokens": 264,
+          "completion_tokens_details": null,
+          "prompt_tokens_details": null
+        },
+        "prompt_logprobs": null,
+        "prompt_token_ids": null,
+        "prompt_text": null,
+        "kv_transfer_params": null,
+        "ec_transfer_params": null,
+        "metrics": null
+      }
+    }
+  ],
+  "summary": {
+    "request_count": 1,
+    "passed_count": 1,
+    "failed_count": 0,
+    "passed": true
+  }
+}

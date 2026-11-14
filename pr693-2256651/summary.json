@@ -1,0 +1,203 @@
+{
+  "tested_commit": "2256651ac575dfacce82dce376f6a5256a4210ca",
+  "runtime_equivalent_commit": "20cc789d3a9dae89fcf95ea38e27e2ff48549e82",
+  "driver_exit": 1,
+  "hardware": {
+    "device": "MetaX C550",
+    "attached_devices": 8,
+    "kernel_driver": "3.8.1",
+    "host_maca_runtime": "3.7.1.5",
+    "layout": "Two concurrent TP4 groups with disjoint device masks"
+  },
+  "image_digest": "sha256:734c6f7d620e2ca3be4fa382a9e2cd6e1d345a310e2e502f11317b5521b886ae",
+  "software_versions": {
+    "vllm": "0.32.0",
+    "torch": "2.10.0+metax3.8.1.0",
+    "flaggems": "5.5.0.dev0",
+    "flaggems_vllm": "0.3.0.dev1"
+  },
+  "ci_setup_environment": {
+    "VLLM_EXECUTE_MODEL_TIMEOUT_SECONDS": "1800",
+    "GEMS_VENDOR": "metax",
+    "VLLM_PLUGINS": "fl"
+  },
+  "harness_environment": {
+    "TENSOR_PARALLEL_SIZE": 4,
+    "MAX_MODEL_LEN": 32768,
+    "SERVICE_TIMEOUT": 2400,
+    "REQUEST_TIMEOUT": 900
+  },
+  "scenario_json_count": 20,
+  "passed": 103,
+  "total": 104,
+  "groups": {
+    "Qwen3.6-27B-eager": {
+      "scenarios": {
+        "text_single": {
+          "request_count": 1,
+          "passed_count": 1,
+          "failed_count": 0,
+          "passed": true
+        },
+        "text_concurrent_8": {
+          "request_count": 8,
+          "passed_count": 8,
+          "failed_count": 0,
+          "passed": true
+        },
+        "image_single": {
+          "request_count": 1,
+          "passed_count": 1,
+          "failed_count": 0,
+          "passed": true
+        },
+        "image_concurrent_8": {
+          "request_count": 8,
+          "passed_count": 8,
+          "failed_count": 0,
+          "passed": true
+        },
+        "mixed_concurrent_8": {
+          "request_count": 8,
+          "passed_count": 8,
+          "failed_count": 0,
+          "passed": true
+        }
+      },
+      "passed": 26,
+      "total": 26,
+      "native_runner_v2": true,
+      "server_revision_argument": null,
+      "graph_capture_finished": false,
+      "positive_piecewise_replay_rows": 0,
+      "piecewise_replay_count_sum": 0,
+      "exit": 0
+    },
+    "Qwen3.6-27B-graph": {
+      "scenarios": {
+        "text_single": {
+          "request_count": 1,
+          "passed_count": 1,
+          "failed_count": 0,
+          "passed": true
+        },
+        "text_concurrent_8": {
+          "request_count": 8,
+          "passed_count": 8,
+          "failed_count": 0,
+          "passed": true
+        },
+        "image_single": {
+          "request_count": 1,
+          "passed_count": 1,
+          "failed_count": 0,
+          "passed": true
+        },
+        "image_concurrent_8": {
+          "request_count": 8,
+          "passed_count": 8,
+          "failed_count": 0,
+          "passed": true
+        },
+        "mixed_concurrent_8": {
+          "request_count": 8,
+          "passed_count": 8,
+          "failed_count": 0,
+          "passed": true
+        }
+      },
+      "passed": 26,
+      "total": 26,
+      "native_runner_v2": true,
+      "server_revision_argument": null,
+      "graph_capture_finished": true,
+      "positive_piecewise_replay_rows": 15,
+      "piecewise_replay_count_sum": 341,
+      "exit": 0
+    },
+    "Qwen3.6-35B-A3B-eager": {
+      "scenarios": {
+        "text_single": {
+          "request_count": 1,
+          "passed_count": 1,
+          "failed_count": 0,
+          "passed": true
+        },
+        "text_concurrent_8": {
+          "request_count": 8,
+          "passed_count": 8,
+          "failed_count": 0,
+          "passed": true
+        },
+        "image_single": {
+          "request_count": 1,
+          "passed_count": 1,
+          "failed_count": 0,
+          "passed": true
+        },
+        "image_concurrent_8": {
+          "request_count": 8,
+          "passed_count": 8,
+          "failed_count": 0,
+          "passed": true
+        },
+        "mixed_concurrent_8": {
+          "request_count": 8,
+          "passed_count": 8,
+          "failed_count": 0,
+          "passed": true
+        }
+      },
+      "passed": 26,
+      "total": 26,
+      "native_runner_v2": true,
+      "server_revision_argument": null,
+      "graph_capture_finished": false,
+      "positive_piecewise_replay_rows": 0,
+      "piecewise_replay_count_sum": 0,
+      "exit": 0
+    },
+    "Qwen3.6-35B-A3B-graph": {
+      "scenarios": {
+        "text_single": {
+          "request_count": 1,
+          "passed_count": 0,
+          "failed_count": 1,
+          "passed": false
+        },
+        "text_concurrent_8": {
+          "request_count": 8,
+          "passed_count": 8,
+          "failed_count": 0,
+          "passed": true
+        },
+        "image_single": {
+          "request_count": 1,
+          "passed_count": 1,
+          "failed_count": 0,
+          "passed": true
+        },
+        "image_concurrent_8": {
+          "request_count": 8,
+          "passed_count": 8,
+          "failed_count": 0,
+          "passed": true
+        },
+        "mixed_concurrent_8": {
+          "request_count": 8,
+          "passed_count": 8,
+          "failed_count": 0,
+          "passed": true
+        }
+      },
+      "passed": 25,
+      "total": 26,
+      "native_runner_v2": true,
+      "server_revision_argument": null,
+      "graph_capture_finished": true,
+      "positive_piecewise_replay_rows": 19,
+      "piecewise_replay_count_sum": 279,
+      "exit": 1
+    }
+  }
+}
