@@ -1,0 +1,12 @@
+Worker INFO 11-14 09:01:03 [worker.py:572] MetaX V2 model runner: vllm.v1.worker.gpu.model_runner.GPUModelRunner
+Worker_TP0 INFO 11-14 09:20:54 [model_runner.py:1127] Graph capturing finished in 558 secs, took 0.10 GiB
+Worker_TP3 INFO 11-14 09:20:54 [model_runner.py:1127] Graph capturing finished in 558 secs, took 0.09 GiB
+Worker_TP2 INFO 11-14 09:20:54 [model_runner.py:1127] Graph capturing finished in 558 secs, took 0.09 GiB
+Worker_TP1 INFO 11-14 09:20:54 [model_runner.py:1127] Graph capturing finished in 558 secs, took 0.09 GiB
+Worker_TP1 INFO 11-14 09:21:24 [model_runner.py:1127] Graph capturing finished in 9 secs, took 0.04 GiB
+Worker_TP2 INFO 11-14 09:21:24 [model_runner.py:1127] Graph capturing finished in 9 secs, took 0.04 GiB
+Worker_TP0 INFO 11-14 09:21:24 [model_runner.py:1127] Graph capturing finished in 9 secs, took 0.04 GiB
+Worker_TP3 INFO 11-14 09:21:24 [model_runner.py:1127] Graph capturing finished in 9 secs, took 0.04 GiB
+INFO:     Application startup complete.
+APIServer INFO 11-14 09:23:48 [cuda_graph.py:123] | 1               | 1             | 0            | PIECEWISE    | 84    |
+APIServer INFO 11-14 09:23:48 [cuda_graph.py:123] | 65              | 128           | 63           | PIECEWISE    | 1     |

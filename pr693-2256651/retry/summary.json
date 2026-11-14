@@ -1,0 +1,16 @@
+{
+  "original_full_gate": "103/104",
+  "scope": "Only test_text.py::test_text_single, using a fresh service",
+  "tested_commit": "2256651ac575dfacce82dce376f6a5256a4210ca",
+  "unchanged_request_and_serve_command": true,
+  "native_runner_v2": true,
+  "positive_piecewise_replay_rows": 2,
+  "piecewise_replay_count_sum": 85,
+  "retry": {
+    "request_count": 1,
+    "passed_count": 1,
+    "failed_count": 0,
+    "passed": true
+  },
+  "exit": 0
+}

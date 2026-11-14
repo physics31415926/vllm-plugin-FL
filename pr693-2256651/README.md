@@ -11,6 +11,8 @@ The first shared TP4 gate passed **103/104 requests** across text, image, and mi
 
 The 35B graph text-only request failed the literal term and order checks because the response omitted the word “limitations.” The response described hallucinations, bias, and the distinction between statistical correlations and understanding. All other original requests passed. The earlier passing run used the same engine configuration and request. [Historical comparison](historical-comparison.json)
 
+A fresh service on the original TP4 device mask reran only the failed request with the unchanged prompt and assertion. The targeted retry passed **1/1**. [Targeted retry evidence](retry/summary.json)
+
 Each group includes five scenario JSON reports, the exact `vllm serve` command, the initial environment receipt, and selected server logs. Replay counts sum the positive `Count` column entries emitted by vLLM's graph metrics. See the [aggregate results](summary.json) and [launch events](launch-events.log).
 
 The hardware run used commit `2256651ac575dfacce82dce376f6a5256a4210ca`. The [PR #693 revision](https://github.com/flagos-ai/vllm-plugin-FL/pull/693/commits/20cc789d3a9dae89fcf95ea38e27e2ff48549e82) differs only by formatting one Python unit-test signature. The test's AST and the runtime, CI, fixture, and gate tree IDs are identical. [Revision comparison](revision-equivalence.json)
