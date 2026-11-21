@@ -1,0 +1,79 @@
+{
+  "baseline_two_identical_original_2F_runs": true,
+  "candidate_original_2P_related26P": true,
+  "focused_CPU_diagnostic_not_GPU_Gate": true,
+  "import_metadata_restored": true,
+  "source_before_after832_both_variants": true,
+  "exact_CID_absent_both": true,
+  "raw_archive": "focused-baseline-candidate-results.tar.gz",
+  "raw_archive_sha256": "52765b93a803959e09df57cd55df0b8f8e97cb5095b339b7b075d0f1c924548e",
+  "results": {
+    "baseline": {
+      "focused-r1": {
+        "tests": 2,
+        "failures": 2,
+        "errors": 0,
+        "skipped": 0,
+        "seconds": 1.727,
+        "status": 1,
+        "import_metadata_queries": [
+          {
+            "args": "(100,)",
+            "kwargs": "{}"
+          }
+        ],
+        "runtime_router_sha256": "7e706595ae2118828891a0d42cc2cd3f275ce467d0d95db5ed8bf41501527d60"
+      },
+      "focused-r2": {
+        "tests": 2,
+        "failures": 2,
+        "errors": 0,
+        "skipped": 0,
+        "seconds": 1.675,
+        "status": 1,
+        "import_metadata_queries": [
+          {
+            "args": "(100,)",
+            "kwargs": "{}"
+          }
+        ],
+        "runtime_router_sha256": "7e706595ae2118828891a0d42cc2cd3f275ce467d0d95db5ed8bf41501527d60"
+      }
+    },
+    "candidate": {
+      "focused-r1": {
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "seconds": 0.063,
+        "status": 0,
+        "import_metadata_queries": [
+          {
+            "args": "(100,)",
+            "kwargs": "{}"
+          }
+        ],
+        "runtime_router_sha256": "f8865d5f4a991ed3012126dd10135856fb1bcd91a1e1e7ae123dceb5965a6e30"
+      },
+      "related": {
+        "tests": 26,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "seconds": 0.174,
+        "status": 0,
+        "import_metadata_queries": [
+          {
+            "args": "(100,)",
+            "kwargs": "{}"
+          }
+        ],
+        "runtime_router_sha256": "f8865d5f4a991ed3012126dd10135856fb1bcd91a1e1e7ae123dceb5965a6e30"
+      }
+    }
+  },
+  "head": "b1423592f370551c3335d8d24e050d2cd3b36696",
+  "tree": "f75820b5466032efb24d44b30766292bfc1f9d3f",
+  "full_CI": "PENDING"
+}
