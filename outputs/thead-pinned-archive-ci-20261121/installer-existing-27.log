@@ -1,0 +1,32 @@
+test_checker_and_shared_installer_use_the_same_pin (__main__.FlagGemsVllmProvenanceTests.test_checker_and_shared_installer_use_the_same_pin) ... ok
+test_editable_installation_is_rejected (__main__.FlagGemsVllmProvenanceTests.test_editable_installation_is_rejected) ... ok
+test_exact_commit_is_accepted_despite_old_metadata_version (__main__.FlagGemsVllmProvenanceTests.test_exact_commit_is_accepted_despite_old_metadata_version) ... ok
+test_metadata_without_git_provenance_is_rejected (__main__.FlagGemsVllmProvenanceTests.test_metadata_without_git_provenance_is_rejected) ... ok
+test_wrong_commit_repository_or_vcs_is_rejected (__main__.FlagGemsVllmProvenanceTests.test_wrong_commit_repository_or_vcs_is_rejected) ... ok
+test_native_loader_and_origin_are_accepted (__main__.NativeImportTests.test_native_loader_and_origin_are_accepted) ... ok
+test_placeholder_module_is_rejected (__main__.NativeImportTests.test_placeholder_module_is_rejected) ... ok
+test_python_shim_is_rejected_even_at_expected_path (__main__.NativeImportTests.test_python_shim_is_rejected_even_at_expected_path) ... ok
+test_shadowing_extension_is_rejected (__main__.NativeImportTests.test_shadowing_extension_is_rejected) ... ok
+test_all_recorded_native_payloads_are_accepted (__main__.NativePayloadTests.test_all_recorded_native_payloads_are_accepted) ... ok
+test_missing_hash_is_rejected (__main__.NativePayloadTests.test_missing_hash_is_rejected) ... ok
+test_modified_native_library_is_rejected (__main__.NativePayloadTests.test_modified_native_library_is_rejected) ... ok
+test_non_elf_placeholder_is_rejected (__main__.NativePayloadTests.test_non_elf_placeholder_is_rejected) ... ok
+test_unrecorded_extension_is_rejected (__main__.NativePayloadTests.test_unrecorded_extension_is_rejected) ... ok
+test_editable_vllm_is_rejected (__main__.NativeProviderTests.test_editable_vllm_is_rejected) ... ok
+test_empty_or_other_cuda_distribution_is_rejected (__main__.NativeProviderTests.test_empty_or_other_cuda_distribution_is_rejected) ... ok
+test_every_required_native_extension_must_exist (__main__.NativeProviderTests.test_every_required_native_extension_must_exist) ... ok
+test_missing_module_origin_is_rejected (__main__.NativeProviderTests.test_missing_module_origin_is_rejected) ... ok
+test_native_scan_finds_nested_and_unrecorded_payloads (__main__.NativeProviderTests.test_native_scan_finds_nested_and_unrecorded_payloads) ... ok
+test_official_cuda_release_pair_is_accepted (__main__.NativeProviderTests.test_official_cuda_release_pair_is_accepted) ... ok
+test_old_and_dev_releases_are_rejected (__main__.NativeProviderTests.test_old_and_dev_releases_are_rejected) ... ok
+test_resolved_same_origin_is_accepted (__main__.NativeProviderTests.test_resolved_same_origin_is_accepted) ... ok
+test_source_checkout_cannot_shadow_installed_wheel (__main__.NativeProviderTests.test_source_checkout_cannot_shadow_installed_wheel) ... ok
+test_pinned_source_and_installed_wheel_are_accepted (__main__.SourceProvenanceTests.test_pinned_source_and_installed_wheel_are_accepted) ... ok
+test_release_wheel_cannot_impersonate_fixed_development_commit (__main__.SourceProvenanceTests.test_release_wheel_cannot_impersonate_fixed_development_commit) ... ok
+test_replaced_or_editable_installation_is_rejected (__main__.SourceProvenanceTests.test_replaced_or_editable_installation_is_rejected) ... ok
+test_same_version_from_different_source_is_rejected (__main__.SourceProvenanceTests.test_same_version_from_different_source_is_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 27 tests in 0.051s
+
+OK

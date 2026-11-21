@@ -1,0 +1,40 @@
+{
+  "applied_heads": {
+    "693": "7e7fc2dd8008e6028951bed78e7849b377724194",
+    "697": "a8d306185adc24bee5f05ce60d74f224a0b3d493"
+  },
+  "changed_paths": [
+    ".github/scripts/thead/setup.sh"
+  ],
+  "source_edit": "Only --source-archive added to the existing installer call.",
+  "archive": {
+    "url": "https://codeload.github.com/flagos-ai/FlagGems-vllm/tar.gz/b5c2c2249319277ccda4d41aa0f65164bd9b2a19",
+    "sha256": "1b47e1eb7982acc606e2fc920561d169e2a17fac7c92ff65c5f11cafa6b8b16e",
+    "bytes": 3774603,
+    "members": 1065,
+    "status": 200,
+    "final_url": "https://codeload.github.com/flagos-ai/FlagGems-vllm/tar.gz/b5c2c2249319277ccda4d41aa0f65164bd9b2a19",
+    "content_length": null,
+    "etag": "\"0e08bd501e0c180d9372d52f0fe3c26fc3c55a0b74abc7d3db4147e512a953ab\""
+  },
+  "archive_verification_host": "Local Windows direct HTTPS; not a claim of successful CI-runner network access.",
+  "installer_unchanged_by_this_fix": true,
+  "dependency_commit_changed": false,
+  "gate_test_policy_changed": false,
+  "CPU_contracts": {
+    "passed": 27,
+    "failed": 0,
+    "skipped": 0,
+    "log_sha256": "6f79028810bd5a969419baafa21f3dab2cbd26506ffb993ba27034cbd37dce47"
+  },
+  "bash_n": {
+    "exit": 0,
+    "input": "Tracked setup source with standard LF normalization; script not executed."
+  },
+  "required_hardware_CI": "PENDING; local download and CPU contracts do not qualify the CI runner's network or model tests",
+  "observed_previous_failures": {
+    "693": "https://github.com/flagos-ai/vllm-plugin-FL/actions/runs/44859945439/job/136711615295",
+    "697": "https://github.com/flagos-ai/vllm-plugin-FL/actions/runs/44859238110/job/136710593528",
+    "symptom": "pip partial clone failed with curl56 connection reset, early EOF and missing promisor blob before functional tests"
+  }
+}
