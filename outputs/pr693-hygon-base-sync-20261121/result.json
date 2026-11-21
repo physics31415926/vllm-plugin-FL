@@ -1,0 +1,35 @@
+{
+  "head": "513834682a8cbc4b2b3a9c776d052012e89240ce",
+  "tree": "63764ee424fa2214a24cfd289166b7b640034b7d",
+  "parents": [
+    "982739fd5d68ff19955c7ff975756960abe1cce7",
+    "f0e89ad3619b87a85c49e44c1c343e45ea58a289"
+  ],
+  "resolution": "Preserve the three existing MetaX attention blobs: main only moves a private import already eliminated by the 0.32 migration. Preserve all Hygon additions and shared mainline behavior.",
+  "CPU_result": {
+    "passed": 374,
+    "GPU_skipped": 13,
+    "failed_before_assertions_no_GPU_driver": 9,
+    "errors": 0
+  },
+  "failed_case_names": [
+    "test_fused_topk_zeroes_padded_rows_without_native_moe_kernel",
+    "test_fused_topk_prefers_upstream_when_native_kernel_takes_the_mask",
+    "test_bias_router_preserves_hash_scaling_and_shared_experts",
+    "test_sqrtsoftplus_fallback_matches_dsv4_formula",
+    "test_ascend_sqrtsoftplus_uses_torch_even_when_cuda_op_is_present",
+    "test_sqrtsoftplus_fallback_honors_hash_table",
+    "test_bias_router_preserves_v032_image_routing_through_upstream",
+    "test_fused_topk_padded_delegates_when_native_op_exists",
+    "test_fused_topk_padded_zeroes_weights_without_native_op"
+  ],
+  "failure_scope": "All nine cases fail while importing oink_ops and querying CUDA capability in the deliberately GPU-isolated runc container. Their test assertions did not execute; hardware CI remains required.",
+  "runtime_image_digest": "sha256:fc28a0284a7fc703cad89dd9041ec19d35b7db59850cf699141f4a3f4b4da6c7",
+  "GPU_devices": [],
+  "all_tracked_source_before_after_verified": true,
+  "owned_container_absence_verified": true,
+  "raw_archive_sha256": "9b14fbbc085176279b5841920a772f53ac37e627da2fdaf8e8ec43baf685260c",
+  "prior_wrapper_setup_failure": "Attempt 1 omitted the basetemp parent directory. A new attempt fixed only that wrapper setup; original tests and source were unchanged, and all 33 setup errors disappeared. Original receipts remain preserved.",
+  "final_head_full_CI": 44859945439,
+  "full_CI_and_hardware_acceptance": "PENDING"
+}
