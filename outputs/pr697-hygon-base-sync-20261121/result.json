@@ -1,0 +1,53 @@
+{
+  "head": "70105a334d743c035bcba997de0d0cbd348ec78f",
+  "tree": "6227cc184d99b303b16ebd17627e700d4b653e3f",
+  "parents": [
+    "8f5ad9358d14f77475d2119ef29fab3ff899fe5b",
+    "f0e89ad3619b87a85c49e44c1c343e45ea58a289"
+  ],
+  "conflict_resolution": {
+    "path": "vllm_fl/dispatch/backends/vendor/sunrise/impl/attention.py",
+    "resolved_blob_matches": "8f5ad9358d14f77475d2119ef29fab3ff899fe5b",
+    "reason": "Main relocates a private _bi_mode import already removed by Sunrise 0.32 migration. Preserve public Attention import and envs.VLLM_BATCH_INVARIANT."
+  },
+  "upstream_files_preserved_exactly": [
+    ".github/configs/hygon.yml",
+    ".github/configs/platforms.yml",
+    ".github/scripts/hygon/patch_vllm_py310.py",
+    ".github/scripts/hygon/setup.sh",
+    ".github/scripts/hygon/verify_install.py",
+    "docker/hygon/Dockerfile",
+    "docs/usage/hygon.md",
+    "tests/platforms/hygon.yaml",
+    "tests/unit_tests/ops/test_fused_moe_router.py",
+    "tests/unit_tests/test_hygon_patch_rollback.py",
+    "tests/unit_tests/test_musa_collective_splitting.py",
+    "tests/unit_tests/test_operator_profile_tools.py",
+    "tests/unit_tests/worker/test_model_runner.py",
+    "vllm_fl/dispatch/backends/vendor/gcu/impl/attention.py",
+    "vllm_fl/dispatch/backends/vendor/hygon/__init__.py",
+    "vllm_fl/dispatch/backends/vendor/hygon/patch.py",
+    "vllm_fl/dispatch/backends/vendor/hygon/worker.py",
+    "vllm_fl/dispatch/backends/vendor/metax/impl/attention/flash_attn.py",
+    "vllm_fl/dispatch/backends/vendor/metax/impl/attention/mla/common.py",
+    "vllm_fl/dispatch/backends/vendor/metax/impl/attention/mla/flashmla.py",
+    "vllm_fl/dispatch/config/hygon.yaml",
+    "vllm_fl/ops/fused_moe/fused_moe_utils.py",
+    "vllm_fl/worker/worker.py"
+  ],
+  "clean_shared_merges": [
+    "docker/build.sh",
+    "vllm_fl/__init__.py",
+    "tests/unit_tests/test_runner_selection.py"
+  ],
+  "CPU": {
+    "vendor_env": "kunlunxin",
+    "passed": 194,
+    "failed": 0,
+    "skipped": 0,
+    "log": "pytest-candidate-194.log",
+    "sha256": "779866eea289385b0e650853c8d30e8c822d7f891911e1bbef68318b3269a7ab"
+  },
+  "hardware_acceptance_on_this_head": "PENDING",
+  "current_CI_run": 44859238110
+}
