@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "case": {
+    "scenario": "text_single",
+    "model_path": "/data/models/Qwen/Qwen3.6-35B-A3B",
+    "served_model_name": "sunrise-gate-1300db8585c540eeae42dfed216f9de9",
+    "port": "36941",
+    "concurrency": 1
+  },
+  "started_at": "2026-11-21T04:14:48.954546+00:00",
+  "finished_at": "2026-11-21T04:19:10.601235+00:00",
+  "input": [
+    {
+      "request_id": "text-llm-details",
+      "kind": "text",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Introduce large language models (LLMs) in detail. Explain what they are, how training and inference work, typical capabilities, limitations, and responsible use. Write a coherent response of at least 256 characters. Do not repeat words or phrases unnecessarily."
+        }
+      ],
+      "required_terms": [
+        "large language model",
+        "training",
+        "inference",
+        "limitations"
+      ],
+      "min_length": 256,
+      "max_tokens": 512
+    }
+  ],
+  "output": [
+    {
+      "request_id": "text-llm-details",
+      "kind": "text",
+      "latency_seconds": 261.608,
+      "text": "Large language models (LLMs) represent a transformative class of artificial intelligence systems designed to understand, generate, and manipulate human language with remarkable fluency. These models are built upon the transformer architecture, which utilizes self-attention mechanisms to process sequential data efficiently, allowing the system to weigh the importance of different words within a context regardless of their distance from one another. The development process typically involves two distinct phases: pre-training and fine-tuning. During pre-training, the model ingests vast quantities of text from the internet, books, and code, learning statistical patterns, grammar, facts, and reasoning abilities by predicting the next token in a sequence. Subsequently, fine-tuning aligns the model\u2019s behavior with human preferences, often using techniques like Reinforcement Learning from Human Feedback (RLHF), to ensure responses are helpful, harmless, and honest.\n\nIn terms of capabilities, LLMs excel at a wide array of tasks, including natural language translation, summarization, code generation, creative writing, and complex logical reasoning. They serve as versatile tools for developers, researchers, and everyday users, enabling automation of routine cognitive tasks and enhancing productivity. However, these systems are not without significant limitations. They can suffer from hallucinations, where they confidently present false information as fact, and they may inadvertently perpetuate biases present in their training data. Furthermore, their lack of true understanding or consciousness means they operate purely on pattern recognition rather than genuine comprehension. Responsible use requires rigorous oversight, including transparency about model origins, continuous monitoring for bias and safety, and clear disclosure when interacting with users. As this technology evolves, ethical considerations regarding privacy, intellectual property, and societal impact remain paramount to ensuring that LLMs benefit humanity while minimizing potential harms.",
+      "checks": {
+        "non_empty": true,
+        "minimum_length": true,
+        "expected_semantics": false,
+        "expected_order": false,
+        "no_bang_triplet": true,
+        "no_mojibake": true,
+        "no_control_characters": true,
+        "no_long_character_run": true,
+        "no_repeated_word_run": true,
+        "no_repeated_phrase": true
+      },
+      "passed": false,
+      "response": {
+        "id": "chatcmpl-929ae8c1a3fbf346",
+        "choices": [
+          {
+            "finish_reason": "stop",
+            "index": 0,
+            "logprobs": null,
+            "message": {
+              "content": "Large language models (LLMs) represent a transformative class of artificial intelligence systems designed to understand, generate, and manipulate human language with remarkable fluency. These models are built upon the transformer architecture, which utilizes self-attention mechanisms to process sequential data efficiently, allowing the system to weigh the importance of different words within a context regardless of their distance from one another. The development process typically involves two distinct phases: pre-training and fine-tuning. During pre-training, the model ingests vast quantities of text from the internet, books, and code, learning statistical patterns, grammar, facts, and reasoning abilities by predicting the next token in a sequence. Subsequently, fine-tuning aligns the model\u2019s behavior with human preferences, often using techniques like Reinforcement Learning from Human Feedback (RLHF), to ensure responses are helpful, harmless, and honest.\n\nIn terms of capabilities, LLMs excel at a wide array of tasks, including natural language translation, summarization, code generation, creative writing, and complex logical reasoning. They serve as versatile tools for developers, researchers, and everyday users, enabling automation of routine cognitive tasks and enhancing productivity. However, these systems are not without significant limitations. They can suffer from hallucinations, where they confidently present false information as fact, and they may inadvertently perpetuate biases present in their training data. Furthermore, their lack of true understanding or consciousness means they operate purely on pattern recognition rather than genuine comprehension. Responsible use requires rigorous oversight, including transparency about model origins, continuous monitoring for bias and safety, and clear disclosure when interacting with users. As this technology evolves, ethical considerations regarding privacy, intellectual property, and societal impact remain paramount to ensuring that LLMs benefit humanity while minimizing potential harms.",
+              "refusal": null,
+              "role": "assistant",
+              "annotations": null,
+              "audio": null,
+              "function_call": null,
+              "tool_calls": null,
+              "reasoning": null
+            },
+            "stop_reason": null,
+            "token_ids": null,
+            "routed_experts": null
+          }
+        ],
+        "created": 1795234489,
+        "model": "sunrise-gate-1300db8585c540eeae42dfed216f9de9",
+        "object": "chat.completion",
+        "metadata": null,
+        "moderation": null,
+        "service_tier": null,
+        "system_fingerprint": "vllm-0.32.0-tp2-06f44e0c",
+        "usage": {
+          "completion_tokens": 349,
+          "prompt_tokens": 65,
+          "total_tokens": 414,
+          "completion_tokens_details": null,
+          "prompt_tokens_details": null
+        },
+        "prompt_logprobs": null,
+        "prompt_token_ids": null,
+        "prompt_text": null,
+        "kv_transfer_params": null,
+        "ec_transfer_params": null,
+        "metrics": null
+      }
+    }
+  ],
+  "summary": {
+    "request_count": 1,
+    "passed_count": 0,
+    "failed_count": 1,
+    "passed": false
+  }
+}

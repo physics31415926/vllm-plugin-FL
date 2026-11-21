@@ -1,0 +1,456 @@
+{
+  "status": "CURRENT_A8_27GRAPH_PASS_MATRIX_INCOMPLETE",
+  "tested_head": "a8d306185adc24bee5f05ce60d74f224a0b3d493",
+  "tested_tree": "8d9d78848e5f49686e93f81b14f023d2a51bce8c",
+  "start": "2026-11-21T03:49:50Z",
+  "deadline": "2026-11-21T07:49:50Z",
+  "finished": "2026-11-21T04:03:58Z",
+  "original_validator_sha256": "1ce2a956bdeffb63b5b59b9ab053edac114b64f84b8da5279067f13b071d7d43",
+  "original_raw_gate": {
+    "scenarios": 5,
+    "requests": 26,
+    "passed": true
+  },
+  "original_check_count": 260,
+  "long_prefill": {
+    "passed": true,
+    "target": 4096,
+    "measured": 4118,
+    "latency_seconds": 39.337764999014325,
+    "original_checks_all_true": true
+  },
+  "effective_configuration": {
+    "tensor_parallel_size": 2,
+    "max_model_len": 8192,
+    "max_num_seqs": 8,
+    "kv_cache_memory_bytes": 4294967296,
+    "enforce_eager": false,
+    "use_v2_model_runner": true,
+    "compilation_mode": 0,
+    "compilation_backend": "eager",
+    "cudagraph_mode": "FULL_DECODE_ONLY",
+    "cudagraph_capture_sizes": [
+      1,
+      2,
+      4,
+      8
+    ]
+  },
+  "original_graph_replay_parser": {
+    "native_full_executions": 221,
+    "sample_rows": [
+      [
+        "1",
+        "1",
+        "0",
+        "27"
+      ],
+      [
+        "1",
+        "1",
+        "0",
+        "61"
+      ],
+      [
+        "1",
+        "1",
+        "0",
+        "60"
+      ],
+      [
+        "1",
+        "1",
+        "0",
+        "46"
+      ],
+      [
+        "8",
+        "8",
+        "0",
+        "2"
+      ],
+      [
+        "4",
+        "4",
+        "0",
+        "1"
+      ],
+      [
+        "1",
+        "1",
+        "0",
+        "1"
+      ],
+      [
+        "1",
+        "1",
+        "0",
+        "7"
+      ],
+      [
+        "3",
+        "4",
+        "1",
+        "3"
+      ],
+      [
+        "2",
+        "2",
+        "0",
+        "2"
+      ]
+    ]
+  },
+  "recorded_original_graph_evidence": {
+    "native_full_executions": 221,
+    "sample_rows": [
+      [
+        "1",
+        "1",
+        "0",
+        "27"
+      ],
+      [
+        "1",
+        "1",
+        "0",
+        "61"
+      ],
+      [
+        "1",
+        "1",
+        "0",
+        "60"
+      ],
+      [
+        "1",
+        "1",
+        "0",
+        "46"
+      ],
+      [
+        "8",
+        "8",
+        "0",
+        "2"
+      ],
+      [
+        "4",
+        "4",
+        "0",
+        "1"
+      ],
+      [
+        "1",
+        "1",
+        "0",
+        "1"
+      ],
+      [
+        "1",
+        "1",
+        "0",
+        "7"
+      ],
+      [
+        "3",
+        "4",
+        "1",
+        "3"
+      ],
+      [
+        "2",
+        "2",
+        "0",
+        "2"
+      ]
+    ]
+  },
+  "scheduler": {
+    "model": "/data/models/Qwen/Qwen3.6-27B",
+    "served_model_name": "sunrise-gate-a6a6950e96bf4f7d8cb80291c382c18f",
+    "port": 40943,
+    "async_scheduling": true,
+    "tensor_parallel_size": 2,
+    "runner_v2_evidence": "native Sunrise startup log, revalidated by original Gate",
+    "evidence": "owned /server_info native vllm_config; system_env discarded",
+    "passed": true
+  },
+  "process_statuses": {
+    "controller": "0",
+    "guard": "0",
+    "attach": "0",
+    "inside": "0",
+    "original_gate": "0"
+  },
+  "monitor": {
+    "status": "MONITOR_ENDED",
+    "reason": "container_stopped",
+    "gate_pass_claimed": false,
+    "release_claimed": false
+  },
+  "monitor_observations": 81,
+  "source_receipts": {
+    "host_before": {
+      "head": "a8d306185adc24bee5f05ce60d74f224a0b3d493",
+      "tree": "8d9d78848e5f49686e93f81b14f023d2a51bce8c",
+      "files_verified": 821,
+      "symlinks": 1,
+      "passed": true
+    },
+    "inside_before": {
+      "head": "a8d306185adc24bee5f05ce60d74f224a0b3d493",
+      "tree": "8d9d78848e5f49686e93f81b14f023d2a51bce8c",
+      "files_verified": 821,
+      "symlinks": 1,
+      "passed": true
+    },
+    "inside_after": {
+      "head": "a8d306185adc24bee5f05ce60d74f224a0b3d493",
+      "tree": "8d9d78848e5f49686e93f81b14f023d2a51bce8c",
+      "files_verified": 821,
+      "symlinks": 1,
+      "passed": true
+    },
+    "host_after": {
+      "head": "a8d306185adc24bee5f05ce60d74f224a0b3d493",
+      "tree": "8d9d78848e5f49686e93f81b14f023d2a51bce8c",
+      "files_verified": 821,
+      "symlinks": 1,
+      "passed": true
+    }
+  },
+  "stack_before": {
+    "packages": {
+      "vllm": "0.32.0+empty",
+      "torch": "2.11.0+cpu",
+      "torch-ptpu": "0.2.3+torch2.11",
+      "flag-gems": "5.4.0",
+      "flagtree": "0.7.0+sunrise3.6",
+      "flagcx": "0.14.0+tangrt1.2.0"
+    },
+    "provider_version": "0.1.0",
+    "provider_direct_url": {
+      "url": "https://github.com/flagos-ai/FlagGems-vllm.git",
+      "vcs_info": {
+        "commit_id": "3b0f3880b2a781699462eacb7dd3e00cc24f2d43",
+        "requested_revision": "3b0f3880b2a781699462eacb7dd3e00cc24f2d43",
+        "vcs": "git"
+      }
+    },
+    "plugin_version": "0.5.0.dev0",
+    "python": "3.10.20 (main, Jul 18 2026, 17:02:35) [Clang 22.1.3 ]",
+    "passed": true,
+    "identity_only_no_backend_import": true
+  },
+  "stack_after": {
+    "packages": {
+      "vllm": "0.32.0+empty",
+      "torch": "2.11.0+cpu",
+      "torch-ptpu": "0.2.3+torch2.11",
+      "flag-gems": "5.4.0",
+      "flagtree": "0.7.0+sunrise3.6",
+      "flagcx": "0.14.0+tangrt1.2.0"
+    },
+    "provider_version": "0.1.0",
+    "provider_direct_url": {
+      "url": "https://github.com/flagos-ai/FlagGems-vllm.git",
+      "vcs_info": {
+        "commit_id": "3b0f3880b2a781699462eacb7dd3e00cc24f2d43",
+        "requested_revision": "3b0f3880b2a781699462eacb7dd3e00cc24f2d43",
+        "vcs": "git"
+      }
+    },
+    "plugin_version": "0.0.0+ga8d30618",
+    "python": "3.10.20 (main, Jul 18 2026, 17:02:35) [Clang 22.1.3 ]",
+    "passed": true,
+    "identity_only_no_backend_import": true
+  },
+  "normal_origins": {
+    "origins": {
+      "torch_ptpu": "/flagos/lib/python3.10/site-packages/torch_ptpu/__init__.py",
+      "torch": "/flagos/lib/python3.10/site-packages/torch/__init__.py",
+      "flag_gems": "/flagos/lib/python3.10/site-packages/flag_gems/__init__.py",
+      "flaggems_vllm": "/flagos/lib/python3.10/site-packages/flaggems_vllm/__init__.py",
+      "triton": "/opt/flagtree/triton/__init__.py",
+      "flagcx": "/flagos/lib/python3.10/site-packages/flagcx/__init__.py",
+      "vllm": "/flagos/lib/python3.10/site-packages/vllm/__init__.py",
+      "vllm_fl": "/source/vllm_fl/__init__.py"
+    },
+    "cache_provenance": {
+      "requested_triton": "/cache/Qwen3.6-27B-graph/triton",
+      "requested_flaggems": "/cache/Qwen3.6-27B-graph/flaggems",
+      "effective_flaggems": "/cache/Qwen3.6-27B-graph/flaggems",
+      "DB_override_configured": false,
+      "DB_value_not_recorded": true
+    },
+    "triton_init_sha256": "df3092178f70be89b50d22905cedae5bac414cc38677053616fc56802c91af30",
+    "provider_api": {
+      "source": "/flagos/lib/python3.10/site-packages/flaggems_vllm/ops/reshape_and_cache_flash_strided.py",
+      "sha256": "4827d6638f9e7ae376b9cc2471b8a9dd561c7455a393991404cfe4db61fc1d5b"
+    },
+    "mapped_DSO_sha256": {
+      "/opt/flagtree/triton/_C/libtriton.so": "83d63a4434eba363b424f11f0a07bfdd08b8b4fb2ad4aad0ca4b53890075beee",
+      "/flagos/lib/python3.10/site-packages/flagcx/lib/libflagcx.so": "7eba3f5e530c5166f7e25b7e949b4b1ad2fdb43ff08fe6606bcc2e014cbdceff",
+      "/flagos/lib/python3.10/site-packages/flagcx/_C.cpython-310-x86_64-linux-gnu.so": "544bf8bd4a2eecb5cef86f417b7f848d20b9f9861992e32cb9582ad216b2b7c0",
+      "/usr/local/tangrt-0.25/targets/linux-x86_64/lib/libtangrt_shared.so": "66b2914e03d69be18373f02f0f33cda131462777c2f43cf37d086e2e5595596a",
+      "/flagos/lib/python3.10/site-packages/torch_ptpu/lib/libptpu_kernel.so": "7a995f7c1c6c7267ea6a6274bdc49ff4c6a9a2c1ae95201242aba5dc78fd14e9",
+      "/usr/local/pccl/lib/linux-x86_64/libpccl.so": "10fff10dc7fe160a770e717979dd07336a33c46033d3efe99274b600cddc5c45",
+      "/usr/local/tangrt-0.25/targets/linux-x86_64/lib/libtablas.so": "a1340a884f04af3626c84663379ee152fd56334c22e532127ce43338689dd0a1",
+      "/flagos/lib/python3.10/site-packages/torch_ptpu/lib/libptpu_kernel_binary_misc.so": "173e39026ba71efe3384313734a39753c4636ed44a91e9e7c00a178366fd2fdb",
+      "/flagos/lib/python3.10/site-packages/torch_ptpu/lib/libptpu_kernel_binary_cmp.so": "cbd9ccab102a90a8acc13f980600cf3b946b5ce1f27d32e80aced88bf5cce6c3",
+      "/flagos/lib/python3.10/site-packages/torch_ptpu/lib/libptpu_kernel_binary_arith.so": "a2b8bfc8d1145b60e65cadf906d3cda183671937d3d4b9dc8f970f6217a8397e",
+      "/flagos/lib/python3.10/site-packages/torch_ptpu/lib/libsgl_kernel_ptpu.so": "496e129bf1af1ea4a3550d49beb86fa86ceeb8c9298a587a00c70873227239aa",
+      "/usr/local/tangrt-0.25/targets/linux-x86_64/lib/stub/libtang.so.0": "65572792ca4db26ddf909a9fb0f45e57eddaec2b46b87567e8c3b934acc68bb7",
+      "/flagos/lib/python3.10/site-packages/torch_ptpu/_C.cpython-310-x86_64-linux-gnu.so": "909fff8521635050c99c088c0736e9bdb07f399e7e4fc61edbf0e695c356ff75",
+      "/usr/local/tangrt-0.25/targets/linux-x86_64/lib/tapti/libtapti_shared.so": "fcb0fed6dc0f7524a0ef38c5c4ff4bb87af4120497aa8ca36f7b1a809fb4d8fd"
+    },
+    "plugin_version": "0.0.0+ga8d30618",
+    "installed_python_files_matched": 327,
+    "normal_production_import": true,
+    "actual_model_dispatch_not_claimed_by_import": true
+  },
+  "model_worker_source_flow": [
+    {
+      "rank": 0,
+      "container_PID": 791,
+      "native_world_size": 2,
+      "native_file": "Qwen3.6-27B-graph.flagcx.791.log",
+      "native_file_sha256": "313323777f5d889dd1d5fd37aaff0feaa2e7539b9b0f6d524efee13e9260425a",
+      "native_bootstrap_rows": [
+        "4ac5cd8e4113:791:791 [0] FLAGCX INFO rank 0 nranks 2 - DONE"
+      ],
+      "same_PID_V2_rows": [
+        "(Worker pid=791) INFO 11-21 03:51:08 [sunrise_worker.py:139] Using Sunrise Model Runner V2"
+      ],
+      "same_PID_loaded_rows": [
+        "(Worker_TP0 pid=791) INFO 11-21 03:51:25 [v1/worker/gpu/model_runner.py:424] Model loading took 25.52 GiB memory and 16.202596 seconds"
+      ],
+      "native_ctor_and_warmup_sourceflow": true,
+      "direct_available_property_snapshot": false,
+      "evidence_type": "bootstrap alone is not comm success; same PID reaches V2/model-load/ready after current constructor nativeInit+warmup outside the library-load catch",
+      "constructor_source_sha256": "6153c19fbe731b3929e7e81e54d07668e755da6ca7d390aef0bd74b67faf3d30",
+      "Sunrise_worker_source_sha256": "8e47b898233bf7500d79b58334cf94720f1d3cc69dc8cf565d001801b4d69a72"
+    },
+    {
+      "rank": 1,
+      "container_PID": 792,
+      "native_world_size": 2,
+      "native_file": "Qwen3.6-27B-graph.flagcx.792.log",
+      "native_file_sha256": "d6096312cde02df4d8c80c6fe798b6713cbed4e4e194b3fd745f6dab9d7c8546",
+      "native_bootstrap_rows": [
+        "4ac5cd8e4113:792:792 [0] FLAGCX INFO rank 1 nranks 2 - DONE"
+      ],
+      "same_PID_V2_rows": [
+        "(Worker pid=792) INFO 11-21 03:51:08 [sunrise_worker.py:139] Using Sunrise Model Runner V2"
+      ],
+      "same_PID_loaded_rows": [
+        "(Worker_TP1 pid=792) INFO 11-21 03:51:25 [v1/worker/gpu/model_runner.py:424] Model loading took 25.52 GiB memory and 15.739761 seconds"
+      ],
+      "native_ctor_and_warmup_sourceflow": true,
+      "direct_available_property_snapshot": false,
+      "evidence_type": "bootstrap alone is not comm success; same PID reaches V2/model-load/ready after current constructor nativeInit+warmup outside the library-load catch",
+      "constructor_source_sha256": "6153c19fbe731b3929e7e81e54d07668e755da6ca7d390aef0bd74b67faf3d30",
+      "Sunrise_worker_source_sha256": "8e47b898233bf7500d79b58334cf94720f1d3cc69dc8cf565d001801b4d69a72"
+    }
+  ],
+  "FlagCX_model_constructor_and_warmup_inference_qualified": true,
+  "FlagGems_operator_entry_records": [
+    "GEMS ALIAS",
+    "GEMS ARANGE",
+    "GEMS ARGMAX",
+    "GEMS BITWISE NOT",
+    "GEMS BITWISE OR",
+    "GEMS BROADCAST_TO",
+    "GEMS CHUNK",
+    "GEMS COPY_",
+    "GEMS DIFF",
+    "GEMS EXPAND",
+    "GEMS EXPAND_AS",
+    "GEMS FLATTEN",
+    "GEMS FULL",
+    "GEMS GT SCALAR",
+    "GEMS INDEX",
+    "GEMS INDEX_FILL_",
+    "GEMS LAYERNORM FORWARD",
+    "GEMS LIFT_FRESH",
+    "GEMS LT SCALAR",
+    "GEMS MASKED FILL",
+    "GEMS NARROW",
+    "GEMS NATIVE_LAYER_NORM",
+    "GEMS NEW_ONES",
+    "GEMS NONZERO",
+    "GEMS NONZERO_NUMPY",
+    "GEMS NORMAL_",
+    "GEMS ONES",
+    "GEMS RANDN",
+    "GEMS RECIPROCAL",
+    "GEMS RESOLVE_CONJ",
+    "GEMS RSQRT",
+    "GEMS SCALAR_TENSOR",
+    "GEMS SILU FORWARD",
+    "GEMS SIN",
+    "GEMS SLICE",
+    "GEMS SPLIT_WITH_SIZES",
+    "GEMS TRANSPOSE",
+    "GEMS UNBIND",
+    "GEMS UNFOLD",
+    "GEMS UNSAFE_VIEW",
+    "GEMS UNSQUEEZE",
+    "GEMS ZEROS",
+    "GEMS ZEROS_LIKE",
+    "GEMS ZERO_",
+    "GEMS _HAS_COMPATIBLE_SHALLOW_COPY_TYPE",
+    "GEMS _RESHAPE_ALIAS",
+    "GEMS _SCALED_DOT_PRODUCT_ATTENTION_MATH"
+  ],
+  "natural_compiled_metadata_count": 920,
+  "archive": "D:\\Codex\\work\\pr697-current-a8d30618-gate-plan-20261121\\model-a8d30618-27graph-complete-raw.tar.gz",
+  "archive_sha256": "28e25cd1d07a8db8cd845e91f98dfa0f7cc419715d58c2ccc2132c2901a0beb9",
+  "archive_bytes": 50908031,
+  "all_raw_cache_preserved": true,
+  "owned_cid": "4ac5cd8e4113a103c9bac16cb8b4eb7a2b46da472a3816278b80172329a2c944",
+  "final_state": {
+    "Status": "exited",
+    "Running": false,
+    "Paused": false,
+    "Restarting": false,
+    "OOMKilled": false,
+    "Dead": false,
+    "Pid": 0,
+    "ExitCode": 0,
+    "Error": "",
+    "StartedAt": "2026-11-21T03:49:54.01545773Z",
+    "FinishedAt": "2026-11-21T04:03:52.341977408Z"
+  },
+  "positive_absence": true,
+  "selected_3_7_after_idle": true,
+  "four_locks_release": {
+    "utc": "2026-11-21T04:07:25.399303+00:00",
+    "locks": [
+      {
+        "path": "/tmp/codex-sunrise-gpu3.lock",
+        "flock_exit": 0,
+        "stderr": ""
+      },
+      {
+        "path": "/tmp/codex-sunrise-gpu7.lock",
+        "flock_exit": 0,
+        "stderr": ""
+      },
+      {
+        "path": "/tmp/codex-sunrise-card3.lock",
+        "flock_exit": 0,
+        "stderr": ""
+      },
+      {
+        "path": "/tmp/codex-sunrise-card7.lock",
+        "flock_exit": 0,
+        "stderr": ""
+      }
+    ]
+  },
+  "following_groups_started": false,
+  "stop_reason": "One qualified group; following groups require the existing conditional authorization",
+  "passed": true
+}
